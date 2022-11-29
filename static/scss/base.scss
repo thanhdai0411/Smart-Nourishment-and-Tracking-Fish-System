@@ -1,0 +1,17 @@
+$primary-color : #025f6f;
+$primary-color-1 : #20c997 ;
+
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: $primary-color;
+    // background-image: linear-gradient(to right,#0a9c3d, #025f6f ,  #20c997);
+    position: relative;
+        height: 100%; 
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}

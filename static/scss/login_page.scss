@@ -1,0 +1,27 @@
+
+.login-page {
+    background-image: url('/static/image/background.jpg');
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+    // background-color: #00ABB3;
+    // width: 100%;
+    // height: 100vh;
+}
+.login-form {
+    background-color: #ccc;
+    border : 1.5px solid #00F5FF ;
+    width: 40%;
+    padding : 20px ;
+    margin : 40px ;
+    box-shadow: 2px 15px 70px #47B5FF;
+    border-radius: 20px;
+}
+
+
+h1 {
+    color : white ;
+}

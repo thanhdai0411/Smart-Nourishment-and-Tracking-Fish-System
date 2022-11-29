@@ -1,0 +1,4 @@
+train: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
+val: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
+names:
+    0: ConCaAnCom

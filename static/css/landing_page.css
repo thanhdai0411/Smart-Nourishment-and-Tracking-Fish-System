@@ -1,0 +1,301 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+
+
+}
+
+a {
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.landing_main {
+    background-image: url('/static/image/background.jpg');
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    /* border-bottom-right-radius: 100px; */
+    /* border-bottom-left-radius: 100px; */
+
+}
+
+.landing_h1 {
+    color: blue;
+}
+
+.landing_nav-bar {
+    width: 100%;
+    /* background-color: olivedrab; */
+    height: 15%;
+    /* margin: 0 10px; */
+}
+
+.nav_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 50px; */
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.landing_nav-bar-body {
+    padding: 0 100px;
+}
+
+.button_custom,
+.landing_register,
+.landing_login,
+.landing_explore {
+    background-color: transparent;
+    border: 1.5px solid white;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    font-weight: 500;
+}
+
+button:hover {
+    opacity: 0.8;
+    color: white;
+}
+
+.landing_register {
+    margin-left: 10px;
+    background-color: #00ABB3;
+}
+
+.landing_login {
+    background-color: #256D85;
+}
+
+.landing_explore {
+    background-color: transparent;
+}
+
+.landing_explore:hover {
+    background-color: #00ABB3;
+}
+
+.lading_content {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    z-index: 1000;
+
+}
+
+.lading_fish img {
+    width: 130px;
+    height: 70px;
+    /* position: absolute; */
+    animation: fish_move 7s linear infinite;
+}
+
+.lading_fish .fish1 {
+    position: absolute;
+    top: 150px;
+    left: -300px;
+    width: 200px;
+    height: 120px;
+    animation-delay: 3s;
+}
+
+.lading_fish .fish2 {
+    position: absolute;
+    top: 290px;
+    left: -200px;
+    animation-delay: 4s;
+}
+
+.lading_fish .fish3 {
+    position: absolute;
+    top: 370px;
+    left: -200px;
+    animation-delay: 1s;
+}
+
+.lading_fish .fish4 {
+    position: absolute;
+    top: 430px;
+    left: -200px;
+    animation-delay: 9s;
+}
+
+.lading_fish .fish5 {
+    position: absolute;
+    top: 60px;
+    left: -200px;
+    width: 180px;
+    height: 90px;
+    animation-delay: 2s;
+}
+
+.lading_fish .fish6 {
+    position: absolute;
+    top: 480px;
+    left: -200px;
+    width: 100px;
+    height: 50px;
+
+    animation-delay: 10s;
+}
+
+
+.landing_bubble img {
+    width: 50px;
+    animation: bubble_move 7s linear infinite;
+}
+
+.landing_bubble {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    bottom: -50px;
+    position: absolute;
+}
+
+.landing_bubble img:nth-child(1) {
+    animation-delay: 2s;
+    width: 30px;
+}
+
+
+.landing_bubble img:nth-child(2) {
+    animation-delay: 1s;
+}
+
+
+.landing_bubble img:nth-child(3) {
+    animation-delay: 3s;
+    width: 35px;
+}
+
+
+.landing_bubble img:nth-child(4) {
+    animation-delay: 4.5s;
+    width: 25px;
+}
+
+
+.landing_bubble img:nth-child(5) {
+    animation-delay: 3s;
+}
+
+.landing_bubble img:nth-child(6) {
+    animation-delay: 6s;
+    width: 40px;
+}
+
+
+.landing_bubble img:nth-child(7) {
+    animation-delay: 7s;
+    width: 35px;
+}
+
+#item_nav {
+    font-weight: 500;
+}
+
+#item_nav:hover {
+    background-color: #67e3e8;
+    border-radius: 18px;
+    padding: 8px 15px;
+    transition: all linear .25s;
+    color: #18586d !important;
+    border: 2px solid #31E1F7;
+}
+
+/* user name login  */
+
+.btn_logout_user {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    display: none;
+    z-index: 99999999999999;
+
+}
+
+.user_login {
+    position: relative;
+    cursor: pointer;
+}
+
+.user_login:hover .btn_logout_user {
+    display: block;
+
+}
+
+.landing_register:hover {
+    opacity: 0.8;
+    color: white;
+    z-index: 99999999999999;
+}
+
+
+
+@keyframes fish_move {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    9% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(2100px);
+        opacity: 1;
+    }
+}
+
+@keyframes bubble_move {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    70% {
+        /* transform: translateX(0); */
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+
+/* login */
+.img_bgc-login {
+    /* background-color: red; */
+    background-image: url('/static/image/background_2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.img_bgc-login img {
+    object-fit: cover;
+}
