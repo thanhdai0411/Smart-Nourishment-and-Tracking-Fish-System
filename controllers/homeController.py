@@ -39,6 +39,10 @@ def render_home_page():
     return render_template('home_page.html')
 
 
+def render_monitor_page():
+    return render_template('monitoring.html')
+
+
 def render_view_camera():
     start_generate_frames()
     stop = False

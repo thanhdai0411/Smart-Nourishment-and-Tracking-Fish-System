@@ -10,8 +10,26 @@ body {
     // background-image: linear-gradient(to right,#0a9c3d, #025f6f ,  #20c997);
     position: relative;
         height: 100%; 
+    
+    
 }
 
 * {
     font-family: 'Poppins', sans-serif;
+    
+}
+body {
+    max-width: 1280px;
+}
+
+
+::-moz-selection {
+    /* Code for Firefox */
+    color: black;
+    background: ($primary-color-1);
+}
+
+::selection {
+    color: black;
+    background: ($primary-color-1);
 }

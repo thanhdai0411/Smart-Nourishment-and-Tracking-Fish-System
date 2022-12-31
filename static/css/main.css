@@ -42,8 +42,30 @@ body {
   * {
     font-family: 'Poppins', sans-serif; }
 
+    body {
+      max-width: 1280px; }
+
+      ::-moz-selection {
+        color: black;
+        background: #20c997; }
+
+        ::selection {
+          color: black;
+          background: #20c997; }
+
 .content {
   padding: 50px; }
+  .content #train_name .train_name-header {
+    margin-bottom: 20px; }
+    .content #train_name .train_name-header div {
+      border: 1.5px solid #1dc577;
+      width: 100%;
+      padding: 10px;
+      background-color: #009688; }
+      .content #train_name .train_name-header p {
+        font-size: 25px;
+        margin: 0;
+        text-align: center; }
   .content #train_name-info h3 {
     font-size: 50px; }
     .content #train_name-info p {
@@ -57,106 +79,6 @@ body {
     border-bottom-right-radius: 40px;
     border: 1px solid #7bc3be;
     box-shadow: -2px 3px 21px 2px #269b93; }
-  .content #monitoring {
-    margin-top: 100px;
-    border: 1px solid #7bc3be;
-    box-shadow: -2px 3px 21px 2px #269b93; }
-    .content #monitoring #camera {
-      width: 100%;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column; }
-      .content #monitoring #camera #camera_btn {
-        display: flex;
-        align-items: center;
-        justify-content: center; }
-        .content #monitoring #camera .camera-btn_group {
-          display: flex;
-          border: 2px solid #96ddca; }
-          .content #monitoring #camera #shape_camera {
-            box-shadow: -2px 3px 21px 2px #38604e;
-            border: 1.5px solid #4b7d67;
-            width: 100%;
-            height: 100%;
-            margin-bottom: 10px;
-            border-radius: 20px;
-            overflow: hidden;
-            background-color: #38604e;
-            display: flex;
-            flex-direction: column; }
-            .content #monitoring #camera #shape_camera_none {
-              box-shadow: -2px 3px 21px 2px #38604e;
-              border: 1.5px solid #4b7d67;
-              width: 100%;
-              height: 100%;
-              margin-bottom: 10px;
-              border-radius: 20px;
-              overflow: hidden;
-              background-color: #38604e;
-              display: none;
-              flex-direction: column;
-              text-align: center;
-              padding-top: 25%; }
-    .content #monitoring #control {
-      width: 100%;
-      text-align: center;
-      display: flex;
-      flex-direction: column; }
-      .content #monitoring #control #switch {
-        border: 1px solid white;
-        height: 50px; }
-        .content #monitoring #control .form-check-input:checked {
-          background-color: #cd812b;
-          border: white; }
-          .content #monitoring #control #control_switch {
-            border: 1.5px solid #1dc577;
-            background-color: #198754;
-            box-shadow: -2px 3px 21px 2px #19c273;
-            display: inline-block;
-            padding: 0;
-            margin: 15px 0;
-            border-radius: 10px;
-            padding: 15px; }
-            .content #monitoring #control #control_switch-off {
-              border: 1.5px solid #7d858d;
-              background-color: #6c757d;
-              box-shadow: -2px 3px 21px 2px #6c757d;
-              display: inline-block;
-              padding: 0;
-              margin: 15px 0;
-              border-radius: 10px;
-              padding: 15px; }
-              .content #monitoring #control .control_switch-checkbox {
-                font-size: 35px;
-                cursor: pointer;
-                margin: 0;
-                padding: 0; }
-                .content #monitoring #control .control_time {
-                  border: 1.5px solid #0ca799;
-                  background-color: #037c71;
-                  box-shadow: -2px 3px 21px 2px #0e9286;
-                  display: inline-block;
-                  padding: 0;
-                  margin: 10px 0;
-                  border-radius: 10px;
-                  padding: 15px;
-                  display: block; }
-                  .content #monitoring #control .control_time-item {
-                    margin: 20px 0;
-                    text-align: left; }
-    .content #monitoring .monitoring-header {
-      padding: 10px; }
-      .content #monitoring .monitoring-header div {
-        border: 1.5px solid #1dc577;
-        width: 100%;
-        padding: 10px;
-        background-color: #009688; }
-        .content #monitoring .monitoring-header p {
-          font-size: 25px;
-          margin: 0;
-          text-align: center; }
   .content #info_fish {
     overflow: hidden;
     margin-bottom: 100px;
@@ -214,15 +136,201 @@ body {
       transform: rotate(360deg);   }
 }
 
-.control_deivice {
-  background-color: #6e1313;
-  width: 95%;
-  height: 80vh;
-  margin: 0;
-  transform: translateX(-50%);
-  display: block;
-  left: 50%;
-  z-index: 1000;
-  position: absolute;
-  top: 90px;
-  border-radius: 20px; }
+a {
+  text-decoration: none !important;
+  color: white !important; }
+
+  .monitor_wrap {
+    padding: 30px 20px; }
+    .monitor_wrap #monitoring_page {
+      border: 1px solid #7bc3be;
+      box-shadow: -2px 3px 21px 2px #269b93; }
+      .monitor_wrap #monitoring_page #camera {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; }
+        .monitor_wrap #monitoring_page #camera #camera_btn {
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+          .monitor_wrap #monitoring_page #camera .camera-btn_group {
+            display: flex;
+            border: 1.5px solid #25f192; }
+            .monitor_wrap #monitoring_page #camera #camera_open {
+              height: 450px; }
+              .monitor_wrap #monitoring_page #camera #shape_camera {
+                box-shadow: -2px 3px 21px 2px #38604e;
+                border: 1.5px solid #4b7d67;
+                width: 100%;
+                height: 450px;
+                margin-bottom: 10px;
+                border-radius: 20px;
+                overflow: hidden;
+                background-color: #38604e;
+                display: flex;
+                flex-direction: column; }
+                .monitor_wrap #monitoring_page #camera #shape_camera_none {
+                  box-shadow: -2px 3px 21px 2px #38604e;
+                  border: 1.5px solid #4b7d67;
+                  width: 100%;
+                  height: 450px;
+                  margin-bottom: 10px;
+                  border-radius: 20px;
+                  overflow: hidden;
+                  background-color: #38604e;
+                  display: none;
+                  flex-direction: column;
+                  text-align: center;
+                  padding-top: 25%; }
+      .monitor_wrap #monitoring_page #food_render {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; }
+        .monitor_wrap #monitoring_page #control {
+          width: 100%;
+          text-align: center;
+          display: flex;
+          flex-direction: column; }
+          .monitor_wrap #monitoring_page #control #switch {
+            border: 1px solid white;
+            height: 50px; }
+            .monitor_wrap #monitoring_page #control .form-check-input:checked {
+              background-color: #cd812b;
+              border: white; }
+              .monitor_wrap #monitoring_page #control .control_switch {
+                border: 1.5px solid #1dc577;
+                background-color: #198754;
+                box-shadow: 0px 3px 21px 2px #19c273;
+                display: inline-block;
+                padding: 0;
+                margin: 15px 0;
+                border-radius: 10px;
+                padding: 15px; }
+                .monitor_wrap #monitoring_page #control .control_switch-off {
+                  border: 1.5px solid #899e94;
+                  background-color: #6c757d;
+                  box-shadow: -2px 3px 21px 2px #90a5b8;
+                  display: inline-block;
+                  padding: 0;
+                  margin: 15px 0;
+                  border-radius: 10px;
+                  padding: 15px; }
+                  .monitor_wrap #monitoring_page #control .control_switch-checkbox {
+                    font-size: 35px;
+                    cursor: pointer;
+                    margin: 0;
+                    padding: 0; }
+                    .monitor_wrap #monitoring_page #control .control_time {
+                      border: 1.5px solid #0ca799;
+                      background-color: #037c71;
+                      box-shadow: -2px 3px 21px 2px #0e9286;
+                      display: inline-block;
+                      padding: 0;
+                      margin: 10px 0;
+                      border-radius: 10px;
+                      padding: 15px;
+                      display: block; }
+                      .monitor_wrap #monitoring_page #control .control_time-item {
+                        margin: 20px 0;
+                        text-align: left; }
+      .monitor_wrap #monitoring_page .monitoring-header {
+        padding: 10px; }
+        .monitor_wrap #monitoring_page .monitoring-header div {
+          border: 1.5px solid #1dc577;
+          width: 100%;
+          padding: 10px;
+          background-color: #009688; }
+          .monitor_wrap #monitoring_page .monitoring-header p {
+            font-size: 25px;
+            margin: 0;
+            text-align: center; }
+
+.nav_monitoring_page #item_nav {
+  font-weight: 500; }
+  .nav_monitoring_page #item_nav:hover {
+    background-color: #67e3e8;
+    border-radius: 18px;
+    padding: 8px 15px;
+    transition: all linear 0.25s;
+    color: #18586d !important;
+    border: 2px solid #31E1F7; }
+    .nav_monitoring_page .landing_nav-bar {
+      width: 100%;
+      height: 75px;
+      border-bottom: 1px solid #43efbb;
+      background: #187158;
+      box-shadow: 3px 8px 22px #20c997; }
+      .nav_monitoring_page .nav_content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 93%;
+        margin: 0 auto; }
+        .nav_monitoring_page .landing_nav-bar-body {
+          padding: 0 100px; }
+          .nav_monitoring_page .button_custom, .nav_monitoring_page .landing_register,
+          .nav_monitoring_page .landing_login, .nav_monitoring_page .landing_explore {
+            background-color: transparent;
+            border: 1.5px solid white;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            outline: none;
+            font-weight: 500; }
+            .nav_monitoring_page button:hover {
+              opacity: 0.8;
+              color: white; }
+              .nav_monitoring_page .landing_register {
+                margin-left: 10px;
+                background-color: #00ABB3; }
+                .nav_monitoring_page .landing_login {
+                  background-color: #256D85; }
+                  .nav_monitoring_page .btn_logout_user {
+                    position: absolute;
+                    top: 50px;
+                    right: 0;
+                    display: none;
+                    z-index: 99999999999999; }
+                    .nav_monitoring_page .user_login {
+                      position: relative;
+                      cursor: pointer; }
+                      .nav_monitoring_page .user_login:hover .btn_logout_user {
+                        display: block; }
+                        .nav_monitoring_page .landing_register:hover {
+                          opacity: 0.8;
+                          color: white;
+                          z-index: 99999999999999; }
+
+.btn_action_food {
+  outline: none;
+  border: 1px solid white;
+  font-size: 14px;
+  border-radius: 5px;
+  font-weight: 500;
+  background-color: #105abf;
+  color: white;
+  padding: 3px 10px; }
+
+  .btn_action_food_delete {
+    outline: none;
+    border: 1px solid white;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+    background-color: #b40d0d;
+    color: white;
+    padding: 3px 10px; }
+
+    .btn_action_food:hover {
+      background-color: #14971f; }
+
+      .btn_action_food_delete:hover {
+        background-color: #14971f; }

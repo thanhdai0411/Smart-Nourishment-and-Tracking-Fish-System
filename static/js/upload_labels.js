@@ -9,6 +9,15 @@ let result = document.querySelector('.result'),
     upload = document.querySelector('#file-input'),
     cropper = '';
 
+const toastUploadSuccess = document.querySelector('#toastUploadLabel');
+const toastUploadFail = document.querySelector('#toastUploadLabelFail');
+
+const timeUpload = document.querySelector('.time_upload');
+const toastContentSuccess = document.querySelector('#toast_success_body');
+
+const timeUploadFail = document.querySelector('.time_upload_fail');
+const toastContentFail = document.querySelector('#toast_fail_body');
+
 let coorDinates = document.querySelector('.coordinates');
 let x, y, w, h;
 
@@ -19,7 +28,6 @@ let x, y, w, h;
 //========================zz===================================================
 let imgUploadName = '';
 $('.box-2').hide();
-
 upload.addEventListener('change', (e) => {
     $('.box-2').show();
     if (e.target.files.length) {
@@ -63,34 +71,7 @@ upload.addEventListener('change', (e) => {
 
 //! end get coordinates
 
-//! save label into storage
-const btnSaveLabel = document.querySelector('#btn_save_label');
-const btnSubmitLabel = document.querySelector('.save');
-const inputLabel = document.querySelector('#input_label');
-const labelPresent = document.querySelector('#label_present');
-labelPresent.innerHTML = localStorage.getItem('label');
-btnSaveLabel.onclick = (e) => {
-    const valueInputLabel = inputLabel.value;
-
-    localStorage.setItem('label', valueInputLabel);
-    labelPresent.innerHTML = localStorage.getItem('label');
-
-    console.log(valueInputLabel);
-};
-
-//! end save label into storage
-
-//! post label
-const userNameLogin = document.querySelector('#username_login').innerHTML;
-
-const toastUploadSuccess = document.querySelector('#toastUploadLabel');
-const toastUploadFail = document.querySelector('#toastUploadLabelFail');
-
-const timeUpload = document.querySelector('.time_upload');
-const timeUploadFail = document.querySelector('.time_upload_fail');
-
-const toastContentFail = document.querySelector('#toast_fail_body');
-
+//!util
 const getTimePresent = () => {
     let today = new Date();
     let timePresent = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
@@ -98,17 +79,166 @@ const getTimePresent = () => {
     return { timePresent, datePresent };
 };
 
+const toastFail = (message) => {
+    const { datePresent, timePresent } = getTimePresent();
+    timeUploadFail.innerHTML = timePresent + ' - ' + datePresent;
+    toastContentFail.innerHTML = message;
+    const toast = new bootstrap.Toast(toastUploadFail);
+    toast.show();
+};
+
+const toastSuccess = (message) => {
+    const { datePresent, timePresent } = getTimePresent();
+    timeUpload.innerHTML = timePresent + ' - ' + datePresent;
+    toastContentSuccess.innerHTML = message;
+    const toast = new bootstrap.Toast(toastUploadSuccess);
+    toast.show();
+};
+
+//! end util
+
+//! save label into storage
+const btnSaveLabel = document.querySelector('#btn_save_label');
+const btnSubmitLabel = document.querySelector('.save');
+const inputLabel = document.querySelector('#input_label');
+const labelPresent = document.querySelector('#label_present');
+const btnShowLabel = document.querySelector('#btn_show_label');
+const wrapLabelShow = document.querySelector('#label_show');
+const tableBody = document.querySelector('#table_body');
+
+labelPresent.innerHTML = localStorage.getItem('label');
+
+btnShowLabel.onclick = (e) => {
+    const userNameLogin = document.querySelector('#username_login').innerHTML;
+
+    $.ajax({
+        type: 'GET',
+        url: `/label/get/${userNameLogin}`,
+        dataType: 'json',
+        success: function (data) {
+            const { data: labelFish, success } = data;
+            if (success === 1) {
+                const labelSave = JSON.parse(labelFish);
+                if (labelSave.length) {
+                    const tableContent = labelSave.map(
+                        (v, index) =>
+                            `
+                                <tr class="text-center">
+                                    <th scope="row">${index}</th>
+                                    <td id="name_label_show"  >${v.name}</td>
+                                    <td>${moment(v.created_at.$date).format('DD/MM/YYYY, HH:mm:ss')}
+                                    </td>
+                                    <td>
+                                        <button id="btn_add_data"
+                                            style="border: none; background-color: orange ; border-radius: 5px">ADD</button>
+                                    </td>
+                                </tr>`
+                    );
+                    tableBody.innerHTML = tableContent.join('');
+                    const btnAddData = document.querySelectorAll('#btn_add_data');
+                    const nameLabelShow = document.querySelectorAll('#name_label_show');
+                    btnAddData.forEach((btn, index) => {
+                        btn.onclick = (e) => {
+                            let nameFishAdd = nameLabelShow[index].innerHTML;
+                            localStorage.setItem('label', nameFishAdd);
+                            labelPresent.innerHTML = nameFishAdd;
+                            $('#modalShowLabel').modal('hide');
+                        };
+                    });
+                } else {
+                    // khong co
+                    wrapLabelShow.innerHTML = 'Hiện bạn chưa có tên nào trong hệ thống';
+                }
+            } else {
+                // that bai
+                wrapLabelShow.innerHTML = 'Hiện bạn chưa có tên nào trong hệ thống';
+            }
+        },
+    });
+
+    const handleClickAddData = (e) => {
+        console.log(e);
+    };
+};
+
+btnSaveLabel.onclick = (e) => {
+    const userNameLogin = document.querySelector('#username_login').innerHTML;
+
+    const nameFishTrain = localStorage.getItem('label');
+    const valueInputLabel = inputLabel.value.replace(/\s/g, '');
+
+    if (inputLabel.value == '') {
+        // alert('Vui lòng nhập tên mới nhấp lưu');
+        toastFail('Vui lòng nhập tên mới nhấp lưu');
+        $('#modalSaveName').modal('hide');
+
+        return;
+    }
+
+    if (valueInputLabel == nameFishTrain) {
+        toastFail('Tên dã tồn tại');
+        $('#modalSaveName').modal('hide');
+        return;
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: `/label/get/${userNameLogin}`,
+        dataType: 'json',
+        success: function (data) {
+            console.log({ data });
+            const { data: labelFish, success } = data;
+            if (success === 1) {
+                const labelSave = JSON.parse(labelFish);
+                let exist = false;
+                if (labelSave.length > 0) {
+                    labelSave.forEach((v) => {
+                        if (valueInputLabel == v.name) {
+                            toastFail('Tên đã tồn tại');
+                            $('#modalSaveName').modal('hide');
+                            exist = true;
+                            return;
+                        }
+                    });
+                    if (!exist) {
+                        localStorage.setItem('label', valueInputLabel);
+                        labelPresent.innerHTML = valueInputLabel;
+                        toastSuccess(
+                            'Lưu tên thú cưng thành công. Bây giờ bạn có thể tải dữ liệu hình ảnh'
+                        );
+
+                        $('#modalSaveName').modal('hide');
+                    }
+                } else {
+                    console.log('2');
+
+                    $('#modalSaveName').modal('hide');
+                    toastSuccess(
+                        'Lưu tên thú cưng thành công. Bây giờ bạn có thể tải dữ liệu hình ảnh'
+                    );
+                    localStorage.setItem('label', valueInputLabel);
+                    labelPresent.innerHTML = valueInputLabel;
+                    return;
+                }
+            } else {
+                toastFail('Lỗi');
+                $('#modalSaveName').modal('hide');
+            }
+        },
+    });
+};
+
+//! end save label into storage
+
+//! post label
+
 btnSubmitLabel.addEventListener('click', (e) => {
     const labelStorage = localStorage.getItem('label');
+    const userNameLogin = document.querySelector('#username_login').innerHTML;
 
     let check = $('#file-input').val();
     if (check == '') {
-        const { datePresent, timePresent } = getTimePresent();
-
-        timeUploadFail.innerHTML = timePresent + ' - ' + datePresent;
-        toastContentFail.innerHTML = 'Vui lòng chọn ảnh và khoanh vùng cá trước khi lưu dữ liệu';
-        const toast = new bootstrap.Toast(toastUploadFail);
-        toast.show();
+        toastFail('Vui lòng chọn ảnh và khoanh vùng cá trước khi lưu dữ liệu');
         return;
     }
     const coordinatesBox = `${x.toFixed(6)} ${y.toFixed(6)} ${w.toFixed(6)} ${h.toFixed(6)}`;
@@ -118,7 +248,7 @@ btnSubmitLabel.addEventListener('click', (e) => {
 
     var bodyFormData = new FormData($('#upload_file')[0]);
 
-    bodyFormData.append('coordinates', 0 + ' ' + coordinatesBox);
+    bodyFormData.append('coordinates', coordinatesBox);
     bodyFormData.append('label', labelStorage);
     bodyFormData.append('image_name', imgUploadName);
     bodyFormData.append('username', userNameLogin);
@@ -137,36 +267,44 @@ btnSubmitLabel.addEventListener('click', (e) => {
         success: function (data) {
             console.log({ data });
             if (data == 'FAIL') {
-                const { datePresent, timePresent } = getTimePresent();
-                timeUploadFail.innerHTML = timePresent + ' - ' + datePresent;
-                toastContentFail.innerHTML = 'Ảnh đã tồn tại';
-                const toast = new bootstrap.Toast(toastUploadFail);
-                toast.show();
+                toastFail('Ảnh đã tồn tại');
             } else {
                 $('#file-input').val('');
                 $('.box-2').hide();
 
-                // console.log(a);
                 const { datePresent, timePresent } = getTimePresent();
 
                 timeUpload.innerHTML = timePresent + ' - ' + datePresent;
                 const toast = new bootstrap.Toast(toastUploadSuccess);
                 toast.show();
+                toastSuccess('Tải dữ liệu thành công');
             }
         },
     });
-
-    // const postDataToServer = async () => {
-    //     const res = await axios.post('http://127.0.0.1:5000/upload/labels', bodyFormData);
-    //     console.log('Upload label to server');
-    //     console.log(res);
-    // if (res.data.success == 1) {
-    //     bodyFormData.append('coordinates', null);
-    //     bodyFormData.append('label', null);
-    // } else {
-    //     alert('error');
-    // }
-    // };
-    // postDataToServer();
 });
 //! end post label
+const btnComplete = document.querySelector('#btn_complete');
+const viewDataPresentForTrain = document.querySelector('#data_present_for_train');
+const btnAgreeTrain = document.querySelector('#btn_agree_train');
+
+btnComplete.onclick = (e) => {
+    const nameFish = localStorage.getItem('label');
+    $.ajax({
+        type: 'GET',
+        url: `/label/get/data_fish/${nameFish}`,
+        dataType: 'json',
+        success: function (v) {
+            const { data } = v;
+            let content = '';
+            if (data < 10) {
+                content = `Hiện tại dữ liệu cho tên ${nameFish} là ${v.data} hình. Chưa đủ để huấn luyện`;
+                $('#btn_agree_train').hide();
+            } else {
+                content = `Hiện tại dữ liệu cho tên ${nameFish} là ${v.data} hình`;
+                $('#btn_agree_train').show();
+            }
+
+            viewDataPresentForTrain.innerHTML = content;
+        },
+    });
+};

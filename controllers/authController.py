@@ -3,7 +3,7 @@ from flask import request, redirect, jsonify, render_template, session
 from flask_session import Session
 
 from constant import SUCCESS_STATUS, ERROR_STATUS, fail_status, success_status
-from models.userModel import User
+from my_models.userModel import User
 
 #  query ==> request.args
 #  form  ==> request.form

@@ -5,6 +5,7 @@ from routes.authRoute import authRoute
 from routes.labelFishRoute import labelFishRoute
 from routes.controlRoute import controlRoute
 from routes.cameraRoute import cameraRoute
+from routes.foodRoute import foodRoute
 
 
 def route(app):
@@ -15,3 +16,4 @@ def route(app):
     app.register_blueprint(labelFishRoute, url_prefix='/label/')
     app.register_blueprint(controlRoute, url_prefix='/control/')
     app.register_blueprint(cameraRoute, url_prefix='/camera/')
+    app.register_blueprint(foodRoute, url_prefix='/food/')

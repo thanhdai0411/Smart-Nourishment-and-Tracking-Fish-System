@@ -34,16 +34,19 @@ rec = 0
 # model = torch.hub.load('ultralytics/yolov5',
 #                        'yolov5s', force_reload=True, pretrained=True)
 
+model_url = "F:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights\\best.pt"
+
 
 def generate_frames_detect():
 
-    model = torch.hub.load('ultralytics/yolov5',
-                           'yolov5s')
+    # model = torch.hub.load('ultralytics/yolov5',
+    #                        'yolov5s')
+
+    model = torch.hub.load('.', 'custom', path=model_url, source='local')
     global out, capture, rec_frame
     while True:
         success, frame = camera.read()
         if success:
-
             ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
             frame = buffer.tobytes()
 

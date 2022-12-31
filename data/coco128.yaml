@@ -1,4 +1,8 @@
 train: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
 val: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
 names:
-    0: ConCaAnCom
+    0: FishGold
+    1: FishBlue
+    2: FishBlack
+    3: FishGreen
+    4: Fish
