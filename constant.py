@@ -8,6 +8,7 @@ ERROR_STATUS = {"success": 0,
 FOLDER_SAVE_LABELS = 'F:\\Studyspace\\DoAn\\Aquarium\\coco128\\labels\\train2017'
 FOLDER_SAVE_IMAGES = 'F:\\Studyspace\\DoAn\\Aquarium\\coco128\\images\\train2017'
 PATCH_TO_COCO12YAML = "F:\\Studyspace\\DoAn\\Aquarium\\data\\coco128.yaml"
+PATCH_COUNT_FISH = 'F:\\Studyspace\\DoAn\\Aquarium\\count_fish.py'
 
 PATCH_FOOD_SETTING = 'F:\\Studyspace\\DoAn\\Aquarium\\my_data\\food_setting.json'
 

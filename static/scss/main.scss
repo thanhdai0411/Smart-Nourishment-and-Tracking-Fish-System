@@ -130,3 +130,34 @@ $border-color-element-control : #1dc577;
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #68db8e;
+    // border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    // border-radius: 10px;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    background-image: -webkit-gradient(linear,
+            40% 0%,
+            75% 84%,
+            from(#34a023),
+            to(#118014),
+            color-stop(.6, #3cc545))
+}
+
+input[type="color"] {
+    display: block;
+    width: 100%;
+    height: 50px;
+    // border-radius: 10px;
+    border: none;
+}

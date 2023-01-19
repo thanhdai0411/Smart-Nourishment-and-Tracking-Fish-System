@@ -21,15 +21,3 @@ body {
 body {
     max-width: 1280px;
 }
-
-
-::-moz-selection {
-    /* Code for Firefox */
-    color: black;
-    background: ($primary-color-1);
-}
-
-::selection {
-    color: black;
-    background: ($primary-color-1);
-}

@@ -66,6 +66,7 @@ modalEditFood.addEventListener('show.bs.modal', (event) => {
     btnCompleteEdit.onclick = (e) => {
         const completeTimeEdit = timeFoodEdit.value;
         const completeAmountEdit = amountFoodEdit.value;
+
         var bodyFormData = new FormData();
 
         bodyFormData.append('time', completeTimeEdit);

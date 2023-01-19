@@ -108,7 +108,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.secret_key = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-    
 
 if __name__ == "__main__":
 

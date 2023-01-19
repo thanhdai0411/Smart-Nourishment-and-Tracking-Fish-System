@@ -213,10 +213,22 @@ switchForFishEat.onchange = (e) => {
 };
 
 // control device
-onOffDevice.onchange = (e) => {
-    let state = stateSwitch(onOffDevice, textDevice, stateDevice, 'onOffDevice');
-    console.log({ state });
-    public_message('control_lamp', state.toString());
-};
+// onOffDevice.onchange = (e) => {
+//     let state = stateSwitch(onOffDevice, textDevice, stateDevice, 'onOffDevice');
+//     console.log({ state });
+//     public_message('control_lamp', state.toString());
+// };
 
 //! end handle control
+
+//!control color food
+const colorLamp = document.querySelector('#control_color');
+colorLamp.onchange = (ev) => {
+    const color = ev.target.value;
+    const r = parseInt(color.substr(1, 2), 16);
+    const g = parseInt(color.substr(3, 2), 16);
+    const b = parseInt(color.substr(5, 2), 16);
+    console.log(`red: ${r}, green: ${g}, blue: ${b}`);
+    public_message('control_rgb', `${r},${g},${b}`);
+};
+//!end control color food

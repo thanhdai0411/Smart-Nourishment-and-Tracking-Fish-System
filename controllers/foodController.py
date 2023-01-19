@@ -82,7 +82,7 @@ def update_food(id):
             time = request.form.get('time')
             amount_food = request.form.get('amount_food')
 
-            food.update(time=time, amount_food=amount_food)
+            food.update(time=time, amount_food=amount_food, status="WAITING")
 
             return 'OK'
 

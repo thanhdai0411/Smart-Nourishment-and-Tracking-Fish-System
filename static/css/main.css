@@ -45,14 +45,6 @@ body {
     body {
       max-width: 1280px; }
 
-      ::-moz-selection {
-        color: black;
-        background: #20c997; }
-
-        ::selection {
-          color: black;
-          background: #20c997; }
-
 .content {
   padding: 50px; }
   .content #train_name .train_name-header {
@@ -135,6 +127,26 @@ body {
     100% {
       transform: rotate(360deg);   }
 }
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #68db8e; }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5; }
+
+    ::-webkit-scrollbar-thumb {
+      cursor: pointer;
+      background-color: white;
+      background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#34a023), to(#118014),
+            color-stop(0.6, #3cc545)); }
+
+      input[type="color"] {
+        display: block;
+        width: 100%;
+        height: 50px;
+        border: none; }
 
 a {
   text-decoration: none !important;
