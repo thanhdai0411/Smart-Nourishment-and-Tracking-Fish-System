@@ -1,8 +1,6 @@
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     /* user-select: none; */
-
-
 }
 
 a {
@@ -10,17 +8,30 @@ a {
     color: white !important;
 }
 
+html {
+    -webkit-text-size-adjust: none;
+    touch-action: manipulation;
+}
+
+input {
+    border-radius: 0;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+}
+
 .landing_main {
-    background-image: url('/static/image/background.jpg');
+    background-image: url("/static/image/background.jpg");
     width: 100%;
     height: 100vh;
     background-size: cover;
     background-position: center;
     position: relative;
     overflow: hidden;
+
     /* border-bottom-right-radius: 100px; */
     /* border-bottom-left-radius: 100px; */
-
 }
 
 .landing_h1 {
@@ -32,17 +43,32 @@ a {
     /* background-color: olivedrab; */
     height: 15%;
     /* margin: 0 10px; */
-    
+}
+
+.nav_text {
+    font-size: 25px;
+    color: #88e7f4;
+    font-weight: 500;
+}
+
+.lading_content_t1 {
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+.lading_content_t2 {
+    font-size: 60px;
+    margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 .landing_nav-bar.landing_nav-bar_fixed {
     width: 100%;
-        height: 74px;
-        position: fixed;
-        z-index: 10000;
-        border-bottom: 1px solid;
-        background: darkred;
-    
+    height: 74px;
+    position: fixed;
+    z-index: 10000;
+    border-bottom: 1px solid;
+    background: darkred;
 }
 
 .nav_content {
@@ -53,7 +79,6 @@ a {
     height: 100%;
     width: 80%;
     margin: 0 auto;
-
 }
 
 .landing_nav-bar-body {
@@ -82,11 +107,11 @@ button:hover {
 
 .landing_register {
     margin-left: 10px;
-    background-color: #00ABB3;
+    background-color: #00abb3;
 }
 
 .landing_login {
-    background-color: #256D85;
+    background-color: #256d85;
 }
 
 .landing_explore {
@@ -94,7 +119,7 @@ button:hover {
 }
 
 .landing_explore:hover {
-    background-color: #00ABB3;
+    background-color: #00abb3;
 }
 
 .lading_content {
@@ -102,7 +127,6 @@ button:hover {
     top: 30%;
     left: 10%;
     z-index: 1000;
-
 }
 
 .lading_fish img {
@@ -161,7 +185,6 @@ button:hover {
     animation-delay: 10s;
 }
 
-
 .landing_bubble img {
     width: 50px;
     animation: bubble_move 7s linear infinite;
@@ -181,23 +204,19 @@ button:hover {
     width: 30px;
 }
 
-
 .landing_bubble img:nth-child(2) {
     animation-delay: 1s;
 }
-
 
 .landing_bubble img:nth-child(3) {
     animation-delay: 3s;
     width: 35px;
 }
 
-
 .landing_bubble img:nth-child(4) {
     animation-delay: 4.5s;
     width: 25px;
 }
-
 
 .landing_bubble img:nth-child(5) {
     animation-delay: 3s;
@@ -207,7 +226,6 @@ button:hover {
     animation-delay: 6s;
     width: 40px;
 }
-
 
 .landing_bubble img:nth-child(7) {
     animation-delay: 7s;
@@ -221,21 +239,20 @@ button:hover {
 #item_nav:hover {
     background-color: #67e3e8;
     border-radius: 18px;
-    padding: 8px 15px;
-    transition: all linear .25s;
+    padding: 5px 10px;
+    transition: all linear 0.2s;
     color: #18586d !important;
-    border: 2px solid #31E1F7;
+    border: 2px solid #31e1f7;
 }
 
 /* user name login  */
 
 .btn_logout_user {
     position: absolute;
-    top: 50px;
+    top: 36px;
     right: 0;
     display: none;
     z-index: 99999999999999;
-
 }
 
 .user_login {
@@ -245,7 +262,6 @@ button:hover {
 
 .user_login:hover .btn_logout_user {
     display: block;
-
 }
 
 .landing_register:hover {
@@ -253,8 +269,6 @@ button:hover {
     color: white;
     z-index: 99999999999999;
 }
-
-
 
 @keyframes fish_move {
     0% {
@@ -298,11 +312,10 @@ button:hover {
     }
 }
 
-
 /* login */
 .img_bgc-login {
     /* background-color: red; */
-    background-image: url('/static/image/background_2.png');
+    background-image: url("/static/image/background_2.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -311,3 +324,200 @@ button:hover {
 .img_bgc-login img {
     object-fit: cover;
 }
+
+/* modal logn */
+.modal_login_title {}
+
+.form-label {}
+
+.btn_modal_login {}
+
+.btn_modal_register {}
+
+.modal_text_not_acount {}
+
+.modal_login_form {
+    width: 50%;
+    background-color: #12635e;
+    padding: 50px 20px
+}
+
+.img_bgc-login {
+    width: 50%;
+}
+
+.modal_login_wrap {}
+
+/* end modal logn */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .nav_text {
+        font-size: 18px;
+        color: #88e7f4;
+        font-weight: 500;
+    }
+
+    .lading_content_t1 {
+        font-size: 20px;
+        margin-bottom: 0px;
+    }
+
+    .lading_content_t2 {
+        font-size: 30px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    .button_custom,
+    .landing_register,
+    .landing_login,
+    .landing_explore {
+        padding: 5px 15px;
+        font-size: 13px;
+    }
+
+    .landing_register {
+        margin-left: 1px;
+    }
+
+    .nav_content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* padding: 0 50px; */
+        height: 100%;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .landing_nav-bar {
+        width: 100%;
+        /* background-color: olivedrab; */
+        height: 10%;
+        /* margin: 0 10px; */
+    }
+
+    /* modal */
+    .modal_login_title {
+        font-size: 20px;
+    }
+
+    .modal_login_form {
+        width: 100%;
+        background-color: #12635e;
+        padding: 10px;
+
+    }
+
+    .img_bgc-login {
+        display: none
+    }
+
+    .form-label {}
+
+    .btn_modal_login {}
+
+    .btn_modal_register {}
+
+    .modal_text_not_acount {}
+
+    /* .lading_fish img {
+        width: 130px;
+        height: 70px;
+        animation: none;
+    }
+        .landing_bubble img {
+            width: 50px;
+            animation: none;
+        } */
+
+    .lading_fish .fish1 {
+        position: absolute;
+        top: 150px;
+        left: -300px;
+        width: 150px;
+        height: 80px;
+        animation-delay: 3s;
+    }
+
+    .lading_fish .fish2 {
+        position: absolute;
+        top: 290px;
+        left: -200px;
+        animation-delay: 4s;
+    }
+
+    .lading_fish .fish3 {
+        position: absolute;
+        top: 370px;
+        left: -200px;
+        animation-delay: 1s;
+    }
+
+    .lading_fish .fish4 {
+        position: absolute;
+        top: 430px;
+        left: -200px;
+        animation-delay: 9s;
+    }
+
+    .lading_fish .fish5 {
+        position: absolute;
+        top: 60px;
+        left: -200px;
+        width: 100px;
+        height: 50px;
+        animation-delay: 2s;
+    }
+
+    .lading_fish .fish6 {
+        position: absolute;
+        top: 480px;
+        left: -200px;
+        width: 100px;
+        height: 50px;
+
+        animation-delay: 10s;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+    .modal_login_title {
+        font-size: 30px;
+    }
+
+    .modal_login_form {
+        width: 100%;
+        background-color: #12635e;
+        padding: 15px;
+
+    }
+
+    .img_bgc-login {
+        display: none
+    }
+
+    .lading_content_t1 {
+        font-size: 25px;
+        margin-bottom: 0px;
+    }
+
+    .lading_content_t2 {
+        font-size: 50px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

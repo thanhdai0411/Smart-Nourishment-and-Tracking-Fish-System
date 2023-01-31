@@ -234,6 +234,12 @@ btnSaveLabel.onclick = (e) => {
 
 btnSubmitLabel.addEventListener('click', (e) => {
     const labelStorage = localStorage.getItem('label');
+
+    if (!labelStorage) {
+        toastFail('Vui lòng đặt tên cho cá trước khi upload image');
+        return;
+    }
+
     const userNameLogin = document.querySelector('#username_login').innerHTML;
 
     let check = $('#file-input').val();

@@ -15,15 +15,12 @@
     <!-- font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,200&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,200&display=swap"
         rel="stylesheet" />
     <!-- b5 -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-        crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
@@ -32,8 +29,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- cropper -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" />
     <link rel="stylesheet" href="" />
     <!-- scss -->
     {% assets "scss_all" %}
@@ -48,42 +44,33 @@
         </canvas> -->
 
         <!-- banner -->
-        <div class="landing_main">
+        <div class="landing_main" id="landing_main_home">
             <nav class="landing_nav-bar">
                 <div class="nav_content">
                     <div class="d-flex align-items-center">
-                        <a href="/home" style="font-size: 25px; font-weight: 500">Aquarium Smart</a>
-                        <div class="ps-4">
-                            <a href="#info_fish" id="item_nav" class="text-light fs-5">Thông tin
+                        <a href="/home" class="home_title">Aquarium Smart</a>
+                        <div class="home_nav_group">
+                            <a href="#info_fish" id="item_nav">Thông tin
                                 cá</a>
-                            <a href="#train_name" id="item_nav" class="text-light fs-5 mx-3">Đặt
+                            <a href="#train_name" id="item_nav">Đặt
                                 tên</a>
-                            <a href="/monitoring" id="item_nav" class="text-light fs-5">Giám sát</a>
+                            <a href="/monitoring" id="item_nav">Giám sát</a>
                         </div>
                     </div>
                     <div></div>
                     <div class="d-flex align-items-center user_login">
-                        <img src="/static/image/icon_fish.png" alt="" width="50" height="50" />
-                        <span style="font-size: 20px" class="ms-2"
-                            id="username_login">{{session.username}}</span>
+                        <img src="/static/image/icon_fish.png" class="hom_img_avatar" alt="" />
+                        <span id="username_login">{{session.username}}</span>
                         <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
                     </div>
                 </div>
             </nav>
             <div class="lading_content">
-                <h3 style="font-size: 20px; margin-bottom: 0px">
-                    Welcome to Aquarium Smart System
-                </h3>
-                <h1 style="font-size: 60px; margin-bottom: 15px; margin-top: 10px">
+                <h3 class="lading_content_t1">Under Water Scenery</h3>
+                <h1 class="lading_content_t2">
                     Beautiful Ocean Life
                 </h1>
-                <!-- <button
-                    class="landing_explore"
-                    data-bs-toggle="modal"
-                    data-bs-target="#login_modal"
-                >
-                    EXPLORE
-                </button> -->
+
             </div>
             <div class="lading_fish">
                 <img src="/static/image/fish.png" alt="" class="fish1" />
@@ -105,18 +92,18 @@
         </div>
         <!-- end banner  -->
         <!-- main content -->
-        <div class="content fluid-container">
+        <div class="content">
             <!--Info fish -->
             <div class="" id="info_fish">
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <div class="d-flex" style="text-align: left">
-                                <div style="width: 50%; padding-left: 60px; padding-right: 30px">
-                                    <p class="" style="font-size: 50px; font-weight: 700">
+                            <div class="slider_wrapper" style="text-align: left">
+                                <div class="slider_content">
+                                    <p class="slider_name_title">
                                         GOLD FISH
                                     </p>
-                                    <p style="text-align: justify">
+                                    <p class="slider_description">
                                         Lorem, ipsum dolor sit amet consectetur adipisicing
                                         elit. A, animi id! Enim quo accusamus alias quia dicta
                                         qui, esse voluptatum consequatur magnam voluptatem quae
@@ -125,33 +112,26 @@
                                         elit. Aut, esse eveniet, pariatur distinctio quisquam
                                         magnam
                                     </p>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal_element"
+                                    <button class="slider_button" data-bs-toggle="modal" data-bs-target="#modal_element"
                                         data-bs-whatever='{"name" : "GOLD FISH", "img" : "/static/image/fish2.jpg"}'
                                         style="
-                                                padding: 8px 20px;
-                                                color: white;
-                                                border: 1.5px solid white;
-                                                outline: none;
-                                                background: #025f6f;
-                                                border-radius: 10px;
+                                                
                                             ">
                                         XEM THÊM THÔNG TIN
                                     </button>
                                 </div>
-                                <div style="width: 50%; padding-right: 60px">
-                                    <img src="/static/image/fish2.jpg"
-                                        style="border-radius: 20px; object-fit: cover" height="350"
-                                        width="100%" />
+                                <div class="slider_image" style="">
+                                    <img src="/static/image/fish2.jpg" style="" />
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <div class="d-flex" style="text-align: left">
-                                <div style="width: 50%; padding-left: 60px; padding-right: 30px">
-                                    <p class="" style="font-size: 50px; font-weight: 700">
+                            <div class="slider_wrapper" style="text-align: left">
+                                <div class="slider_content">
+                                    <p class="slider_name_title">
                                         BLUE FISH
                                     </p>
-                                    <p style="text-align: justify">
+                                    <p class="slider_description">
                                         Lorem, ipsum dolor sit amet consectetur adipisicing
                                         elit. A, animi id! Enim quo accusamus alias quia dicta
                                         qui, esse voluptatum consequatur magnam voluptatem quae
@@ -160,33 +140,26 @@
                                         elit. Aut, esse eveniet, pariatur distinctio quisquam
                                         magnam
                                     </p>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal_element"
+                                    <button class="slider_button" data-bs-toggle="modal" data-bs-target="#modal_element"
                                         data-bs-whatever='{"name" : "BLUE FISH", "img" : "/static/image/fish3.jpg"}'
                                         style="
-                                                padding: 8px 20px;
-                                                color: white;
-                                                border: 1.5px solid white;
-                                                outline: none;
-                                                background: #025f6f;
-                                                border-radius: 10px;
+                                                
                                             ">
                                         XEM THÊM THÔNG TIN
                                     </button>
                                 </div>
-                                <div style="width: 50%; padding-right: 60px">
-                                    <img src="/static/image/fish3.jpg"
-                                        style="border-radius: 20px; object-fit: cover" width="100%"
-                                        height="350" />
+                                <div class="slider_image" style="">
+                                    <img src="/static/image/fish3.jpg" style="" />
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <div class="d-flex" style="text-align: left">
-                                <div style="width: 50%; padding-left: 60px; padding-right: 30px">
-                                    <p class="" style="font-size: 50px; font-weight: 700">
-                                        YELLOW FISH
+                            <div class="slider_wrapper" style="text-align: left">
+                                <div class="slider_content">
+                                    <p class="slider_name_title">
+                                        RED FISHSH
                                     </p>
-                                    <p style="text-align: justify">
+                                    <p class="slider_description">
                                         Lorem, ipsum dolor sit amet consectetur adipisicing
                                         elit. A, animi id! Enim quo accusamus alias quia dicta
                                         qui, esse voluptatum consequatur magnam voluptatem quae
@@ -195,61 +168,20 @@
                                         elit. Aut, esse eveniet, pariatur distinctio quisquam
                                         magnam
                                     </p>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal_element"
-                                        data-bs-whatever='{"name" : "YELLOW FISH", "img" : "/static/image/fish4.jpg"}'
+                                    <button class="slider_button" data-bs-toggle="modal" data-bs-target="#modal_element"
+                                        data-bs-whatever='{"name" : "RED FISH", "img" : "/static/image/fish4.jpg"}'
                                         style="
-                                                padding: 8px 20px;
-                                                color: white;
-                                                border: 1.5px solid white;
-                                                outline: none;
-                                                background: #025f6f;
-                                                border-radius: 10px;
+                                                
                                             ">
                                         XEM THÊM THÔNG TIN
                                     </button>
                                 </div>
-                                <div style="width: 50%; padding-right: 60px">
-                                    <img src="/static/image/fish4.jpg"
-                                        style="border-radius: 20px; object-fit: cover" width="100%"
-                                        height="350" />
+                                <div class="slider_image" style="">
+                                    <img src="/static/image/fish4.jpg" style="" />
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="d-flex" style="text-align: left">
-                                <div style="width: 50%; padding-left: 60px; padding-right: 30px">
-                                    <p class="" style="font-size: 50px; font-weight: 700">
-                                        RED FISH
-                                    </p>
-                                    <p style="text-align: justify">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                                        elit. A, animi id! Enim quo accusamus alias quia dicta
-                                        qui, esse voluptatum consequatur magnam voluptatem quae
-                                        itaque explicabo optio blanditiis voluptatibus debitis.
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit. Aut, esse eveniet, pariatur distinctio quisquam
-                                        magnam
-                                    </p>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal_element"
-                                        data-bs-whatever='{"name" : "RED FISH", "img" : "/static/image/fish5.jpg"}'
-                                        style="
-                                                padding: 8px 20px;
-                                                color: white;
-                                                border: 1.5px solid white;
-                                                outline: none;
-                                                background: #025f6f;
-                                                border-radius: 10px;
-                                            ">
-                                        XEM THÊM THÔNG TIN
-                                    </button>
-                                </div>
-                                <div style="width: 50%; padding-right: 60px">
-                                    <img src="/static/image/fish5.jpg"
-                                        style="border-radius: 20px; object-fit: cover" width="100%"
-                                        height="350" />
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="swiper-button-next" style="color: white; font-size: 20px"></div>
                     <div class="swiper-button-prev" style="color: white"></div>
@@ -258,14 +190,13 @@
             </div>
 
             <!-- Modal Detail Info -->
-            <div class="modal fade modal-lg text-dark" id="modal_element" tabindex="-1"
-                aria-labelledby="modal_Label" aria-hidden="true">
+            <div class="modal fade modal-lg text-dark" id="modal_element" tabindex="-1" aria-labelledby="modal_Label"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header text-dark">
                             <h1 class="modal-title fs-5 text-dark" id="modal_Label"></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <img src="" alt="" id="img_info_fish" width="100%" height="300" />
@@ -287,19 +218,19 @@
             <!-- End modal detail info -->
 
             <!-- train name -->
-            <div class="row" id="train_name">
+            <div id="train_name">
                 <!-- <div class="col-12 train_name-header">
                     <div>
                         <p>ĐẶT TÊN CHO CÁ</p>
                     </div>
                 </div> -->
-                <div class="col" id="train_name-info">
-                    <p class="" style="font-size: 50px; margin: 0 ; font-weight: bold">
+                <div id="train_name-info">
+                    <p class="train_title" style="">
                         Bạn
                         muốn đặt
                         tên
                         cho thú cưng của mình ?</p>
-                    <p>
+                    <p class="train_description">
                         Tất nhiên là được ! Hãy điền đầy đủ thông tin vào form bên cạnh. Hãy thu
                         thập hình ảnh cá bạn muốn đặt tên và upload lên. Càng nhiều dữ liệu thì
                         tỉ lệ thành công càng cao và đương nhiên nếu quá ít dữ liệu tỉ lệ thành
@@ -311,92 +242,74 @@
                     </p>
                     <p style="color: orange" class="text_complete_train"></p>
                 </div>
-                <div class="col">
-                    <div class="form-group text-start" id="train_name-form">
-                        <!-- label -->
+                <div class="form-group text-start" id="train_name-form">
+                    <!-- label -->
 
-                        <div class="mb-3" style="
-                                    background-color: #009a92;
-                                    color: white;
-                                   
-                                    background-color: #1987545e;
-                                    padding: 10px;
-                                    border-radius: 10px;
-                                    box-shadow: 1px 3px 21px #48bf88;
-                                ">
-                            <label bel for="exampleFormControlInput1" class="form-label">Nhập tên
-                                cho cá của bạn</label>
-                            <input type="email" class="form-control" id="input_label"
-                                placeholder="Nhập tên..." required />
-                            <div>
-                                <label for="exampleFormControlInput1" class="form-label mt-2">Tên
-                                    cho lần đào tạo này:
-                                    <span id="label_present"
-                                        style="color: orange; font-size: 20px"></span>
-                                </label>
-                                <p
-                                    style="margin: 0; padding-bottom: 10px; font-size: 14px; text-align: justify">
-                                    Lưu ý: Bạn chỉ cần nhập tên một lần duy nhất, tiêp sau đó
-                                    chi cân tải hình ảnh lên
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-lg-between align-content-center">
-                                <button style="
+                    <div class="train_name-form-body" style="background-color: #1987545e;">
+                        <label bel for="exampleFormControlInput1" class="form-label">Nhập tên
+                            cho cá của bạn</label>
+                        <input type="email" class="form-control" id="input_label" placeholder="Nhập tên..." required />
+                        <div>
+                            <label for="exampleFormControlInput1" class="form-label mt-2">Tên
+                                cho lần đào tạo này:
+                                <span id="label_present" style="color: orange; font-size: 20px"></span>
+                            </label>
+                            <p style="margin: 0; padding-bottom: 10px; font-size: 14px; text-align: justify">
+                                Lưu ý: Bạn chỉ cần nhập tên một lần duy nhất, tiêp sau đó
+                                chi cân tải hình ảnh lên
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-lg-between align-content-center">
+                            <button style="
                                            
                                             background-color: #009a92;
                                             color: white;
                                             border: 1.5px solid #25f192;
-                                        " class="btn mt-1 w-100 me-1" data-bs-toggle="modal"
-                                    id="btn_save_label_temp" data-bs-target="#modalSaveName">
-                                    LƯU TÊN
-                                </button>
-                                <button style="
+                                        " class="btn mt-1 w-100 me-1" data-bs-toggle="modal" id="btn_save_label_temp"
+                                data-bs-target="#modalSaveName">
+                                LƯU TÊN
+                            </button>
+                            <button style="
                                             
                                             background-color: #0d6efd;
                                             color: white;
                                             border: 1.5px solid #25f192;
                                         " class="btn mt-1 w-100" data-bs-toggle="modal"
-                                    data-bs-target="#modalShowLabel" id="btn_show_label">
-                                    TÊN ĐÃ ĐẶT
-                                </button>
+                                data-bs-target="#modalShowLabel" id="btn_show_label">
+                                TÊN ĐÃ ĐẶT
+                            </button>
 
-                            </div>
                         </div>
-                        <!-- end label -->
+                    </div>
+                    <!-- end label -->
 
-                        <!-- upload image -->
-                        <form id="upload_file" method="POST" enctype="multipart/form-data" style="
+                    <!-- upload image -->
+                    <form id="upload_file" method="POST" enctype="multipart/form-data" style="
                                     background-color: #1987545e;
                                     padding: 10px;
                                     border-radius: 10px;
                                     box-shadow: 1px 3px 21px #48bf88;
                                     margin-top: 20px;
                                 ">
-                            <label for="file" class="form-label">Tải hình cá lên</label>
-                            <input class="form-control" accept="image/*" type="file" required
-                                id="file-input" name="file" />
-                            <p
-                                style="margin: 0; padding-top: 10px; font-size: 14px; text-align: justify">
-                                Lưu ý: Bạn cần khoanh đúng vùng cá bạn muôn đặt tên
-                            </p>
-                            <div class="box-2">
-                                <div class="result"></div>
-                            </div>
-                            <div class="box-2 img-result hide">
-                                <img class="cropped" src="" alt="" />
-                            </div>
+                        <label for="file" class="form-label">Tải hình cá lên</label>
+                        <input class="form-control" accept="image/*" type="file" required id="file-input" name="file" />
+                        <p style="margin: 0; padding-top: 10px; font-size: 14px; text-align: justify">
+                            Lưu ý: Bạn cần khoanh đúng vùng cá bạn muôn đặt tên
+                        </p>
+                        <div class="box-2">
+                            <div class="result"></div>
+                        </div>
+                        <div class="box-2 img-result hide">
+                            <img class="cropped" src="" alt="" />
+                        </div>
 
-                            <p class="coordinates" style="font-size: 20px"></p>
+                        <p class="coordinates" style="font-size: 20px"></p>
 
-                            <input
-                                style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
-                                type="button" class="btn save w-100 shadow-lg"
-                                value="NHÁP ĐỂ LƯU DỮ LIỆU" />
-                        </form>
-                        <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal"
-                            style=" border: 1.5px solid #25f192;" id="btn_complete"
-                            data-bs-target="#modalAuthTrain">HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</a>
-                    </div>
+                        <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
+                            type="button" class="btn save w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
+                    </form>
+                    <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style=""
+                        id="btn_complete" data-bs-target="#modalAuthTrain">HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</a>
                 </div>
             </div>
             <!-- End train name -->
@@ -409,13 +322,12 @@
 
     <!-- Toast start train -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastStart" class="toast text-bg-success border-0" role="alert"
-            aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-delay="10000">
+        <div id="toastStart" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="10000">
             <div class="toast-header">
                 <strong class="me-auto">Thông báo</strong>
                 <small class="time_start_toast"></small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-start p-2">
                 Bắt đầu tiến hành đào tạo bạn sẽ sớm nhận được kết quả. Hãy kiên nhẫn chờ đợi
@@ -425,13 +337,12 @@
     </div>
     <!-- Toast train complete -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastEnd" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
-            aria-atomic="true" data-bs-animation="true" data-bs-delay="10000">
+        <div id="toastEnd" class="toast text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-animation="true" data-bs-delay="10000">
             <div class="toast-header">
                 <strong class="me-auto">Thông báo</strong>
                 <small class="time_end_toast"></small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-end p-2">
                 Đào tạo hoàn thành ! Nếu chưa thành công nhận dạng đúng, bạn hãy đào tạo lại với
@@ -442,13 +353,12 @@
 
     <!-- Toast upload label success -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastUploadLabel" class="toast text-bg-success border-0" role="alert"
-            aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
+        <div id="toastUploadLabel" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
             <div class="toast-header">
                 <strong class="me-auto">Thông báo</strong>
                 <small class="time_upload"></small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-end p-2" id="toast_success_body"></div>
         </div>
@@ -456,13 +366,12 @@
 
     <!-- Toast upload label fail -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastUploadLabelFail" class="toast text-bg-danger border-0" role="alert"
-            aria-live="assertive" aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
+        <div id="toastUploadLabelFail" class="toast text-bg-danger border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
             <div class="toast-header">
                 <strong class="me-auto">Thất bại</strong>
                 <small class="time_upload_fail"></small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-end p-2" id="toast_fail_body"></div>
         </div>
@@ -471,16 +380,15 @@
     <!-- End Toast message -->
 
     <!-- modal auth train -->
-    <div class="modal fade text-dark" id="modalAuthTrain" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade text-dark" id="modalAuthTrain" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                    <h1 class="modal-title fs-5 text-dark " id="exampleModalLabel">
                         Hoàn thành hồ sơ tiến hành đào tạo
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
                     <b style="font-size: 18px">Bạn chắc chắn muốn đào tạo ?</b> <br />
@@ -489,8 +397,8 @@
                     thành công <br />
                     Nếu thông tin bạn cũng cấp cho chúng tôi không đủ thì tỉ lệ thất bại là rất
                     cao? Hay suy nghĩ kĩ trước khi nhấn xác nhận nhế
-                    <div id="data_present_for_train"
-                        style="color : #136965; font-size : 20px; font-weight: 500;">Waiting...
+                    <div id="data_present_for_train" style="color : #136965; font-size : 20px; font-weight: 500;">
+                        Waiting...
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -506,16 +414,15 @@
     <!-- end modal -->
 
     <!-- modal save label -->
-    <div class="modal fade text-dark" id="modalSaveName" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade text-dark" id="modalSaveName" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
                         Lưu tên thú cưng
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
                     <b style="font-size: 18px">Bạn chắc chắn muốn lưu tên này cho thú cưng của bạn
@@ -536,16 +443,15 @@
     <!-- end modal -->
 
     <!-- modal show label -->
-    <div class="modal fade text-dark" id="modalShowLabel" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal fade text-dark" id="modalShowLabel" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
                         Tên đã đào tạo có trong hệ thống
                     </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
                     <!-- <div id="label_show_intro">
@@ -582,8 +488,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
-    type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
 <script src="/static/js/upload_labels.js" type="text/javascript"></script>
 <script src="/static/js/food.js" type="text/javascript"></script>

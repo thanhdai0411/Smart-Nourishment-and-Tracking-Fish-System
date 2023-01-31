@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
     <title>Aquarium Smart</title>
+
     <link rel="icon" type="image/x-icon" href="/static/image/icon_fish.png" />
 
     <link rel="stylesheet" href="/static/css/landing_page.css" />
     <!-- font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,200&display=swap"
         rel="stylesheet" />
@@ -33,7 +37,7 @@
         <nav class="landing_nav-bar">
             <div class="nav_content">
                 <div>
-                    <a style="font-size: 25px; color: #88e7f4; font-weight: 500">Aquarium Smart</a>
+                    <a class="nav_text">Aquarium Smart</a>
                     <!-- <a>CAMERA</a> -->
                 </div>
                 <div>
@@ -49,8 +53,8 @@
             </div>
         </nav>
         <div class="lading_content">
-            <h3 style="font-size: 20px; margin-bottom: 0px">Under Water Scenery</h3>
-            <h1 style="font-size: 60px; margin-bottom: 15px; margin-top: 10px">
+            <h3 class="lading_content_t1" >Under Water Scenery</h3>
+            <h1 class="lading_content_t2" >
                 Beautiful Ocean Life
             </h1>
             <button class="landing_explore" data-bs-toggle="modal" data-bs-target="#login_modal">
@@ -85,21 +89,20 @@
             <div class="modal-content"
                 style=" box-shadow: 2px 15px 70px rgb(0, 0, 0, 0.5);overflow: hidden; border:none">
                 <div class=" d-flex text-white">
-                    <div class="img_bgc-login" style="width: 50% ;">
+                    <div class="img_bgc-login">
                         <!-- <img src="/static/image/background_2.png" width="100%" height="100%" alt=""> -->
                     </div>
-                    <div class=""
-                        style="width: 50%; background-color: #12635e; padding : 50px 20px">
+                    <div class="modal_login_form" >
 
                         <div class="text-center mb-1">
 
-                            <h1 class="modal-title pb-3" id="exampleModalLabel">
+                            <h1 class="modal-title pb-3 modal_login_title" id="exampleModalLabel">
                                 ĐĂNG NHẬP
                             </h1>
                             <!-- <button style="background-color: #fff; " type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></button> -->
                         </div>
-                        <form style="width: 100% ;" action="http://127.0.0.1:5000/auth/login"
+                        <form style="width: 100% ;" action="/auth/login"
                             method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Nhập tên đăng nhập</label>
@@ -111,15 +114,15 @@
                                 <input type="password" class="form-control" id="password"
                                     name="password" placeholder="Nhập mật khẩu..." />
                             </div>
-                            <button type="submit" class="btn  btn-success  w-100 fs-6">
+                            <button type="submit" class="btn  btn-success w-100 btn_modal_login">
                                 ĐĂNG NHẬP NGAY
                             </button>
                         </form>
-                        <p class="my-2 text-center" style="margin:0;">Chưa có tài khoản ?</p>
+                        <p class="my-2 text-center modal_text_not_acount" style="margin:0;">Chưa có tài khoản ?</p>
 
                         <div class="">
                             <button type="button" style="background-color: #009a92 ; color : white"
-                                class="btn  w-100 fs-6" data-bs-toggle="modal"
+                                class="btn w-100 btn_modal_register" data-bs-toggle="modal"
                                 data-bs-target="#register_modal">
                                 ĐĂNG KÝ
                             </button>
@@ -142,10 +145,10 @@
                         box-shadow: 2px 15px 70px rgb(0, 0, 0, 0.5);
                     ">
                 <div class="d-flex text-white">
-                    <div class="img_bgc-login" style="width: 50% ;">
+                    <div class="img_bgc-login" >
                         <!-- <img src="/static/image/background_2.png" width="100%" height="100%" alt=""> -->
                     </div>
-                    <div style="width: 50%; background-color: #12635e; padding : 30px 20px">
+                    <div class="modal_login_form" >
 
                         <div class="text-center">
                             <h1 class="modal-title pb-3" id="exampleModalLabel">
@@ -158,7 +161,7 @@
                                 aria-label="Close"
                             ></button> -->
                         </div>
-                        <form action="http://127.0.0.1:5000/auth/register" method="post">
+                        <form action="/auth/register" method="post">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Nhập tên đăng ký</label>
                                 <input type="text" class="form-control" id="username"
@@ -197,6 +200,7 @@
     </div>
 
     <!-- End Modal Register -->
+    <script src="/static/js/mqtt.js"></script>
 
 </body>
 

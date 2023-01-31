@@ -21,6 +21,8 @@ def upload_labels():
         coordinates = request.form.get('coordinates')
         image_name = request.form.get('image_name')
         username = request.form.get('username')
+        if(not label or not coordinates or not image_name or not username):
+            return 'FAIL_NOT'
 
         img = request.files['file']
 

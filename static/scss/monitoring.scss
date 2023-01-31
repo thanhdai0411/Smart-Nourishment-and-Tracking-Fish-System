@@ -1,21 +1,41 @@
+@import "responsive";
 $border-color-element-control : #1dc577;
+
 a {
     text-decoration: none !important;
     color: white !important;
 }
+
+
 .monitor_wrap {
     // background-color: #60c094;
     padding: 30px 20px;
 
+    @include mobile {
+        padding: 16px;
+    }
+
+    @include tablet {
+        padding: 16px;
+    }
 
     #monitoring_page {
         // background-color: #60c094;
         border: 1px solid #7bc3be;
         box-shadow: -2px 3px 21px 2px #269b93;
+        // margin-top: 50px;
+
+        @include mobile {
+            margin-top: 10px;
+        }
+
+        @include tablet {
+            margin-top: 10px;
+        }
 
         #camera {
             // border : 1px solid white;
-            width: 100%;
+            // width: 100%;
             // text-align: center;
             // margin : auto ;
             padding: 10px;
@@ -23,6 +43,14 @@ a {
             justify-content: center;
             align-items: center;
             flex-direction: column;
+
+            @include mobile {
+                padding: 5px;
+            }
+
+            @include tablet {
+                padding: 5px;
+            }
 
             #camera_btn {
                 display: flex;
@@ -35,20 +63,42 @@ a {
                 border: 1.5px solid #25f192;
 
             }
+
             #camera_open {
-                height: 450px;
+                // height: 450px;
+                height: 100%;
             }
 
+            .btn_detect_camera {
+                background-color: #0d995a;
+            }
 
+            .btn_start_camera:hover {
+                background-color: orange;
+            }
 
+            .btn_stop_camera {
+                background-color: #0d995a;
+
+            }
+
+            .btn_stop_camera:hover {
+                transition: all 0.5 ease-in;
+                background-color: rgb(177, 17, 17);
+            }
+
+            .btn_detect_camera:hover {
+                transition: all 0.5 ease-in;
+                background-color: rgb(17, 177, 177);
+            }
 
 
             #shape_camera {
                 box-shadow: -2px 3px 21px 2px #38604e;
                 border: 1.5px solid #4b7d67;
                 width: 100%;
-                height: 450px;
-                // height: 100%;
+                // height: 450px;
+                height: 100%;
                 margin-bottom: 10px;
                 border-radius: 20px;
                 overflow: hidden;
@@ -59,19 +109,29 @@ a {
             }
 
             #shape_camera_none {
-                box-shadow: -2px 3px 21px 2px #38604e;
-                border: 1.5px solid #4b7d67;
+                box-shadow: -2px 3px 21px 2px #377D71;
+                border: 1.5px solid #46a579;
                 width: 100%;
-                // height: 100%;
-                height: 450px;
+                height: 100%;
                 margin-bottom: 10px;
                 border-radius: 20px;
                 overflow: hidden;
-                background-color: #38604e;
+                background-color: #377D71;
                 display: none;
                 flex-direction: column;
+                justify-content: center;
                 text-align: center;
-                padding-top: 25%;
+
+                @include mobile {
+                    height: 300px;
+                }
+
+                @include tablet {
+                    height: 400px;
+                }
+
+                // padding-top: 25%;
+
             }
 
 
@@ -89,17 +149,157 @@ a {
             align-items: center;
             flex-direction: column;
 
+            @include mobile {
+                padding: 5px;
+            }
 
+            @include tablet {
+                padding: 5px;
+            }
+
+            table {
+                background-color: #037c71;
+                color: white;
+
+                @include mobile {
+                    margin: 0;
+                }
+
+                @include tablet {
+                    margin: 0;
+                }
+
+                th {
+                    font-size: 20px;
+
+                    @include mobile {
+                        font-size: 13px;
+                    }
+                }
+
+                td {
+                    font-size: 18px;
+
+                    @include mobile {
+                        font-size: 13px;
+                    }
+
+                    span {
+                        padding: 3px 10px;
+                        font-weight: 500;
+                        font-size: 14px;
+
+                        @include mobile {
+                            font-size: 10px;
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        #food_chart {
+            @include mobile {
+                padding: 5px;
+            }
+
+            @include tablet {
+                padding: 5px;
+            }
         }
 
         #control {
             // border: 1px solid white;
-            width: 100%;
+            // width: 100%;
             // height: 400px;
             text-align: center;
             display: flex;
+            padding: 10px;
+            align-content: space-between;
             // justify-content: center;
             flex-direction: column;
+
+            @include mobile {
+                padding: 5px;
+            }
+
+            @include tablet {
+                padding: 5px;
+            }
+
+            .button_control {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+
+            .group_btn_control {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .control_text_state {
+                font-size: 25px;
+                margin: 0px;
+                font-weight: bold;
+
+                @include mobile {
+                    font-size: 16px;
+                }
+
+                @include desktop {
+                    font-size: 18px;
+                }
+            }
+
+            .control_text_who {
+                font-size: 18px;
+                margin: 0;
+                text-align: left;
+                font-weight: 500;
+                margin-top: 15px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                /* number of lines to show */
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+
+
+                @include mobile {
+                    font-size: 14px;
+                    margin-top: 10px;
+                }
+
+                @include desktop {
+                    font-size: 15px;
+                }
+
+                // @include tablet {
+                //     font-size: 14px;
+                //     margin-top: 10px;
+                // }
+            }
+
+
+            .button_control:nth-child(2) {
+                margin: 0 18px;
+
+                @include mobile {
+                    margin: 0 5px;
+                }
+
+                @include tablet {
+                    margin: 0 10px;
+                }
+
+                @include desktop {
+                    margin: 0 5px;
+                }
+            }
 
             #switch {
                 border: 1px solid white;
@@ -118,9 +318,27 @@ a {
                 box-shadow: 0px 3px 21px 2px #19c273;
                 display: inline-block;
                 padding: 0;
-                margin: 15px 0;
+                // margin: 15px 0;
+                // margin-top: 15px;
                 border-radius: 10px;
                 padding: 15px;
+                // width: 50%;
+                display: flex;
+
+                @include mobile {
+                    padding: 8px;
+
+                }
+
+                @include tablet {
+                    padding: 8px;
+
+                }
+
+                // @include desktop  {
+                //     padding: 8px;
+
+                // }
             }
 
             .control_switch-off {
@@ -130,16 +348,41 @@ a {
                 box-shadow: -2px 3px 21px 2px #90a5b8;
                 display: inline-block;
                 padding: 0;
-                margin: 15px 0;
+                // margin: 15px 0;
+                // margin-top: 15px;
                 border-radius: 10px;
                 padding: 15px;
+                display: flex;
+
+                @include mobile {
+                    padding: 8px;
+                }
+
+                @include tablet {
+                    padding: 8px;
+                }
             }
 
             .control_switch-checkbox {
                 font-size: 35px;
                 cursor: pointer;
                 margin: 0;
-                padding: 0
+                padding: 0;
+
+                @include mobile {
+                    font-size: 25px;
+                    margin-left: 5px;
+                }
+
+                @include tablet {
+                    font-size: 30px;
+                    margin-left: 5px;
+                }
+
+                @include desktop {
+                    font-size: 30px;
+                    margin-left: 5px;
+                }
             }
 
             .control_time {
@@ -148,66 +391,271 @@ a {
                 box-shadow: -2px 3px 21px 2px #0e9286;
                 display: inline-block;
                 padding: 0;
-                margin: 10px 0;
+                margin-top: 20px;
                 border-radius: 10px;
                 padding: 15px;
-                display: block;
+                // display: block;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                height: 100%;
 
-                &-item {
-                    margin: 20px 0;
-                    text-align: left;
-                    // border: 1px solid white;
+                @include mobile {
+                    padding: 8px;
+                    margin-top: 10px;
                 }
 
+                @include tablet {
+                    padding: 8px;
+                    margin-top: 10px;
+                }
+
+                &-title {
+                    text-align: left;
+                    font-size: 27px;
+                    margin-top: 20px;
+                    margin :  0px ;
+
+                    @include mobile {
+                        margin-top: 10px;
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                    }
+
+                    @include tablet {
+                        margin-top: 10px;
+                        font-size: 25px;
+                        margin-bottom: 10px;
+                    }
+
+                    @include desktop {
+                        margin-top: 10px;
+                        font-size: 25px;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                &-item {
+                    margin: 10px 0;
+                    text-align: left;
+
+                    // border: 1px solid white;
+                    @include mobile {
+                        margin: 10px 0px;
+                    }
+
+                    @include tablet {
+                        margin: 10px 0px;
+                    }
+
+                    @include desktop {
+                        margin: 10px 0px;
+                    }
+
+                    table {
+                        margin: 20px 0;
+
+                        @include mobile {
+                            margin: 10px 0px;
+                        }
+
+                        @include tablet {
+                            margin: 10px 0px;
+                        }
+
+
+                        td {
+                            @include mobile {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+
+                    #label_btn_setting_food {
+                        @include mobile {
+                            font-size: 14px;
+                        }
+
+                    }
+                }
+
+            }
+
+            .control_lamp_icon {
+                font-size: 30px;
+
+                @include mobile {
+                    display: none;
+                }
             }
         }
 
         .monitoring-header {
             padding: 10px;
 
+            @include mobile {
+                padding: 5px;
+            }
+
+            @include tablet {
+                padding: 5px;
+            }
+
             div {
                 border: 1.5px solid $border-color-element-control;
                 width: 100%;
                 padding: 10px;
                 background-color: #009688;
+
+                @include mobile {
+                    padding: 5px;
+                }
+
+                @include tablet {
+                    padding: 5px;
+                }
             }
 
             p {
                 font-size: 25px;
                 margin: 0;
                 text-align: center;
+
+                @include mobile {
+                    font-size: 18px;
+                }
+
+                @include tablet {
+                    font-size: 20px;
+                }
             }
         }
 
 
     }
-        
+
 
 }
 
 .nav_monitoring_page {
+    .item_nav_title {
+        font-size: 25px;
+        font-weight: 500;
+
+        @include mobile {
+            display: none;
+        }
+
+        @include tablet {
+            display: none;
+        }
+    }
+
+    .nav_content {
+        @include mobile {}
+    }
+
+    .nav_img_avatar {
+        width: 50px;
+        height: 50px;
+
+        @include mobile {
+            width: 35px;
+            height: 35px;
+        }
+
+        @include tablet {
+            width: 40px;
+            height: 40px;
+        }
+
+    }
+
+    .nav_item_group {
+        padding-left: 30px;
+
+        @include mobile {
+            padding-left: 0px;
+        }
+
+        @include tablet {
+            padding-left: 0px;
+        }
+    }
+
+    #username_login {
+        font-size: 20px;
+        margin-left: 10px;
+
+        @include mobile {
+            display: none;
+        }
+
+        @include tablet {
+            display: none;
+        }
+
+    }
+
     #item_nav {
-            font-weight: 500;
+        font-weight: 500;
+        font-size: 20px;
+
+        @include mobile {
+            font-size: 16px;
         }
-    
-        #item_nav:hover {
-            background-color: #67e3e8;
-            border-radius: 18px;
-            padding: 8px 15px;
-            transition: all linear .25s;
-            color: #18586d !important;
-            border: 2px solid #31E1F7;
+
+        @include tablet {
+            font-size: 20px;
         }
-    
+    }
+
+    #item_nav:nth-child(2) {
+        margin: 0 20px;
+
+        @include tablet {
+            margin: 0 20px;
+        }
+        @include mobile {
+            margin: 0 10px;
+        }
+    }
+
+
+
+    #item_nav:hover {
+        background-color: #67e3e8;
+        border-radius: 18px;
+        padding: 5px 10px;
+        transition: all linear .25s;
+        color: #18586d !important;
+        border: 2px solid #31E1F7;
+
+        @include mobile {
+            padding: 5px 10px;
+        }
+
+        @include tablet {
+            padding: 5px 10px;
+        }
+    }
+
     .landing_nav-bar {
-    width: 100%;
+        width: 100%;
         height: 75px;
         border-bottom: 1px solid #43efbb;
         background: #187158;
-        box-shadow: 3px 8px 22px #20c997 ;
-    
+        box-shadow: 3px 8px 22px #20c997;
+
+        @include mobile {
+            height: 60px;
+        }
+
+        @include tablet {
+            height: 60px;
+        }
     }
-    
+
     .nav_content {
         display: flex;
         justify-content: space-between;
@@ -216,14 +664,14 @@ a {
         height: 100%;
         width: 93%;
         margin: 0 auto;
-    
+
     }
-    
+
     .landing_nav-bar-body {
         padding: 0 100px;
     }
-    
-    
+
+
     .button_custom,
     .landing_register,
     .landing_login,
@@ -238,42 +686,42 @@ a {
         outline: none;
         font-weight: 500;
     }
-    
+
     button:hover {
         opacity: 0.8;
         color: white;
     }
-    
+
     .landing_register {
         margin-left: 10px;
         background-color: #00ABB3;
     }
-    
+
     .landing_login {
         background-color: #256D85;
     }
-    
+
     /* user name login  */
-    
+
     .btn_logout_user {
         position: absolute;
-        top: 50px;
+        top: 35px;
         right: 0;
         display: none;
         z-index: 99999999999999;
-    
+
     }
-    
+
     .user_login {
         position: relative;
         cursor: pointer;
     }
-    
+
     .user_login:hover .btn_logout_user {
         display: block;
-    
+
     }
-    
+
     .landing_register:hover {
         opacity: 0.8;
         color: white;
@@ -283,28 +731,70 @@ a {
 
 .btn_action_food {
     outline: none;
-        border: 1px solid white;
-        font-size: 14px;
-        border-radius: 5px;
-        font-weight: 500;
-        background-color: #105abf;
-        color: white;
-        padding: 3px 10px;
+    border: 1px solid white;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+    background-color: #105abf;
+    color: white;
+    padding: 3px 10px;
+
+    @include mobile {
+        font-size: 10px;
+        padding: 3px 5px;
+    }
 }
 
 .btn_action_food_delete {
     outline: none;
-        border: 1px solid white;
-        font-size: 14px;
-        border-radius: 5px;
-        font-weight: 500;
-        background-color: rgb(180, 13, 13);
-        color: white;
-        padding: 3px 10px;
+    border: 1px solid white;
+    font-size: 14px;
+    border-radius: 5px;
+    font-weight: 500;
+    background-color: rgb(180, 13, 13);
+    color: white;
+    padding: 3px 10px;
+
+    @include mobile {
+        font-size: 10px;
+        padding: 3px 5px;
+    }
 }
+
 .btn_action_food:hover {
-        background-color: #14971f;
+    background-color: #14971f;
 }
+
 .btn_action_food_delete:hover {
-        background-color: #14971f;
+    background-color: #14971f;
+}
+
+// chart style 
+
+.btn_search_chart {
+    padding: 5px 20px;
+    outline: none;
+    border: none;
+    background-color: #aa6313;
+    color: white;
+    border: 1px solid white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn_search_chart:hover {
+    color: orange;
+    background-color: #136b42;
+}
+
+#opacity_loading_page {
+    background-color: #141619;
+    position: fixed;
+    z-index: 100000000000000000000000000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+
 }

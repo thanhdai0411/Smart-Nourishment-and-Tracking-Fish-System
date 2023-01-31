@@ -5,32 +5,22 @@ from my_models.foodModel import Food
 from flask import request
 from multiprocessing import Process, Value
 import json
-
+import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-import cv2
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH
 
 
-patch = "F:\\Studyspace\\DoAn\\CountFish\\demcaaa\\12.mp4"
-cap = cv2.VideoCapture(patch)
+def write_file_json(data_write) : 
+    with open(PATCH_FOOD_SETTING, "w") as open_file:
+        open_file.write(json.dumps(data_write))
 
+def read_file_json() : 
+    with open(PATCH_FOOD_SETTING, 'r') as open_file:
+            json_object = json.load(open_file)
+    return json_object   
 
-if not cap.isOpened():
-    print("Cannot open camera")
-    exit()
-
-
-DURATION = 10
-
-EDGE_TOP = 50
-EDGE_RIGHT = 500
-EDGE_BOTTOM = 350
-EDGE_LEFT = 100
-
-TIME_DURATION = datetime.datetime.now() + datetime.timedelta(seconds=DURATION)
-# time_duration = datetime.datetime.now()+datetime.timedelta(minutes=DURATION)
 
 
 def cron_food(loop_on):
@@ -55,10 +45,43 @@ def cron_food(loop_on):
             if(controlLamp and msg.payload == b'0'):
                 print('OFF LAMP')
 
+            # !===============================================================
             if(controlAIFood and msg.payload == b'1'):
                 print('ON AI FOOD')
+                try :
+                    
+
+                    json_object = read_file_json()
+                    
+                    json_object.append({'username': "MODE_AI"})
+
+                    write_file_json(json_object)
+                    
+                except Exception:
+                    handle_exception()
+                
+    
             if(controlAIFood and msg.payload == b'0'):
                 print('OFF AI FOOD')
+                
+                try :
+                    
+                    json_object = read_file_json()
+
+                    length = len(json_object)
+                    modeAI =  json_object[length-1]["username"]
+
+                    if(modeAI == "MODE_AI") :
+                        json_object.remove({'username': "MODE_AI"})
+                        write_file_json(json_object)
+
+                        
+
+                except Exception :
+                    handle_exception()
+                
+
+            # !===============================================================
 
             if(controlFood and msg.payload == b'1'):
                 print('ON FOOD TIME')
@@ -88,46 +111,64 @@ def cron_food(loop_on):
         client.loop_start()
 
         while True:
+            if loop_on.value == True :
 
-            if loop_on.value == True:
                 # foods = open(PATCH_FOOD_SETTING, "r").read()
-                with open(PATCH_FOOD_SETTING, 'r') as openfile:
+                fileEmpty = os.stat(PATCH_FOOD_SETTING).st_size == 0
+                fileSize = os.stat(PATCH_FOOD_SETTING).st_size
+                if not fileEmpty and fileSize > 2  : 
 
-                    json_object = json.load(openfile)
-                if json_object:
-                    for food in json_object:
-                        time_setting = food["time"]
-                        hour = time_setting.split(":")[0]
-                        minute = time_setting.split(":")[1]
+                    
+                    json_object = read_file_json()
 
-                        amount_food = food["amount_food"]
+                    length = len(json_object) 
+                    mode =  json_object[length-1]["username"]
 
-                        print(time_setting, amount_food)
+                    if json_object and length > 0 and not mode == "MODE_AI" and not mode == "START_CRON" :
+                        for food in json_object:
 
-                        dt_obj = datetime.datetime.now()
+                            time_setting = food["time"]
+                            hour = time_setting.split(":")[0]
+                            minute = time_setting.split(":")[1]
+                            amount_food = food["amount_food"]
 
-                        time_on = dt_obj.replace(hour=int(hour), minute=int(minute), second=0)
+                            # print(time_setting, amount_food)
 
-                        time_present = dt_obj.replace(hour=dt_obj.hour, minute=dt_obj.minute,
-                                                      second=dt_obj.second)
-                        if(time_on == time_present):
+                            dt_obj = datetime.datetime.now()
 
-                            print('Hey Hey , Cron Food at : ' + str(time_setting) + ' Amount Food: ' + str(amount_food))
-                            call(['python', PATCH_COUNT_FISH])
+                            time_on = dt_obj.replace(hour=int(hour), minute=int(minute), second=0,microsecond=0)
 
-                            id = food["_id"]["$oid"]
-                            complete = str(id) + "=COMPLETE"
-                            client.publish("food_complete", payload=complete, qos=1)
-                            sleep(5)
-                else:
-                    print('Not setting food')
+                            time_present = dt_obj.replace(hour=dt_obj.hour, minute=dt_obj.minute,
+                                                        second=dt_obj.second, microsecond=0)
+                            if(time_on == time_present ):
+                                print('Hey Hey , Cron Food')
+
+                                json_object = read_file_json()
+                                json_object.append({'username': "START_CRON"})
+                                write_file_json(json_object)
+
+                                call(['python', PATCH_COUNT_FISH])
+                                id = food["_id"]["$oid"]
+                                complete = str(id) + "=COMPLETE"
+                                client.publish("food_complete", payload=complete, qos=1)
+                    else:
+                        print('Not setting food')
+
+                        if(mode == "START_CRON") :
+                            json_object.remove({'username': "START_CRON"})
+                            write_file_json(json_object)
+                            
+
+                        
             sleep(1)
+
+        
     except Exception:
         print("Thoat Crond")
         handle_exception()
-
 
 def handle_exception():
     print("handle_exception")
     recording_on = Value('b', True)
     cron_food(recording_on)
+

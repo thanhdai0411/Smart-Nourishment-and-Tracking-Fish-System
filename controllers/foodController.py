@@ -73,7 +73,6 @@ def delete_food(id):
             'message': Exception,
         }
 
-
 def update_food(id):
     if request.method == 'POST':
         try:
@@ -83,6 +82,21 @@ def update_food(id):
             amount_food = request.form.get('amount_food')
 
             food.update(time=time, amount_food=amount_food, status="WAITING")
+
+            return 'OK'
+
+        except ValueError as ve:
+            return 'FAIL'
+    else:
+        return None
+
+
+def update_food_daily():
+    if request.method == 'POST':
+        try:
+            food = Food.objects()
+
+            food.update(status="WAITING")
 
             return 'OK'
 
