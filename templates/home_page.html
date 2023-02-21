@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="/static/css/landing_page.css" />
     <!-- swiper csss -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"
+        integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +33,22 @@
         crossorigin="anonymous"></script>
 
     <!-- swiper -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script> -->
+
+
+
+
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+        integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- cropper -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" />
@@ -52,8 +74,7 @@
                         <div class="home_nav_group">
                             <a href="#info_fish" id="item_nav">Thông tin
                                 cá</a>
-                            <a href="#train_name" id="item_nav">Đặt
-                                tên</a>
+
                             <a href="/monitoring" id="item_nav">Giám sát</a>
                         </div>
                     </div>
@@ -94,7 +115,7 @@
         <!-- main content -->
         <div class="content">
             <!--Info fish -->
-            <div class="" id="info_fish">
+            <!-- <div class="" id="info_fish">
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
@@ -187,10 +208,95 @@
                     <div class="swiper-button-prev" style="color: white"></div>
                     <div class="swiper-pagination" style="color: white"></div>
                 </div>
+            </div> -->
+
+            <!-- <div #swiperRef="" class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">Slide 1</div>
+                    <div class="swiper-slide">Slide 2</div>
+                    <div class="swiper-slide">Slide 3</div>
+                    <div class="swiper-slide">Slide 4</div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div> -->
+
+            <div id="info_fish">
+
+                <h3 class="title_info_fish">CƯ DÂN TRONG THÀNH PHỐ</h3>
+
+                <div class="owl-carousel owl-theme">
+                    <div class="item">
+                        <div class="avatar">
+                            <img src="/static/image/fish5.jpg" alt="" cl>
+                        </div>
+                        <div class="content_profile">
+                            <h4>Fish Gold</h4>
+                            <p class="fish_name_origin">Cá bảy màu</p>
+                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <button>XEM THÊM THÔNG TIN</button>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="avatar">
+                            <img src="/static/image/fish4.jpg" alt="" cl>
+                        </div>
+                        <div class="content_profile">
+                            <h4>Fish Red</h4>
+                            <p class="fish_name_origin">Cá bảy màu</p>
+                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <button>XEM THÊM THÔNG TIN</button>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="avatar">
+                            <img src="/static/image/fish3.jpg" alt="" cl>
+                        </div>
+                        <div class="content_profile">
+                            <h4>Fish Blue</h4>
+                            <p class="fish_name_origin">Cá bảy màu</p>
+                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <button>XEM THÊM THÔNG TIN</button>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="avatar">
+                            <img src="/static/image/fish2.jpg" alt="" cl>
+                        </div>
+                        <div class="content_profile">
+                            <h4>Fish Green</h4>
+                            <p class="fish_name_origin">Cá bảy màu</p>
+                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <button>XEM THÊM THÔNG TIN</button>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="avatar">
+                            <img src="/static/image/fish1.jpg" alt="" cl>
+                        </div>
+                        <div class="content_profile">
+                            <h4>Fish Black</h4>
+                            <p class="fish_name_origin">Cá bảy màu</p>
+                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <button>XEM THÊM THÔNG TIN</button>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
+
+            <!-- end info fish -->
+
+
             <!-- Modal Detail Info -->
-            <div class="modal fade modal-lg text-dark" id="modal_element" tabindex="-1" aria-labelledby="modal_Label"
+            <div class="modal fade text-dark" id="modal_element" tabindex="-1" aria-labelledby="modal_Label"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -217,101 +323,215 @@
             </div>
             <!-- End modal detail info -->
 
-            <!-- train name -->
-            <div id="train_name">
-                <!-- <div class="col-12 train_name-header">
-                    <div>
-                        <p>ĐẶT TÊN CHO CÁ</p>
-                    </div>
-                </div> -->
-                <div id="train_name-info">
-                    <p class="train_title" style="">
-                        Bạn
-                        muốn đặt
-                        tên
-                        cho thú cưng của mình ?</p>
-                    <p class="train_description">
-                        Tất nhiên là được ! Hãy điền đầy đủ thông tin vào form bên cạnh. Hãy thu
-                        thập hình ảnh cá bạn muốn đặt tên và upload lên. Càng nhiều dữ liệu thì
-                        tỉ lệ thành công càng cao và đương nhiên nếu quá ít dữ liệu tỉ lệ thành
-                        công sẽ thấp.
-                    </p>
-                    <p>
-                        Bạn hãy nhớ chỉ nhấp <b> HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</b> khi bạn
-                        hoàn thành tập dữ liệu của bạn.
-                    </p>
-                    <p style="color: orange" class="text_complete_train"></p>
-                </div>
-                <div class="form-group text-start" id="train_name-form">
-                    <!-- label -->
+            <!--  end fish profile -->
 
-                    <div class="train_name-form-body" style="background-color: #1987545e;">
-                        <label bel for="exampleFormControlInput1" class="form-label">Nhập tên
-                            cho cá của bạn</label>
-                        <input type="email" class="form-control" id="input_label" placeholder="Nhập tên..." required />
-                        <div>
-                            <label for="exampleFormControlInput1" class="form-label mt-2">Tên
-                                cho lần đào tạo này:
-                                <span id="label_present" style="color: orange; font-size: 20px"></span>
-                            </label>
-                            <p style="margin: 0; padding-bottom: 10px; font-size: 14px; text-align: justify">
-                                Lưu ý: Bạn chỉ cần nhập tên một lần duy nhất, tiêp sau đó
-                                chi cân tải hình ảnh lên
+            <div class="train_name_wrap" id="profile_fish_wrap">
+
+                <div class="train_name-header">
+                    <div>
+                        <p>NỘP HỒ SƠ VÀO THÀNH PHỐ</p>
+                    </div>
+                </div>
+                <div id="train_name" class="profile_fish">
+
+                    <div id="train_name-info">
+                        <p class="train_title" id="title_profile">
+                            HỒ SƠ GIA NHẬP THÀNH PHỐ THÔNG MINH</p>
+                        <div class="content_description">
+                            <p>Mỗi cư dân trong thành phố đều có hồ sơ lý lịch riêng của mình, trước khi thả vào hồ, hãy
+                                nhập hồ sơ cho cá của mình để tiến hành gia nhập thành phố thông minh nhé!. Hãy lưu lại nhưng thông tin, ghi chú nhưng thứ cần thiết về cá, để khi cần dễ dàng có
+                                thể tra cứu</p>
+                            
+                            <p>
+                                Để khi không có bạn, người khác cũng có thể xem thông tin và dễ dàng chăm sóc cho cá của
+                                bạn
                             </p>
+                            <p>Những thông tin này có thể sửa bất cứ khi nào bạn muốn. Hãy nhập thông tin và nhấn <B>LƯU
+                                    THÔNG TIN</B> bạn nhé !. Đừng để cá của mình là vô gia cứ nhé</p>
+                            <p style="color: orange" class="text_complete_train"></p>
+
                         </div>
-                        <div class="d-flex justify-content-lg-between align-content-center">
-                            <button style="
+
+                    </div>
+                    <div class="form-group text-start" id="train_name-form">
+                        <!-- label -->
+
+                        <form id="upload_profile" method="POST" enctype="multipart/form-data" style="">
+
+                            <div class="mb-3">
+                                <label bel for="exampleFormControlInput1" class="form-label">Họ và tên người thả</label>
+                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                    required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label bel for="exampleFormControlInput1" class="form-label">Tên loại cá</label>
+                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                    required />
+                            </div>
+                            <div class="mb-3">
+                                <label bel for="exampleFormControlInput1" class="form-label">Ngày thả vào hồ</label>
+                                <input type="date" value="" class="form-control" id="input_label"
+                                    placeholder="Nhập tên..." required />
+                            </div>
+                            <div class="mb-3">
+                                <label bel for="exampleFormControlInput1" class="form-label">Tên bạn muốn đặt cho cá của
+                                    bạn</label>
+                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                    required />
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Hình đại diện cho cá</label>
+                                <input class="form-control" accept="image/*" type="file" required id="file-input_avatar"
+                                    name="file" />
+                            </div>
+                            <!-- <div class="mb-3">
+                            <label for="file" class="form-label">Hình liên quan</label>
+                            <input class="form-control" accept="image/*" type="file" required id="file-input"
+                                name="file" />
+                        </div> -->
+
+
+
+                            <div class="mb-3">
+                                <label bel for="exampleFormControlInput1" class="form-label">Ghi chú thêm về cá</label>
+                                <textarea style="color : black ;" class="form-control" name="" id="" cols="30" rows="2"
+                                    placeholder="Ghi chú thông tin về cá của bạn"></textarea>
+                            </div>
+
+                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
+                                type="button" class="btn save-profile w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
+
+                            <!-- preview image -->
+                            <div class="box-2">
+                                <div class="result"></div>
+                            </div>
+                            <div class="box-2 img-result hide">
+                                <img class="cropped" src="" alt="" />
+                            </div>
+
+
+                        </form>
+
+                        <!-- end label -->
+
+                        <!-- upload image -->
+
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- fish profile -->
+
+            <!-- train name -->
+            <div class="train_name_wrap">
+
+
+                <div class="train_name-header">
+                    <div>
+                        <p>ĐẶT TÊN CHO CƯ DÂN</p>
+                    </div>
+                </div>
+                <div id="train_name">
+                    <div id="train_name-info">
+                        <p class="train_title" id="title_profile" style="text-transform: uppercase;">
+                            Bạn
+                            muốn tên cá của bạn đặt có thể quan sát từ camera</p>
+                        <p class="train_description">
+                            Không có gì là không thể ! Bạn hãy điền đầy đủ thông tin vào form bên cạnh. Hãy thu
+                            thập hình ảnh cá bạn muốn đặt tên và upload lên. Càng nhiều dữ liệu thì
+                            tỉ lệ thành công càng cao và đương nhiên nếu quá ít dữ liệu tỉ lệ thành
+                            công s ẽ thấp.
+                        </p>
+                        <p>
+                            Bạn hãy nhớ chỉ nhấp <b> HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</b> khi bạn
+                            hoàn thành tập dữ liệu của bạn.
+                        </p>
+                        <p style="color: orange" class="text_complete_train"></p>
+                    </div>
+                    <div class="form-group text-start" id="train_name-form">
+                        <!-- label -->
+
+                        <div class="train_name-form-body">
+                            <label bel for="exampleFormControlInput1" class="form-label">Nhập tên
+                                cho cá của bạn</label>
+                            <input type="email" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                required />
+                            <div>
+                                <label for="exampleFormControlInput1" class="form-label mt-2">Tên
+                                    cho lần đào tạo này:
+                                    <span id="label_present" style="color: orange; font-size: 20px"></span>
+                                </label>
+                                <p style="margin: 0; padding-bottom: 10px; font-size: 14px; text-align: justify">
+                                    Lưu ý: Bạn chỉ cần nhập tên một lần duy nhất, tiêp sau đó
+                                    chi cân tải hình ảnh lên
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-lg-between align-content-center">
+                                <button style="
                                            
                                             background-color: #009a92;
                                             color: white;
                                             border: 1.5px solid #25f192;
                                         " class="btn mt-1 w-100 me-1" data-bs-toggle="modal" id="btn_save_label_temp"
-                                data-bs-target="#modalSaveName">
-                                LƯU TÊN
-                            </button>
-                            <button style="
+                                    data-bs-target="#modalSaveName">
+                                    LƯU TÊN
+                                </button>
+                                <button style="
                                             
                                             background-color: #0d6efd;
                                             color: white;
                                             border: 1.5px solid #25f192;
                                         " class="btn mt-1 w-100" data-bs-toggle="modal"
-                                data-bs-target="#modalShowLabel" id="btn_show_label">
-                                TÊN ĐÃ ĐẶT
-                            </button>
+                                    data-bs-target="#modalShowLabel" id="btn_show_label">
+                                    TÊN ĐÃ ĐẶT
+                                </button>
 
+                            </div>
                         </div>
-                    </div>
-                    <!-- end label -->
+                        <!-- end label -->
 
-                    <!-- upload image -->
-                    <form id="upload_file" method="POST" enctype="multipart/form-data" style="
-                                    background-color: #1987545e;
+                        <!-- upload image -->
+                        <form id="upload_file" method="POST" enctype="multipart/form-data" style="
+                                    /* background-color: #1987545e;
                                     padding: 10px;
                                     border-radius: 10px;
-                                    box-shadow: 1px 3px 21px #48bf88;
-                                    margin-top: 20px;
+                                    box-shadow: 1px 3px 21px #48bf88;*/
+                                    margin-top: 20px; 
                                 ">
-                        <label for="file" class="form-label">Tải hình cá lên</label>
-                        <input class="form-control" accept="image/*" type="file" required id="file-input" name="file" />
-                        <p style="margin: 0; padding-top: 10px; font-size: 14px; text-align: justify">
-                            Lưu ý: Bạn cần khoanh đúng vùng cá bạn muôn đặt tên
-                        </p>
-                        <div class="box-2">
-                            <div class="result"></div>
-                        </div>
-                        <div class="box-2 img-result hide">
-                            <img class="cropped" src="" alt="" />
-                        </div>
+                            <label for="file" class="form-label">Tải hình cá lên</label>
+                            <input class="form-control" accept="image/*" type="file" required id="file-input"
+                                name="file" />
+                            <p style="margin: 0; padding-top: 10px; font-size: 14px; text-align: justify">
+                                Lưu ý: Bạn cần khoanh đúng vùng cá bạn muôn đặt tên
+                            </p>
+                            <!-- preview image -->
+                            <div class="box-2">
+                                <div class="result"></div>
+                            </div>
+                            <div class="box-2 img-result hide">
+                                <img class="cropped" src="" alt="" />
+                            </div>
 
-                        <p class="coordinates" style="font-size: 20px"></p>
+                            <p class="coordinates" style="font-size: 20px"></p>
 
-                        <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
-                            type="button" class="btn save w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
-                    </form>
-                    <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style=""
-                        id="btn_complete" data-bs-target="#modalAuthTrain">HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</a>
+                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
+                                type="button" class="btn save w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
+                        </form>
+                        <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style="" id="btn_complete"
+                            data-bs-target="#modalAuthTrain">HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</a>
+                    </div>
                 </div>
+
             </div>
+
             <!-- End train name -->
 
 
@@ -481,6 +701,37 @@
         </div>
     </div>
     <!-- end modal -->
+
+
+    <!-- modal delete label -->
+    <div class="modal fade text-dark" id="modalDeleteFishName" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                        Xóa tên cá trong hệ thống
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: justify">
+                    <!-- <div id="label_show_intro">
+
+                        Nhấp <b>Hiện thị tên đã đào
+                            tạo</b> để hiện thị tên thú cưng đã có trong hệ thống
+                    </div> -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        BACK
+                    </button>
+                    <a type="button" id="btn_save_label" class="btn btn-danger" id="btn_delete_fish_name">DELETE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
 </body>
 <!-- <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
     integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
@@ -491,10 +742,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
 <script src="/static/js/upload_labels.js" type="text/javascript"></script>
-<script src="/static/js/food.js" type="text/javascript"></script>
+<!-- <script src="/static/js/food.js" type="text/javascript"></script> -->
 
-<script src="/static/js/camera.js"></script>
-<script src="/static/js/mqtt.js" type="text/javascript"></script>
+<!-- <script src="/static/js/camera.js"></script> -->
+<!-- <script src="/static/js/mqtt.js" type="text/javascript"></script> -->
 <script src="/static/js/my_swiper.js"></script>
 <script src="/static/js/info_fish.js"></script>
 

@@ -1,5 +1,4 @@
 import cv2
-from msilib.schema import Class
 from flask import Flask, render_template, Response, flash, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os.path

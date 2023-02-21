@@ -18,6 +18,24 @@ def get_fish(username):
         }
 
 
+def delete_fish(username, fish_name):
+    result = LabelFish.objects(username=username, name=fish_name)
+    print(result)
+    return result
+    
+    # try:
+    #     return {
+    #         "success": 1,
+    #         'data': result.to_json(),
+    #         'message': 'success'
+    #     }
+    # except(Exception):
+    #     return {
+    #         "success": 0,
+    #         'message': Exception,
+    #     }
+
+
 def get_data_present(fish_name):
     try:
         count = 0

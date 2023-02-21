@@ -141,7 +141,7 @@ def cron_food(loop_on):
                             time_present = dt_obj.replace(hour=dt_obj.hour, minute=dt_obj.minute,
                                                         second=dt_obj.second, microsecond=0)
                             if(time_on == time_present ):
-                                print('Hey Hey , Cron Food')
+                                print('Hey Hey , Cron Food'  + str(time_on) + "Lượng thức ăn: " + str(amount_food))
 
                                 json_object = read_file_json()
                                 json_object.append({'username': "START_CRON"})
@@ -153,7 +153,7 @@ def cron_food(loop_on):
                                 client.publish("food_complete", payload=complete, qos=1)
                     else:
                         print('Not setting food')
-
+                        sleep(1)
                         if(mode == "START_CRON") :
                             json_object.remove({'username': "START_CRON"})
                             write_file_json(json_object)
