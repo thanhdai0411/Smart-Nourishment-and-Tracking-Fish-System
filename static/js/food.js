@@ -20,35 +20,15 @@ const tableBodyFood = document.querySelector("#table_body_food");
 // const timeUploadFailFood = document.querySelector(".time_upload_fail");
 // const toastContentFailFail = document.querySelector("#toast_fail_body");
 
-// const getTimePresentFood = () => {
-//     let today = new Date();
-//     let timePresent = today.getHours() + ":" + today.getMinutes();
-//     var datePresent = today.getDate() + "/" + (today.getMonth() + 1);
-//     var datePresentReverse =
-//         today.getMonth() +
-//         1 +
-//         "/" +
-//         today.getDate() +
-//         "/" +
-//         today.getFullYear();
+const getTimeSettingFood = () => {
+    let today = new Date();
+    let timePresent = today.getHours() + ":" + today.getMinutes();
+    var datePresent = today.getDate() + "/" + (today.getMonth() + 1);
 
-//     return { timePresent, datePresent, datePresentReverse };
-// };
-// const toastFailFood = (message) => {
-//     const { datePresent, timePresent } = getTimePresentFood();
-//     timeUploadFailFood.innerHTML = timePresent + " - " + datePresent;
-//     toastContentFailFail.innerHTML = message;
-//     const toast = new bootstrap.Toast(toastUploadFailFood);
-//     toast.show();
-// };
+    const datePresentReverse = moment(today).format("MM/DD/YYYY");
 
-// const toastSuccessFood = (message) => {
-//     const { datePresent, timePresent } = getTimePresentFood();
-//     timeUploadFood.innerHTML = timePresent + " - " + datePresent;
-//     toastContentSuccessFood.innerHTML = message;
-//     const toast = new bootstrap.Toast(toastUploadSuccessFood);
-//     toast.show();
-// };
+    return { timePresent, datePresent, datePresentReverse };
+};
 
 const userNameLogin = document.querySelector("#username_login").innerHTML;
 
@@ -273,13 +253,18 @@ if (modeAI == 1) {
 // emd get render value when reload
 
 const checkTimeSet = (date1, date2) => {
-    var diff = date2.getTime() + date1.getTime();
+    var diff = date1.getTime() - date2.getTime();
+
+    if (diff < 0) {
+        diff = date2.getTime() - date1.getTime();
+    }
 
     var msec = diff;
     var hh = Math.floor(msec / 1000 / 60 / 60);
     msec -= hh * 1000 * 60 * 60;
     var mm = Math.floor(msec / 1000 / 60);
     msec -= mm * 1000 * 60;
+
     var ss = Math.floor(msec / 1000);
     msec -= ss * 1000;
 
@@ -292,7 +277,7 @@ btnCompleteSetting.onclick = (e) => {
     const modeAI = localStorage.getItem("switchAIForFishEat");
     const settingFoods = JSON.parse(localStorage.getItem("setting_food"));
     const userNameLogin = document.querySelector("#username_login").innerHTML;
-    const { datePresentReverse, timePresent } = getTimePresentFood();
+    const { datePresentReverse, timePresent } = getTimeSettingFood();
 
     const userTimeSet = timeSet.value;
     const userAmountFoodSet = amountFood.value;
@@ -301,6 +286,7 @@ btnCompleteSetting.onclick = (e) => {
     settingFoods.forEach((value) => {
         var date2 = new Date(`${datePresentReverse} ${value.time}`);
         var date1 = new Date(`${datePresentReverse} ${userTimeSet}`);
+
         const { hh, mm } = checkTimeSet(date1, date2);
         console.log(hh + " : " + mm);
         if (hh == 0 && mm < 30) {

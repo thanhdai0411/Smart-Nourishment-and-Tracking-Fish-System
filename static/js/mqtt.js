@@ -825,8 +825,10 @@ $(document).ready(function () {
 
     if (modeAIOFF) {
         if (id_time_count_fish && modeAIOFF == 0) {
-            $("#opacity_loading_page").show();
-            getFishCountDetail(id_time_count_fish);
+            $("#loading_feeder_fish").show();
+
+            // $("#opacity_loading_page").show();
+            // getFishCountDetail(id_time_count_fish);
         } else {
             $("#opacity_loading_page").hide();
         }
