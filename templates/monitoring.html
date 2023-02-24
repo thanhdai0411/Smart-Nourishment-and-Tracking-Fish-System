@@ -52,15 +52,15 @@
 
     <!-- opacity loading page -->
 
-  
-    <div id="opacity_loading_page">
+
+    <!-- <div id="opacity_loading_page">
         <div class="text-center mt-5">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p>Vui lòng chờ</p>
         </div>
-    </div> 
+    </div> -->
 
 
     <!-- end opacity loading page -->
@@ -184,7 +184,7 @@
                                     <td>
                                         <input class="w-100" type="time" name="" id="set_time" value="00:00"
                                             placeholder="Đặt thời gian"
-                                            style="border: none ; outline: none;padding : 5px 10px ; border-radius: 5px; "  />
+                                            style="border: none ; outline: none;padding : 5px 10px ; border-radius: 5px; " />
                                     </td>
                                 </tr>
                                 <tr>
@@ -343,7 +343,7 @@
 
                 <div class="modal fade" id="modalChart" tabindex="-1" aria-labelledby="modalChartLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered ">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
                         <div class="modal-content ">
                             <div class="modal-header ">
                                 <h1 class="modal-title fs-5 text-dark" id="modalChartLabel">Thay đổi thời gian tra cứu
@@ -353,7 +353,7 @@
                             </div>
                             <div class="modal-body text-dark">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Chọn ngày muốn truy vấn</label>
+                                    <label for="exampleInputEmail1" class="form-label" style="font-size: 15px;">Chọn ngày muốn truy vấn</label>
                                     <input type="date" id="input_date_chart" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp">
                                     <button id="btn_search_chart"
@@ -536,9 +536,11 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
-<script src="/static/js/food.js" type="text/javascript"></script>
+
+
 <script src="/static/js/camera.js"></script>
 <script src="/static/js/mqtt.js"></script>
+<script src="/static/js/food.js" type="text/javascript"></script>
 
 
 

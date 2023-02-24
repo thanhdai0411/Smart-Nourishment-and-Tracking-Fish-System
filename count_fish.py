@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import time
 import datetime
 import paho.mqtt.client as paho
@@ -11,7 +11,7 @@ from pymongo import MongoClient
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
 
-patch = "D:\\Studyspace\\DoAn\\CountFish\\demcaaa\\12.mp4"
+patch = "/home/doan/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
 
 cap = cv2.VideoCapture(patch)
 

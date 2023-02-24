@@ -2,6 +2,8 @@ from pymongo import MongoClient
 from constant import MONGODB_URL
 import json
 from bson.objectid import ObjectId
+import jsonpickle
+
 
 
 db_client=MongoClient()
@@ -19,7 +21,7 @@ def get_count_fish() :
             item['_id'] = str(item['_id'])
             data.append((item))
         
-        return data
+        return jsonpickle.encode(data)
     except(Exception):
         return {
             "success": 0,
@@ -34,7 +36,7 @@ def get_count_fish_by_date(date) :
             item['time_start'] =  str(item['time_start'])
             item['_id'] = str(item['_id'])
             data.append((item))
-        return data
+        return jsonpickle.encode(data)
     except(Exception):
         return {
             "success": 0,

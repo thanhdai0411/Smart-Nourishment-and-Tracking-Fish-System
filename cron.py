@@ -141,13 +141,13 @@ def cron_food(loop_on):
                             time_present = dt_obj.replace(hour=dt_obj.hour, minute=dt_obj.minute,
                                                         second=dt_obj.second, microsecond=0)
                             if(time_on == time_present ):
-                                print('Hey Hey , Cron Food'  + str(time_on) + "Lượng thức ăn: " + str(amount_food))
+                                print('Hey Hey , Cron Food'  + str(time_on) + " Lượng thức ăn: " + str(amount_food))
 
                                 json_object = read_file_json()
                                 json_object.append({'username': "START_CRON"})
                                 write_file_json(json_object)
 
-                                call(['python', PATCH_COUNT_FISH])
+                                call(['python3', PATCH_COUNT_FISH])
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"
                                 client.publish("food_complete", payload=complete, qos=1)

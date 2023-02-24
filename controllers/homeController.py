@@ -8,7 +8,7 @@ from constant import SUCCESS_STATUS, ERROR_STATUS, FOLDER_SAVE_IMAGES, FOLDER_SA
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-camera = cv2.VideoCapture(0)
+camera = ""
 
 
 def check_user():
