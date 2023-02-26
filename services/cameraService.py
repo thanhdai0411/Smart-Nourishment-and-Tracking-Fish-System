@@ -6,7 +6,7 @@ from threading import Thread
 
 import cv2
 import numpy as np
-# import torch
+import torch
 from flask import (Flask, Response, flash, redirect, render_template, request,
                    url_for)
 from PIL import Image
@@ -50,16 +50,20 @@ from PIL import Image
 # model = torch.hub.load('ultralytics/yolov5',
 #                        'yolov5s', force_reload=True, pretrained=True)
 
-model_url = "/home/doan/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt"
+# model_url = "/home/doan/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt"
+model_url = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
 
 
 def generate_frames_detect():
 
     # model = torch.hub.load('ultralytics/yolov5',
     #                        'yolov5s')
-    return 
     model = torch.hub.load('.', 'custom', path=model_url, source='local')
-    global out, capture, rec_frame
+    
+    camera = cv2.VideoCapture(0)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
     while True:
         success, frame = camera.read()
         if success:
@@ -90,8 +94,8 @@ def generate_frames():
 
 
     camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 352)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 288)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
     while True:
         success, frame = camera.read()

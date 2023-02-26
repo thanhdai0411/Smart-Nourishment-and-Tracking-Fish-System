@@ -11,15 +11,6 @@ const tableBodyFood = document.querySelector("#table_body_food");
 
 //!util
 
-// const toastUploadFailFood = document.querySelector("#toastUploadLabelFail");
-// const toastUploadSuccessFood = document.querySelector("#toastUploadLabel");
-
-// const timeUploadFood = document.querySelector(".time_upload");
-// const toastContentSuccessFood = document.querySelector("#toast_success_body");
-
-// const timeUploadFailFood = document.querySelector(".time_upload_fail");
-// const toastContentFailFail = document.querySelector("#toast_fail_body");
-
 const getTimeSettingFood = () => {
     let today = new Date();
     let timePresent = today.getHours() + ":" + today.getMinutes();
@@ -28,22 +19,6 @@ const getTimeSettingFood = () => {
 
     return { timePresent, datePresent, datePresentReverse };
 };
-// const toastFailFood = (message) => {
-//     const { datePresent, timePresent } = getTimePresentFood();
-//     timeUploadFailFood.innerHTML = timePresent + " - " + datePresent;
-//     toastContentFailFail.innerHTML = message;
-//     const toast = new bootstrap.Toast(toastUploadFailFood);
-//     toast.show();
-// };
-
-// const toastSuccessFood = (message) => {
-//     const { datePresent, timePresent } = getTimePresentFood();
-//     timeUploadFood.innerHTML = timePresent + " - " + datePresent;
-//     toastContentSuccessFood.innerHTML = message;
-//     const toast = new bootstrap.Toast(toastUploadSuccessFood);
-//     toast.show();
-// };
-
 const userNameLogin = document.querySelector("#username_login").innerHTML;
 
 // edit setting food
@@ -267,10 +242,10 @@ if (modeAI == 1) {
 // emd get render value when reload
 
 const checkTimeSet = (date1, date2) => {
-    var diff = date1.getTime() - date2.getTime();
+    var diff = date1.getTime() + date2.getTime();
 
     if (diff < 0) {
-        diff = date2.getTime() - date1.getTime();
+        diff = date2.getTime() + date1.getTime();
     }
 
     var msec = diff;
@@ -391,3 +366,5 @@ btnCompleteSetting.onclick = (e) => {
         });
     }
 };
+
+btnSubmitProfile.onclick = (e) => {};

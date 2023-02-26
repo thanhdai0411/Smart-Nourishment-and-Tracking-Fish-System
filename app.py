@@ -62,7 +62,7 @@ def train_model():
     client.publish("Train_model", payload=pl, qos=1)
     sleep(10)
 
-    call(['python', 'F:\\Studyspace\\DoAn\\Aquarium\\train.py'])
+    call(['python3', '/home/doan/DA/WebServer/Aquarium-Smart/train.py'])
 
     dt_obj_2 = datetime.now()
     timeComplete = dt_obj_2.strftime("%d/%m/%Y - %H:%M")
@@ -128,5 +128,5 @@ if __name__ == "__main__":
     connectDB(app)
     p.start()
     # app.run(debug=True, threaded=True)
-    app.run(host="0.0.0.0", port=8978,debug=False, threaded=True)
+    app.run(host="0.0.0.0", port=8978,debug=True, threaded=True)
     p.join()

@@ -463,6 +463,31 @@ function onConnectionLost(responseObject) {
     }
 }
 
+const valueRange = document.getElementById("value_range");
+
+$('[type="range"]').on("mouseup input", function () {
+    let rangePercent = $('[type="range"]').val();
+    // console.log({ rangePercent: Math.round((rangePercent * 255) / 100) });
+
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
+    }
+    let a = 0;
+    function saveInput() {
+        const brightNess = Math.round((rangePercent * 255) / 100);
+        valueRange.innerHTML = brightNess;
+    }
+    const processChange = debounce(() => saveInput(), 1000);
+
+    processChange();
+});
+
 function onMessageArrived(message) {
     console.log(
         ">>>>>>>>>  " + message.destinationName + ": " + message.payloadString
@@ -494,6 +519,13 @@ function onMessageArrived(message) {
                 }
             },
         });
+
+        const rgbCode = localStorage.getItem("rgb_code");
+        public_message("rgb_control", rgbCode);
+
+        // getValue();
+        // toastSuccessFood(`Cho cá ăn thành công`);
+        // $("#modalEditFood").modal("hide");
     } else if (topic === "feed_fish") {
         let payload = message.payloadString.split("=");
 
@@ -598,6 +630,9 @@ const stateSave = (local) => {
             stateOn(switchForFishEat, textForFishEat, stateForFishEat);
         } else if (v == "onOffDevice" && localState == 1) {
             stateOn(onOffDevice, textDevice, stateDevice);
+
+            // const codeRgb = localStorage.getItem("rgb_code");
+            // public_message("rgb_control", codeRgb);
         }
     });
 };
@@ -656,7 +691,10 @@ colorLamp.onchange = (ev) => {
     const g = parseInt(color.substr(3, 2), 16);
     const b = parseInt(color.substr(5, 2), 16);
     console.log(`red: ${r}, green: ${g}, blue: ${b}`);
-    public_message("control_rgb", `${r},${g},${b}`);
+
+    const rgbCode = `R${r}G${g}B${b}E`;
+    localStorage.setItem("rgb_code", rgbCode);
+    public_message("rgb_control", rgbCode);
 };
 
 //!end control color food
@@ -821,7 +859,7 @@ const updateFoodSettingDaily = () => {
 //     const month = date.getMonth();
 //     const year = date.getFullYear();
 
-//     const dateCurrent = `${day}/${month + 1}/${year}`;
+//     const dateCurrent = moment(date).format("DD/MM/YYYY");
 //     const dateSave = localStorage.getItem("date_current");
 
 //     if (dateSave != dateCurrent) {

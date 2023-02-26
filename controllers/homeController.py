@@ -25,10 +25,10 @@ def render_landing_page():
 
 def render_view_home():
     # check_user()
-    if session.get("username"):
-        user = session.get('username')
-        print(user + ' Login')
-        return redirect("/home")
+    # if session.get("username"):
+    #     user = session.get('username')
+    #     print(user + ' Login')
+    #     return redirect("/home")
     return render_template('landing_page.html')
 
     # return render_template('home.html')

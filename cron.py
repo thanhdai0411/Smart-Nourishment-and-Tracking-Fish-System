@@ -1,3 +1,5 @@
+from pymongo import MongoClient
+
 import datetime
 from time import sleep
 from constant import PATCH_FOOD_SETTING
@@ -9,7 +11,18 @@ import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL
+
+from bson.objectid import ObjectId
+
+# connect db
+
+# db_client=MongoClient()
+# db_client = MongoClient(MONGODB_URL)
+# mydatabase = db_client["test"]
+# collection_name = mydatabase["food"]
+
+
 
 
 def write_file_json(data_write) : 
@@ -141,16 +154,24 @@ def cron_food(loop_on):
                             time_present = dt_obj.replace(hour=dt_obj.hour, minute=dt_obj.minute,
                                                         second=dt_obj.second, microsecond=0)
                             if(time_on == time_present ):
+
+                            
                                 print('Hey Hey , Cron Food'  + str(time_on) + " Lượng thức ăn: " + str(amount_food))
+
+                                controlMotor =  "M" + str(int(int(amount_food)*1000)) + "E"
+                                print(controlMotor)
+                                client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 json_object = read_file_json()
                                 json_object.append({'username': "START_CRON"})
                                 write_file_json(json_object)
 
                                 call(['python3', PATCH_COUNT_FISH])
+
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"
                                 client.publish("food_complete", payload=complete, qos=1)
+                                
                     else:
                         print('Not setting food')
                         sleep(1)

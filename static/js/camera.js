@@ -29,10 +29,11 @@ btnStartCamera.onclick = (e) => {
             console.log({ camera: data });
             $("#shape_camera").show();
             $("#shape_camera_none").hide();
-
             $("#loading_open_camera").hide();
             $(".camera-btn_group").show();
             camera.setAttribute("src", "/camera/video");
+            // document.querySelector(".btn_detect_camera").sytle.backgroundColor =
+            //     null;
         },
     });
 };

@@ -28,6 +28,6 @@ def video():
 
 
 def video_detect():
-    start_generate_frames()
+    # start_generate_frames()
     return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
     # return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
