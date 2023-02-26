@@ -10,6 +10,11 @@ FOLDER_SAVE_IMAGES = '/home/doan/DA/WebServer/Aquarium-Smart/coco128/labels/trai
 PATCH_TO_COCO12YAML = "/home/doan/DA/WebServer/Aquarium-Smart/data/coco128.yaml"
 PATCH_COUNT_FISH = '/home/doan/DA/WebServer/Aquarium-Smart/count_fish.py'
 
+CLOUDINARY_NAME = 'img-aquarium'
+CLOUDINARY_API_KEY = '297934749829863'
+CLOUDINARY_API_SECRET = 'gtbtgeyPmx219CYa67cEqnHZ9xU'
+
+
 PATCH_FOOD_SETTING = '/home/doan/DA/WebServer/Aquarium-Smart/my_data/food_setting.json'
 
 BROKER_URL = 'e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud'
