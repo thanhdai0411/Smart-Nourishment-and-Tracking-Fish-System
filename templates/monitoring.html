@@ -40,6 +40,10 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <!-- end hight charts -->
 
+    <!-- color table -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+
 
     <!-- scss -->
     {% assets "scss_all" %}
@@ -52,7 +56,7 @@
 
     <!-- opacity loading page -->
 
-  
+
     <!-- <div id="opacity_loading_page">
         <div class="text-center mt-5">
             <div class="spinner-border" role="status">
@@ -60,7 +64,7 @@
             </div>
             <p>Vui lòng chờ</p>
         </div>
-    </div>  -->
+    </div> -->
 
 
     <!-- end opacity loading page -->
@@ -152,15 +156,22 @@
                         <div class="form-check form-switch button_control  state-on_off_device control_switch-off">
                             <div class="d-flex justify-content-between align-items-center">
                                 <input type="color" id="control_color" value="#ffffff" />
+                                <!-- <div class="wrap_color_table"> -->
+                                <!-- <input type="text" class="color-field" id="color_table" value="#ffff"  data-coloris> -->
+                                <!-- </div> -->
+                                <p id="value_range" style="opacity: 0;"></p>
                                 <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch"
                                     id="on_off_device" />
                                 <p class="d-none" style="font-size: 25px; margin: 0" id="text-on_off_device">OFF </p>
 
                             </div>
+                            <!-- <input type="range" value="0" id="range_brightness">
+                            <div id="h4-container">
+                                <div id="h4-subcontainer">
+                                    <h4>0<span></span></h4>
+                                </div>
+                            </div> -->
 
-                            <div class="text-start">
-                                <!-- <i id="control_lamp_icon" class="bi bi-lightbulb control_lamp_icon"></i> -->
-                            </div>
                             <div class="text-start">
 
                                 <p class="control_text_who">
@@ -184,7 +195,7 @@
                                     <td>
                                         <input class="w-100" type="time" name="" id="set_time" value="00:00"
                                             placeholder="Đặt thời gian"
-                                            style="border: none ; outline: none;padding : 5px 10px ; border-radius: 5px; "  />
+                                            style="border: none ; outline: none;padding : 5px 10px ; border-radius: 5px; " />
                                     </td>
                                 </tr>
                                 <tr>
@@ -198,6 +209,10 @@
 
 
                             </table>
+                            <p style="text-align: justify;">Lưu ý: Lượng thức ăn được cài đặt dựa trên thòi gian quay
+                                của máy cho ăn. Khi cài đặt <b>1</b> thì máy sẽ quay <b>1s</b> ,<b>0.5</b> thì máy sẽ
+                                quay <b>0.5s</b>,... Thời gian càng lâu cho ăn càng nhiều . <b>Hãy cài dặt lượng thứ ăn
+                                    vừa đủ nhé</b></p>
                             <div class="d-flex align-items-center">
 
                                 <!-- <input class="form-check-input control_switch-checkbox"
@@ -311,7 +326,7 @@
                 <!-- control -->
                 <div class="col-12" id="food_chart">
 
-                    
+
                     <!-- <button id="btn_reload_chart">Reload Chart</button> -->
                     <!-- <div class="text-center" id="loading_feeder_fish">
 
@@ -324,7 +339,7 @@
                         <div class="spinner-grow text-warning spinner-grow-sm" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <p class="text-center">Đang khởi tạo biểu đồ...</p>
+                        <p class="text-center">Đang trong thời gian cho cá ăn</p>
                     </div> -->
                     <figure class="highcharts-figure">
                         <div id="chart_food" style="border: 1px solid #ffff"></div>
@@ -343,7 +358,7 @@
 
                 <div class="modal fade" id="modalChart" tabindex="-1" aria-labelledby="modalChartLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered ">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
                         <div class="modal-content ">
                             <div class="modal-header ">
                                 <h1 class="modal-title fs-5 text-dark" id="modalChartLabel">Thay đổi thời gian tra cứu
@@ -353,7 +368,8 @@
                             </div>
                             <div class="modal-body text-dark">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Chọn ngày muốn truy vấn</label>
+                                    <label for="exampleInputEmail1" class="form-label" style="font-size: 15px;">Chọn
+                                        ngày muốn truy vấn</label>
                                     <input type="date" id="input_date_chart" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp">
                                     <button id="btn_search_chart"
@@ -536,9 +552,12 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
-<script src="/static/js/food.js" type="text/javascript"></script>
+
+
+<script src="/static/js/color_table.js"></script>
 <script src="/static/js/camera.js"></script>
 <script src="/static/js/mqtt.js"></script>
+<script src="/static/js/food.js" type="text/javascript"></script>
 
 
 

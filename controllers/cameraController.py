@@ -8,26 +8,26 @@ from services.cameraService import (generate_frames, generate_frames_detect,
 
 
 def start_camera():
-    start_generate_frames()
+    # start_generate_frames()
     # stop = False
     # return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
     # return render_template('home_page.html', stop=stop)
-    return 'success'
+    return 'camera_succcess'
 
 
 def stop_camera():
-    stop_generate_frames()
+    # stop_generate_frames()
     # stop = True
     # return render_template('home_page.html', stop=stop)
-    return 'success'
+    return 'stop_success'
 
 
 def video():
-    start_generate_frames()
+    # start_generate_frames()
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 def video_detect():
-    start_generate_frames()
+    # start_generate_frames()
     return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
     # return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')

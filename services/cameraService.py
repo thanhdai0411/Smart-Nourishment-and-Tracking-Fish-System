@@ -12,15 +12,31 @@ from flask import (Flask, Response, flash, redirect, render_template, request,
 from PIL import Image
 
 
-camera = cv2.VideoCapture(0)
 
-global capture, rec_frame, grey, switch, neg, face, rec, out
-capture = 0
-grey = 0
-neg = 0
-face = 0
-switch = 1
-rec = 0
+# STD_DIMENSIONS =  {
+#     "480p": (640, 480),
+#     "720p": (1280, 720),
+#     "1080p": (1920, 1080),
+#     "4k": (3840, 2160),
+# }
+
+# 160.0 x 120.0
+# 176.0 x 144.0
+# 320.0 x 240.0
+# 352.0 x 288.0
+# 640.0 x 480.0
+# 1024.0 x 768.0
+# 1280.0 x 1024.0
+
+# camera = cv2.VideoCapture(0)
+
+
+# camera.set(cv2.CAP_PROP_FRAME_WIDTH, 352)
+# camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 288)
+
+
+
+# camera.release()
 
 
 # try:
@@ -34,16 +50,20 @@ rec = 0
 # model = torch.hub.load('ultralytics/yolov5',
 #                        'yolov5s', force_reload=True, pretrained=True)
 
-model_url = "F:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights\\best.pt"
+# model_url = "/home/doan/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt"
+model_url = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
 
 
 def generate_frames_detect():
 
     # model = torch.hub.load('ultralytics/yolov5',
     #                        'yolov5s')
-
     model = torch.hub.load('.', 'custom', path=model_url, source='local')
-    global out, capture, rec_frame
+    
+    camera = cv2.VideoCapture(0)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
     while True:
         success, frame = camera.read()
         if success:
@@ -71,23 +91,16 @@ def generate_frames_detect():
 
 
 def generate_frames():
-    global out, capture, rec_frame
+
+
+    camera = cv2.VideoCapture(0)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
     while True:
         success, frame = camera.read()
         if success:
 
-            if(capture):
-                capture = 0
-                now = datetime.datetime.now()
-                p = os.path.sep.join(
-                    ['./public/capture_camera', "shot_{}.png".format(str(now).replace(":", ''))])
-                cv2.imwrite(p, frame)
-
-            if(rec):
-                rec_frame = frame
-                frame = cv2.putText(cv2.flip(
-                    frame, 1), "Recording...", (0, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4)
-                frame = cv2.flip(frame, 1)
 
             ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
             frame = buffer.tobytes()
@@ -96,8 +109,13 @@ def generate_frames():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
         else:
+            # print("fail open camera")
+            # print(success)
             pass
 
+
+def handle_fail_open_camera() :
+    print("")
 
 def start_generate_frames():
     global camera, state_open_camera

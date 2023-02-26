@@ -381,7 +381,9 @@ async function dataChart(data, realtime = false) {
             chart.series[0].update({
                 name: String(data.fish_count[0].time),
             });
-            chart.setTitle({ text: `Biều đồ số lượng cá ăn vào ${timeCount}` });
+            chart.setTitle({
+                text: `Biều đồ số lượng cá ăn vào ${timeCount}`,
+            });
         });
     }
 }
@@ -461,6 +463,31 @@ function onConnectionLost(responseObject) {
     }
 }
 
+const valueRange = document.getElementById("value_range");
+
+$('[type="range"]').on("mouseup input", function () {
+    let rangePercent = $('[type="range"]').val();
+    // console.log({ rangePercent: Math.round((rangePercent * 255) / 100) });
+
+    function debounce(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
+    }
+    let a = 0;
+    function saveInput() {
+        const brightNess = Math.round((rangePercent * 255) / 100);
+        valueRange.innerHTML = brightNess;
+    }
+    const processChange = debounce(() => saveInput(), 1000);
+
+    processChange();
+});
+
 function onMessageArrived(message) {
     console.log(
         ">>>>>>>>>  " + message.destinationName + ": " + message.payloadString
@@ -492,6 +519,13 @@ function onMessageArrived(message) {
                 }
             },
         });
+
+        const rgbCode = localStorage.getItem("rgb_code");
+        public_message("rgb_control", rgbCode);
+
+        // getValue();
+        // toastSuccessFood(`Cho cá ăn thành công`);
+        // $("#modalEditFood").modal("hide");
     } else if (topic === "feed_fish") {
         let payload = message.payloadString.split("=");
 
@@ -596,6 +630,9 @@ const stateSave = (local) => {
             stateOn(switchForFishEat, textForFishEat, stateForFishEat);
         } else if (v == "onOffDevice" && localState == 1) {
             stateOn(onOffDevice, textDevice, stateDevice);
+
+            // const codeRgb = localStorage.getItem("rgb_code");
+            // public_message("rgb_control", codeRgb);
         }
     });
 };
@@ -654,7 +691,10 @@ colorLamp.onchange = (ev) => {
     const g = parseInt(color.substr(3, 2), 16);
     const b = parseInt(color.substr(5, 2), 16);
     console.log(`red: ${r}, green: ${g}, blue: ${b}`);
-    public_message("control_rgb", `${r},${g},${b}`);
+
+    const rgbCode = `R${r}G${g}B${b}E`;
+    localStorage.setItem("rgb_code", rgbCode);
+    public_message("rgb_control", rgbCode);
 };
 
 //!end control color food
@@ -698,18 +738,19 @@ const getFishCount = () => {
 };
 
 const getFishCountDetail = (id) => {
+    console.log({ id });
     $.ajax({
         type: "GET",
         url: `/count_fish/get_detail/${id}`,
         dataType: "json",
         success: function (data) {
-            console.log({ data });
+            console.log({ data_reload: data });
             localStorage.setItem("data_count_fish", JSON.stringify(data));
-            dataChart(data);
             $("#opacity_loading_page").hide();
             $("#loading_chart").hide();
             $("#table_chart").show();
             $("#modalChart").modal("hide");
+            dataChart(data);
         },
     });
 };
@@ -720,9 +761,12 @@ const getFishCountByDate = (date) => {
         url: `/count_fish/get_date/${date}`,
         dataType: "json",
         success: function (data) {
-            console.log({ data });
-            if (!data) {
-                tableBodyChart.innerHTML = `Không có dữ liệu vào ngày ${date}`;
+            console.log({ data_chart: data });
+            if (data.length <= 0) {
+                tableChart.innerHTML = `Không có dữ liệu vào ngày ${date}`;
+                $("#btn_search_chart").show();
+                $("#table_chart").show();
+                $("#loading_chart").hide();
                 return;
             }
             $("#btn_search_chart").show();
@@ -731,20 +775,23 @@ const getFishCountByDate = (date) => {
             textDateEat.innerHTML = date;
             let content;
             content = data.map((item, index) => {
-                if (item.fish_count.length > 0)
+                console.log(item.fish_count[0].time);
+                if (item.fish_count.length > 0) {
                     return `
                                 <tr class="text-center">
                                     <th scope="row">${index}</th>
                                     <td id="time_count_fish" data-time_original="${
                                         item._id
-                                    }">${moment(item.fish_count[0].time)
-                        .utc()
-                        .format("DD/MM/YYYY, HH:mm:ss")}</td>
+                                    }">${moment(item.time_start).format(
+                        "DD/MM/YYYY, HH:mm:ss"
+                    )}</td>
                                     <td>
                                         <button id="btn_chart_choose"
-                                            style="border: none; background-color: orange ; border-radius: 5px;color : white;">CHOOSE</button>
+                                            style="border: none; background-color: orange ; border-radius: 5px;color : white;">Watch</button>
                                     </td>
                                 </tr>`;
+                }
+
                 // console.log({ data })
             });
 
@@ -771,10 +818,10 @@ const getFishCountByDate = (date) => {
 };
 
 btnSearchChart.onclick = (e) => {
-    // if (!inputChart.value) {
-    //     toastFailFood(`Vui lòng chọn ngày muốn truy vấn`);
-    //     return;
-    // }
+    if (!inputChart.value) {
+        toastFailFood(`Vui lòng chọn ngày muốn truy vấn`);
+        return;
+    }
     $("#btn_search_chart").hide();
     $("#loading_chart").show();
 
@@ -805,34 +852,33 @@ const updateFoodSettingDaily = () => {
     });
 };
 
-$(document).ready(function () {
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
+// $(document).ready(function () {
+//     console.log("reload page");
+//     const date = new Date();
+//     const day = date.getDate();
+//     const month = date.getMonth();
+//     const year = date.getFullYear();
 
-    const dateCurrent = `${day}/${month + 1}/${year}`;
-    const dateSave = localStorage.getItem("date_current");
+//     const dateCurrent = moment(date).format("DD/MM/YYYY");
+//     const dateSave = localStorage.getItem("date_current");
 
-    if (dateSave != dateCurrent) {
-        updateFoodSettingDaily();
-        localStorage.setItem("date_current", dateCurrent);
-    }
+//     if (dateSave != dateCurrent) {
+//         updateFoodSettingDaily();
+//         localStorage.setItem("date_current", dateCurrent);
+//     }
 
-    if (modeAIOFF == 1) {
-        $("#opacity_loading_page").hide();
-    }
+//     if (modeAIOFF == 1) {
+//         $("#opacity_loading_page").hide();
+//     }
 
-    if (modeAIOFF) {
-        if (id_time_count_fish && modeAIOFF == 0) {
-            $("#loading_feeder_fish").show();
-
-            // $("#opacity_loading_page").show();
-            // getFishCountDetail(id_time_count_fish);
-        } else {
-            $("#opacity_loading_page").hide();
-        }
-    } else {
-        $("#opacity_loading_page").hide();
-    }
-});
+//     if (modeAIOFF) {
+//         if (id_time_count_fish && modeAIOFF == 0) {
+//             $("#opacity_loading_page").show();
+//             getFishCountDetail(id_time_count_fish);
+//         } else {
+//             $("#opacity_loading_page").hide();
+//         }
+//     } else {
+//         $("#opacity_loading_page").hide();
+//     }
+// });

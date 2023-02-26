@@ -11,25 +11,14 @@ const tableBodyFood = document.querySelector("#table_body_food");
 
 //!util
 
-// const toastUploadFailFood = document.querySelector("#toastUploadLabelFail");
-// const toastUploadSuccessFood = document.querySelector("#toastUploadLabel");
-
-// const timeUploadFood = document.querySelector(".time_upload");
-// const toastContentSuccessFood = document.querySelector("#toast_success_body");
-
-// const timeUploadFailFood = document.querySelector(".time_upload_fail");
-// const toastContentFailFail = document.querySelector("#toast_fail_body");
-
 const getTimeSettingFood = () => {
     let today = new Date();
     let timePresent = today.getHours() + ":" + today.getMinutes();
     var datePresent = today.getDate() + "/" + (today.getMonth() + 1);
-
     const datePresentReverse = moment(today).format("MM/DD/YYYY");
 
     return { timePresent, datePresent, datePresentReverse };
 };
-
 const userNameLogin = document.querySelector("#username_login").innerHTML;
 
 // edit setting food
@@ -253,10 +242,10 @@ if (modeAI == 1) {
 // emd get render value when reload
 
 const checkTimeSet = (date1, date2) => {
-    var diff = date1.getTime() - date2.getTime();
+    var diff = date1.getTime() + date2.getTime();
 
     if (diff < 0) {
-        diff = date2.getTime() - date1.getTime();
+        diff = date2.getTime() + date1.getTime();
     }
 
     var msec = diff;
@@ -271,8 +260,6 @@ const checkTimeSet = (date1, date2) => {
     return { hh, mm };
 };
 
-// console.log(checkTimeSet("09:35"))
-
 btnCompleteSetting.onclick = (e) => {
     const modeAI = localStorage.getItem("switchAIForFishEat");
     const settingFoods = JSON.parse(localStorage.getItem("setting_food"));
@@ -282,39 +269,75 @@ btnCompleteSetting.onclick = (e) => {
     const userTimeSet = timeSet.value;
     const userAmountFoodSet = amountFood.value;
 
-    let checkData = [];
-    settingFoods.forEach((value) => {
-        var date2 = new Date(`${datePresentReverse} ${value.time}`);
-        var date1 = new Date(`${datePresentReverse} ${userTimeSet}`);
+    if (!userTimeSet) {
+        toastFailFood("Vui lòng cài thời gian cho cá ăn");
+        return;
+    }
 
-        const { hh, mm } = checkTimeSet(date1, date2);
-        console.log(hh + " : " + mm);
-        if (hh == 0 && mm < 30) {
-            // let data = `${hh}:${mm}`
-            checkData.push(1);
+    if (!userAmountFoodSet) {
+        toastFailFood("Vui lòng cài lượng thức ăn cho cá");
+        return;
+    }
+
+    if (settingFoods.length > 10) {
+        toastFailFood("Tối đa chỉ được 10 cài đặt");
+        return;
+    }
+
+    if (modeAI == 1) {
+        toastFailFood("Bạn đang trong chế độ cho ăn bằng AI không thể cài đặt");
+        return;
+    }
+
+    //
+
+    if (settingFoods && settingFoods.length > 0) {
+        let checkData = [];
+        settingFoods.forEach((value) => {
+            var date2 = new Date(`${datePresentReverse} ${value.time}`);
+            var date1 = new Date(`${datePresentReverse} ${userTimeSet}`);
+            const { hh, mm } = checkTimeSet(date1, date2);
+            console.log(hh + " : " + mm);
+            if (hh == 0 && mm < 30) {
+                // let data = `${hh}:${mm}`
+                checkData.push(1);
+            } else {
+                checkData.push(2);
+            }
+        });
+        console.log(checkData);
+
+        if (checkData.length && !checkData.includes(1)) {
+            var bodyFormData = new FormData();
+
+            bodyFormData.append("time", userTimeSet);
+            bodyFormData.append("amount_food", userAmountFoodSet);
+            bodyFormData.append("username", userNameLogin);
+
+            $.ajax({
+                type: "POST",
+                url: "/food/add",
+                data: bodyFormData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    if (data === "OK") {
+                        getValue();
+                        toastSuccessFood("Cài đặt thời gian cho ăn thành công");
+                    } else if (data == "LIMIT") {
+                        toastFailFood("Cài đặt tối đa là 10");
+                    } else if (data == "EXIST_TIME") {
+                        toastFailFood("Thời gian cài đặt đã tồn tại");
+                    } else {
+                        toastFailFood("Cài đặt thời gian cho ăn thất bại");
+                    }
+                },
+            });
         } else {
-            checkData.push(2);
+            return toastFailFood("Các môc thời gian phải cách nhau 30 phút");
         }
-    });
-    console.log(checkData);
-
-    if (checkData.length && !checkData.includes(1)) {
-        if (modeAI == 1) {
-            toastFailFood(
-                "Bạn đang trong chế độ cho ăn bằng AI không thể cài đặt"
-            );
-            return;
-        }
-        if (!userTimeSet || !userAmountFoodSet) {
-            toastFailFood("Cài đặt thời gian cho ăn thất bại");
-            return;
-        }
-
-        if (settingFoods.length > 10) {
-            toastFailFood("Tối đa chỉ được 10 cài đặt");
-            return;
-        }
-
+    } else {
         var bodyFormData = new FormData();
 
         bodyFormData.append("time", userTimeSet);
@@ -341,7 +364,7 @@ btnCompleteSetting.onclick = (e) => {
                 }
             },
         });
-    } else {
-        return toastFailFood("Các môc thời gian phải cách nhau 30 phút");
     }
 };
+
+// btnSubmitProfile.onclick = (e) => {};
