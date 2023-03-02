@@ -1,4 +1,4 @@
-weights: yolov5s.pt
+weights: D:\Studyspace\DoAn\Aquarium\train_complete\train\weights\last.pt
 cfg: ''
 data: data\coco128.yaml
 hyp:

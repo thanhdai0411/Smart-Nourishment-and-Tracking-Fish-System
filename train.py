@@ -430,11 +430,24 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     return results
 
 
+exist_folder = os.path.isdir('D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train')
+path_model_init = ""
+
+if(exist_folder) :
+    for model in os.listdir("D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights"):
+        if(model == "last.pt") :
+            path_model_init = "D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights\\last.pt"
+else :
+    path_model_init = "D:\\Studyspace\\DoAn\\Aquarium\\yolov5n.pt"
+
+print(path_model_init)
+
+
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default=ROOT /
-                        'yolov5s.pt', help='initial weights path')
+                        path_model_init, help='initial weights path')
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch-low.yaml', help='hyperparameters path')

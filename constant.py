@@ -5,8 +5,8 @@ SUCCESS_STATUS = {"success": 1,
 ERROR_STATUS = {"success": 0,
                 "message": "Error !!"}
 
-FOLDER_SAVE_LABELS = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\images\\train2017'
-FOLDER_SAVE_IMAGES = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\labels\\train2017'
+FOLDER_SAVE_LABELS = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\labels\\train2017'
+FOLDER_SAVE_IMAGES = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\images\\train2017'
 
 PATCH_TO_COCO12YAML = "D:\\Studyspace\\DoAn\\Aquarium\\data\\coco128.yaml"
 PATH_TO_WEIGHT_INIT = "D:\\Studyspace\\DoAn\\Aquarium\\yolov5n.pt"
