@@ -97,7 +97,7 @@ def addLabelForTrainModel(newLabel, coordinate, imgFromUser, imageFromUserName, 
     else:
         saveCoco128Write = open(PATCH_TO_COCO12YAML, 'w')
 
-        addLabelFileCoCo128(nameFile, coordinate, 0 + " ")
+        addLabelFileCoCo128(nameFile, coordinate, str(0) + " ")
         addImageForCoCo128(imgFromUser, newLabel)
 
         saveLabelToDB(username, newLabel)

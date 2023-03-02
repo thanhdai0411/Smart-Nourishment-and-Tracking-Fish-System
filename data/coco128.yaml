@@ -1,10 +1,5 @@
-train: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
-val: F:\Studyspace\DoAn\Aquarium\coco128\images\train2017
+train: D:\Studyspace\DoAn\Aquarium\coco128\labels\train2017
+val: D:\Studyspace\DoAn\Aquarium\coco128\labels\train2017
 names:
     0: FishGold
     1: FishBlue
-    2: FishBlack
-    3: FishGreen
-    4: Fish
-    5: null
-    6: ConCua

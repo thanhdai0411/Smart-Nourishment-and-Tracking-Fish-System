@@ -118,73 +118,55 @@
 
 
             <div id="info_fish">
+                <div class="header_info_fish">
+                    <h3 class="title_info_fish">CƯ DÂN TRONG THÀNH PHỐ</h3>
 
-                <h3 class="title_info_fish">CƯ DÂN TRONG THÀNH PHỐ</h3>
+                </div>
 
-                <div class="owl-carousel owl-theme">
+                <div class="owl-carousel owl-theme" id="wrap_my_carousel">
+                    {% if data %}
+                    {% for item in data %}
+                    <!-- <li>{{item.fish_name}}</li> -->
                     <div class="item">
                         <div class="avatar">
-                            <img src="/static/image/fish5.jpg" alt="" cl>
+                            <img src={{item.avatar}} alt="" cl>
                         </div>
                         <div class="content_profile">
-                            <h4>Fish Gold</h4>
-                            <p class="fish_name_origin">Cá bảy màu</p>
-                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
-                            <button>XEM THÊM THÔNG TIN</button>
+                            <h4>{{item.fish_name}}</h4>
+                            <p class="fish_name_origin">{{item.fish_type}}</p>
+                            <p class="note_profile">{{item.note }}</p>
+                            <button class="info_profile" data-id_info={{item.id}}>XEM THÊM THÔNG TIN</button>
                         </div>
 
                     </div>
+                    {% endfor %}
+                    {% else %}
                     <div class="item">
                         <div class="avatar">
-                            <img src="/static/image/fish4.jpg" alt="" cl>
+                            <img src="/static/image/f1.jpg" alt="" cl>
                         </div>
                         <div class="content_profile">
-                            <h4>Fish Red</h4>
-                            <p class="fish_name_origin">Cá bảy màu</p>
-                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
+                            <h4>NoName</h4>
+                            <p class="fish_name_origin">Chủng loại cá</p>
+                            <p class="note_profile">01/01/2021</p>
                             <button>XEM THÊM THÔNG TIN</button>
+
                         </div>
 
                     </div>
-                    <div class="item">
-                        <div class="avatar">
-                            <img src="/static/image/fish3.jpg" alt="" cl>
-                        </div>
-                        <div class="content_profile">
-                            <h4>Fish Blue</h4>
-                            <p class="fish_name_origin">Cá bảy màu</p>
-                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
-                            <button>XEM THÊM THÔNG TIN</button>
-                        </div>
+                    {% endif %}
 
-                    </div>
-                    <div class="item">
-                        <div class="avatar">
-                            <img src="/static/image/fish2.jpg" alt="" cl>
-                        </div>
-                        <div class="content_profile">
-                            <h4>Fish Green</h4>
-                            <p class="fish_name_origin">Cá bảy màu</p>
-                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
-                            <button>XEM THÊM THÔNG TIN</button>
-                        </div>
 
-                    </div>
-                    <div class="item">
-                        <div class="avatar">
-                            <img src="/static/image/fish1.jpg" alt="" cl>
-                        </div>
-                        <div class="content_profile">
-                            <h4>Fish Black</h4>
-                            <p class="fish_name_origin">Cá bảy màu</p>
-                            <p class="note_profile">Cá chỉ ăn thịt bò, không ăn cám. Vui lòng cho đúng </p>
-                            <button>XEM THÊM THÔNG TIN</button>
-                        </div>
 
-                    </div>
+
+                </div>
+                <div class="text-center">
+                    <a href="/profile" class="btn_all_profile">XEM TẤT CẢ</a>
 
                 </div>
             </div>
+
+
 
 
             <!-- end info fish -->
@@ -252,28 +234,30 @@
                     <div class="form-group text-start" id="train_name-form">
                         <!-- label -->
 
-                        <form id="upload_profile" method="POST" enctype="multipart/form-data" style="">
+                        <form id="upload_profile" method="POST" enctype="multipart/form-data">
 
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Họ và tên người thả</label>
-                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                <label bel for="exampleFormControlInput1" class="form-label">Họ và tên người khai
+                                    báo</label>
+                                <input type="text" class="form-control" id="input_username" placeholder="Nhập tên..."
                                     required />
                             </div>
 
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Tên loại cá</label>
-                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                <input type="text" class="form-control" id="input_fish_type" placeholder="Nhập tên..."
                                     required />
                             </div>
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Ngày thả vào hồ</label>
-                                <input type="date" value="" class="form-control" id="input_label"
-                                    placeholder="Nhập tên..." required />
+                                <input type="date" value="" class="form-control" id="input_time_start" 
+                                     placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required />
+                                    
                             </div>
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Tên bạn muốn đặt cho cá của
                                     bạn</label>
-                                <input type="text" class="form-control" id="input_label" placeholder="Nhập tên..."
+                                <input type="text" class="form-control" id="input_fish_name" placeholder="Nhập tên..."
                                     required />
                             </div>
 
@@ -281,7 +265,7 @@
                             <div class="mb-3">
                                 <label for="file" class="form-label">Hình đại diện cho cá</label>
                                 <input class="form-control" accept="image/*" type="file" required id="file-input_avatar"
-                                    name="file" />
+                                    name="avatar_fish" />
                             </div>
                             <!-- <div class="mb-3">
                             <label for="file" class="form-label">Hình liên quan</label>
@@ -293,13 +277,21 @@
 
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Ghi chú thêm về cá</label>
-                                <textarea style="color : black ;" class="form-control" name="" id="" cols="30" rows="2"
-                                    placeholder="Ghi chú thông tin về cá của bạn"></textarea>
+                                <textarea style="color : black ;" class="form-control" name="" id="input_not_fish"
+                                    cols="30" rows="2" placeholder="Ghi chú thông tin về cá của bạn"></textarea>
+                            </div>
+                            <div class="loading_profile hide_element">
+                                <div class="text-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
-                                type="button" class="btn save-profile w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
 
+                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
+                                type="button" class="btn save-profile w-100 shadow-lg" id="btn_submit_profile"
+                                value="NHÁP ĐỂ LƯU HỒ SƠ" />
 
 
                         </form>
@@ -622,6 +614,80 @@
         </div>
     </div>
     <!-- end modal -->
+
+    <!-- modal detail profile fish -->
+    <div class="modal fade" id="modalProfileFish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="overflow: hidden;border-radius: 20px;">
+                <!-- <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Thông tin cư dân</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div>
+                    <div>
+
+                        <div class="header_wrap">
+
+                            <div class="header_detail_info">
+                                <div>
+                                    <img src="/static/image/fish1.jpg" alt="" id="avatar_info">
+
+                                </div>
+                                <div>
+
+                                    <button class="edit_info">
+                                        UPDATE
+                                    </button>
+                                    <button class="delete_info">
+                                        DELETE
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info_content_detail">
+                            <form id="update_profile" method="POST" enctype="multipart/form-data">
+                                <h4 class="fish_name_info">Fish Gold</h4>
+                                <div class="mb-2">
+                                    <div class="mb-1" style="font-weight: 500;">Người nộp hồ sơ</div>
+                                    <input class=" form-control username_info" type="text" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-2">
+                                    <div class="mb-1" style="font-weight: 500;">Loại cá</div>
+                                    <input class=" form-control fish_type_info" type="text" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-2">
+                                    <div class="mb-1" style="font-weight: 500;">Ngày gia nhập thành phố</div>
+                                    <input class=" form-control start_date_info" type="date" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp">
+                                        
+                                </div>
+                                <div class="mb-2">
+                                    <div class="mb-1" style="font-weight: 500;">Ghi chú</div>
+                                    <textarea class="form-control note_info" name="" id="" cols="30"
+                                        rows="2"></textarea>
+                                    <!-- <textarea class="form-control note_info" type="email"  id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+                                </div>
+                                <div class="mb-2">
+                                    <div class="mb-1" style="font-weight: 500;">Thay đổi hình đại diện</div>
+                                    <input class="form-control" accept="image/*" type="file" required
+                                        id="file-input_avatar" name="avatar_fish_update" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Sửa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div> -->
+        </div>
+    </div>
+    </div>
+    <!-- end  modal detail profile fish -->
 </body>
 <!-- <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
     integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
@@ -638,6 +704,8 @@
 <!-- <script src="/static/js/mqtt.js" type="text/javascript"></script> -->
 <script src="/static/js/my_swiper.js"></script>
 <script src="/static/js/info_fish.js"></script>
+<script src="/static/js/profile_fish.js"></script>
+
 
 
 </html>

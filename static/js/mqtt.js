@@ -852,33 +852,33 @@ const updateFoodSettingDaily = () => {
     });
 };
 
-// $(document).ready(function () {
-//     console.log("reload page");
-//     const date = new Date();
-//     const day = date.getDate();
-//     const month = date.getMonth();
-//     const year = date.getFullYear();
+$(document).ready(function () {
+    console.log("reload page");
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
 
-//     const dateCurrent = moment(date).format("DD/MM/YYYY");
-//     const dateSave = localStorage.getItem("date_current");
+    const dateCurrent = moment(date).format("DD/MM/YYYY");
+    const dateSave = localStorage.getItem("date_current");
 
-//     if (dateSave != dateCurrent) {
-//         updateFoodSettingDaily();
-//         localStorage.setItem("date_current", dateCurrent);
-//     }
+    if (dateSave != dateCurrent) {
+        updateFoodSettingDaily();
+        localStorage.setItem("date_current", dateCurrent);
+    }
 
-//     if (modeAIOFF == 1) {
-//         $("#opacity_loading_page").hide();
-//     }
+    if (modeAIOFF == 1) {
+        $("#opacity_loading_page").hide();
+    }
 
-//     if (modeAIOFF) {
-//         if (id_time_count_fish && modeAIOFF == 0) {
-//             $("#opacity_loading_page").show();
-//             getFishCountDetail(id_time_count_fish);
-//         } else {
-//             $("#opacity_loading_page").hide();
-//         }
-//     } else {
-//         $("#opacity_loading_page").hide();
-//     }
-// });
+    if (modeAIOFF) {
+        if (id_time_count_fish && modeAIOFF == 0) {
+            $("#opacity_loading_page").show();
+            getFishCountDetail(id_time_count_fish);
+        } else {
+            $("#opacity_loading_page").hide();
+        }
+    } else {
+        $("#opacity_loading_page").hide();
+    }
+});

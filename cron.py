@@ -166,7 +166,7 @@ def cron_food(loop_on):
                                 json_object.append({'username': "START_CRON"})
                                 write_file_json(json_object)
 
-                                call(['python3', PATCH_COUNT_FISH])
+                                call(['python', PATCH_COUNT_FISH])
 
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"

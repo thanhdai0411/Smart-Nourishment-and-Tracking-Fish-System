@@ -12,7 +12,7 @@ from pymongo import MongoClient
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
 
-patch = "/home/doan/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
+patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
 
 cap = cv2.VideoCapture(patch)
 
@@ -128,8 +128,8 @@ while True:
                     count = count + 1
 
     #! show frame
-    # cv2.imshow("Edge", img_cvtc)
-    # cv2.imshow("Thresh", fish_contour)
+    cv2.imshow("Edge", img_cvtc)
+    cv2.imshow("Thresh", fish_contour)
 
     year, month, day = time.strftime(
         '%Y'), time.strftime('%m'), time.strftime('%d')

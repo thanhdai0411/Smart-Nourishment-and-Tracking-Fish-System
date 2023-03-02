@@ -366,5 +366,3 @@ btnCompleteSetting.onclick = (e) => {
         });
     }
 };
-
-// btnSubmitProfile.onclick = (e) => {};

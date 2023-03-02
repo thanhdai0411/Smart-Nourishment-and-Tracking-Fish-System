@@ -5,11 +5,10 @@ SUCCESS_STATUS = {"success": 1,
 ERROR_STATUS = {"success": 0,
                 "message": "Error !!"}
 
-FOLDER_SAVE_LABELS = '/home/doan/DA/WebServer/Aquarium-Smart/coco128/images/train2017'
-FOLDER_SAVE_IMAGES = '/home/doan/DA/WebServer/Aquarium-Smart/coco128/labels/train2017'
-PATCH_TO_COCO12YAML = "/home/doan/DA/WebServer/Aquarium-Smart/data/coco128.yaml"
-PATCH_COUNT_FISH = 'D:\Studyspace\DoAn\Aquarium\count_fish.py'
-
+FOLDER_SAVE_LABELS = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\images\\train2017'
+FOLDER_SAVE_IMAGES = 'D:\\Studyspace\\DoAn\\Aquarium\\coco128\\labels\\train2017'
+PATCH_TO_COCO12YAML = "D:\\Studyspace\\DoAn\\Aquarium\\data\\coco128.yaml"
+PATCH_COUNT_FISH = 'D:\\Studyspace\\DoAn\\Aquarium\\count_fish.py'
 
 CLOUDINARY_NAME = 'img-aquarium'
 CLOUDINARY_API_KEY = '297934749829863'
