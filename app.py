@@ -1,5 +1,5 @@
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, SUCCESS_STATUS
-from subprocess import call
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL,PATCH_TO_COCO12YAML,PATH_TO_WEIGHT_INIT
+from subprocess import call,Popen,check_call
 from werkzeug.utils import secure_filename
 from flask_session import Session
 from flask_assets import Environment, Bundle
@@ -60,9 +60,11 @@ def train_model():
 
     print('Start train')
     client.publish("Train_model", payload=pl, qos=1)
-    sleep(10)
+    sleep(5)
 
-    call(['python3', '/home/doan/DA/WebServer/Aquarium-Smart/train.py'])
+    # python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt
+
+    call(["python",PATH_TRAIN_MODEL])
 
     dt_obj_2 = datetime.now()
     timeComplete = dt_obj_2.strftime("%d/%m/%Y - %H:%M")

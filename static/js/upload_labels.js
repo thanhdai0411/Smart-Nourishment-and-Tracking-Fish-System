@@ -25,7 +25,21 @@ let x, y, w, h;
 //     let data = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
 // };
 
+function getCookie(name) {
+    function escape(s) {
+        return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, "\\$1");
+    }
+    var match = document.cookie.match(
+        RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
+    );
+    return match ? match[1] : null;
+}
+
+// const usernameLogin = getCookie("username").split('"')[1];
+// document.querySelector("#username_login").innerHTML = usernameLogin;
+
 //========================zz===================================================
+
 let imgUploadName = "";
 $(".box-2").hide();
 upload.addEventListener("change", (e) => {
@@ -170,10 +184,7 @@ btnShowLabel.onclick = (e) => {
                                     <td>
                                         <button id="btn_add_data"
                                             style="border: none; background-color: orange ; border-radius: 5px">ADD</button>
-                                        <button id="btn_delete_data" data-name-fish=${
-                                            v.name
-                                        } data-bs-toggle="modal" data-bs-target="#modalDeleteFishName"
-                                            style="border: none; background-color: red ; color : white ; border-radius: 5px">DELETE</button>
+                                        
                                     </td>
                                 </tr>`
                     );
@@ -275,6 +286,7 @@ btnSaveLabel.onclick = (e) => {
                     toastSuccess(
                         "Lưu tên thú cưng thành công. Bây giờ bạn có thể tải dữ liệu hình ảnh"
                     );
+
                     localStorage.setItem("label", valueInputLabel);
                     labelPresent.innerHTML = valueInputLabel;
                     return;
@@ -358,6 +370,9 @@ const viewDataPresentForTrain = document.querySelector(
 const btnAgreeTrain = document.querySelector("#btn_agree_train");
 
 btnComplete.onclick = (e) => {
+    const MIN_TRAIN = 5;
+    const minTrainLabel = document.querySelector("#min_train_label");
+    minTrainLabel.innerHTML = MIN_TRAIN;
     const nameFish = localStorage.getItem("label");
     $.ajax({
         type: "GET",
@@ -366,7 +381,7 @@ btnComplete.onclick = (e) => {
         success: function (v) {
             const { data } = v;
             let content = "";
-            if (data < 10) {
+            if (data < MIN_TRAIN) {
                 content = `Hiện tại dữ liệu cho tên ${nameFish} là ${v.data} hình. Chưa đủ để huấn luyện`;
                 $("#btn_agree_train").hide();
             } else {

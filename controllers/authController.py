@@ -1,9 +1,12 @@
 
-from flask import request, redirect, jsonify, render_template, session
+from flask import request, redirect, jsonify, render_template, session,make_response
 from flask_session import Session
-
 from constant import SUCCESS_STATUS, ERROR_STATUS, fail_status, success_status
 from my_models.userModel import User
+
+import datetime
+expire_date = datetime.datetime.now()
+expire_date = expire_date + datetime.timedelta(days=30)
 
 #  query ==> request.args
 #  form  ==> request.form
@@ -30,9 +33,14 @@ def register_user():
 
         newUser = User(username=username, password=password)
         newUser.save()
-        session['login'] = True
-        session['username'] = username
-        return redirect('/home')
+        
+        resp = make_response(redirect('/home'))
+
+        resp.set_cookie('username',username, max_age=60*60*24*30)
+
+        # session['login'] = True
+        # session['username'] = username
+        return resp
 
     except ValueError as ve:
         return fail_status(ve)
@@ -52,21 +60,30 @@ def login_user():
 
         if user.password != password:
             return fail_status("Password enter not match")
+        
+        resp = make_response(redirect('/home'))
 
-        session['login'] = True
-        session['username'] = username
+        resp.set_cookie('username',username, max_age=60*60*24*30)
+
+        # session['login'] = True
+        # session['username'] = username
         # return user.to_json()
         # return render_template('home_page.html', auth=REGISTER_SUCCESS)
-        return redirect('/home')
+        return resp
+        # return redirect('/home')
 
     except ValueError as ve:
         return fail_status(ve)
 
 
 def logout():
-    session.pop('login', None)
-    session.pop('username', None)
-    return redirect("/")
+
+    resp = make_response(redirect('/'))
+
+
+    resp.set_cookie('username','',max_age=0)
+
+    return resp
 
 
 def get_user(username):

@@ -13,12 +13,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 camera = ""
 
 
-def check_user():
-    if session.get("username"):
-        user = session.get('username')
-        print(user + ' Login')
-        return redirect("/home")
-
 
 def render_landing_page():
 
@@ -27,9 +21,10 @@ def render_landing_page():
 
 def render_view_home():
     # check_user()
-    if session.get("username"):
-        user = session.get('username')
-        print(user + ' Login')
+    user_login = request.cookies.get('username', None)
+    if user_login:
+        # user = session.get('username')
+        
         return redirect("/home")
     return render_template('landing_page.html')
 
@@ -37,13 +32,20 @@ def render_view_home():
 
 
 def render_home_page():
-    user_system = session.get('username')
-    result = ProfileFish.objects[:8](user_system = user_system )
-    return render_template('home_page.html', data = result )
+    user_system = request.cookies.get('username', None)
+    if user_system:    
+        result = ProfileFish.objects[:8](user_system = user_system )
+        return render_template('home_page.html', data = result )
+    return redirect('/')
+
+   
 
 
 def render_monitor_page():
-    return render_template('monitoring.html')
+    user_login = request.cookies.get('username', None)
+    if user_login:    
+        return render_template('monitoring.html')
+    return redirect('/')
 
 
 def render_view_camera():
@@ -52,9 +54,13 @@ def render_view_camera():
     return render_template('camera.html', stop=stop)
 
 def render_profile_page() :
-    user_system = session.get('username')
-    result = ProfileFish.objects(user_system = user_system )
-    return render_template('profile_fish.html', data = result )
+    user_system = request.cookies.get('username', None)
+    if user_system:    
+        result = ProfileFish.objects(user_system = user_system )
+        return render_template('profile_fish.html', data = result )
+    return redirect('/')
+
+    
 
 def stop_camera():
     stop_generate_frames()

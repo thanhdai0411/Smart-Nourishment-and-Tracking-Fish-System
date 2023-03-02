@@ -1,5 +1,5 @@
-train: D:\Studyspace\DoAn\Aquarium\coco128\labels\train2017
-val: D:\Studyspace\DoAn\Aquarium\coco128\labels\train2017
+train: D:\Studyspace\DoAn\Aquarium\coco128
+val: D:\Studyspace\DoAn\Aquarium\coco128
 names:
     0: FishGold
     1: FishBlue

@@ -20,7 +20,7 @@ const getTimeSettingFood = () => {
     return { timePresent, datePresent, datePresentReverse };
 };
 const userNameLogin = document.querySelector("#username_login").innerHTML;
-
+console.log({ userNameLogin });
 // edit setting food
 const modalEditFood = document.getElementById("modalEditFood");
 const modalDeleteFood = document.getElementById("modalDeleteFood");

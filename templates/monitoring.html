@@ -40,9 +40,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <!-- end hight charts -->
 
-    <!-- color table -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
-    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+    
 
 
     <!-- scss -->
@@ -553,13 +551,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
 
+<script>
+
+    function getCookie(name) {
+        function escape(s) {
+            return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, "\\$1");
+        }
+        var match = document.cookie.match(
+            RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
+        );
+        return match ? match[1] : null;
+    }
+    const usernameLogin = getCookie("username").split('"')[1];
+    document.querySelector("#username_login").innerHTML = usernameLogin;
+</script>
 
 <script src="/static/js/color_table.js"></script>
 <script src="/static/js/camera.js"></script>
 <script src="/static/js/mqtt.js"></script>
 <script src="/static/js/food.js" type="text/javascript"></script>
-
-
 
 
 

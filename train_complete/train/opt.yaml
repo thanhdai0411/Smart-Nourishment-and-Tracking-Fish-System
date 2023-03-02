@@ -1,4 +1,4 @@
-weights: F:\Studyspace\DoAn\Aquarium\train_complete\train\weights\best.pt
+weights: yolov5s.pt
 cfg: ''
 data: data\coco128.yaml
 hyp:
@@ -30,7 +30,7 @@ hyp:
   mosaic: 1.0
   mixup: 0.0
   copy_paste: 0.0
-epochs: 30
+epochs: 1
 batch_size: 16
 imgsz: 640
 rect: false

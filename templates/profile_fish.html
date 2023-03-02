@@ -314,6 +314,22 @@
 <script src="/static/js/info_fish.js"></script>
 <script src="/static/js/profile_fish.js"></script>
 
+<script>
+    
+        function getCookie(name) {
+            function escape(s) {
+                return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, "\\$1");
+            }
+            var match = document.cookie.match(
+                RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
+            );
+            return match ? match[1] : null;
+        }
+    const usernameLogin = getCookie("username").split('"')[1];
+    document.querySelector("#username_login").innerHTML = usernameLogin;
+</script>
+
+
 
 
 </html>
