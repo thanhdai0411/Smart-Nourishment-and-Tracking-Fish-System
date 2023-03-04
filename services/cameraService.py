@@ -11,6 +11,8 @@ from flask import (Flask, Response, flash, redirect, render_template, request,
                    url_for)
 from PIL import Image
 
+from constant import PATH_MODEL_FISH_DIE
+
 
 
 # STD_DIMENSIONS =  {
@@ -51,14 +53,14 @@ from PIL import Image
 #                        'yolov5s', force_reload=True, pretrained=True)
 
 # model_url = "/home/doan/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt"
-model_url = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
+# model_url = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
 
 
 def generate_frames_detect():
 
     # model = torch.hub.load('ultralytics/yolov5',
     #                        'yolov5s')
-    model = torch.hub.load('.', 'custom', path=model_url, source='local')
+    model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
     
     camera = cv2.VideoCapture(0)
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
@@ -73,9 +75,56 @@ def generate_frames_detect():
             # =====================================
 
             img = Image.open(io.BytesIO(frame))
-            results = model(img, size=640)
+            results = model(img)
             # results = model(img)
-            results.print()
+            # results.print()
+
+            count_detect = results.pandas().xyxy[0]['name']
+            list_count_detect = list(count_detect) 
+            
+            if(len(list_count_detect) > 0) :
+                print('Die count: ' + str(len(list_count_detect)))
+
+            img = np.squeeze(results.render())  # RGB
+            # read image as BGR
+            img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+            frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
+            # =====================================
+
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+        else:
+            pass
+
+def generate_frames_detect_fish_die():
+
+    # model = torch.hub.load('ultralytics/yolov5',
+    #                        'yolov5s')
+    model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
+    
+    camera = cv2.VideoCapture(0)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+
+    while True:
+        success, frame = camera.read()
+        if success:
+            ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
+            frame = buffer.tobytes()
+
+            # =====================================
+
+            img = Image.open(io.BytesIO(frame))
+            results = model(img)
+            # results = model(img)
+            # results.print()
+
+            count_detect = results.pandas().xyxy[0]['name']
+            list_count_detect = list(count_detect) 
+            
+            if(len(list_count_detect) > 0) :
+                print('Die count: ' + str(len(list_count_detect)))
 
             img = np.squeeze(results.render())  # RGB
             # read image as BGR

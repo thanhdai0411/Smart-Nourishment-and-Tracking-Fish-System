@@ -5,81 +5,39 @@ const btnDetectCamera = document.querySelector(".btn_detect_camera");
 const shapeCameraNone = document.querySelector("#shape_camera_none");
 
 const camera = document.querySelector("#camera_open");
+const cameraFishDie = document.querySelector("#camera_fish_die");
 
 // $('#shape_camera_none').show();
 shapeCameraNone.style.display = "flex";
 $("#loading_open_camera").hide();
 $("#shape_camera").hide();
+// $("#shape_camera_fish_die").hide();
 
 btnStartCamera.onclick = (e) => {
-    var bodyFormData = new FormData();
-
-    bodyFormData.append("start", 1);
-    $("#loading_open_camera").show();
-    $(".camera-btn_group").hide();
-
-    $.ajax({
-        type: "GET",
-        url: "/camera/play",
-        data: bodyFormData,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-            console.log({ camera: data });
-            $("#shape_camera").show();
-            $("#shape_camera_none").hide();
-            $("#loading_open_camera").hide();
-            $(".camera-btn_group").show();
-            camera.setAttribute("src", "/camera/video");
-            // document.querySelector(".btn_detect_camera").sytle.backgroundColor =
-            //     null;
-        },
-    });
+    $("#shape_camera").show();
+    $("#shape_camera_none").hide();
+    $(".camera-btn_group").show();
+    camera.setAttribute("src", "/camera/video");
+    $("#loading_open_camera").hide();
 };
 
 btnStopCamera.onclick = (e) => {
-    var bodyFormData = new FormData();
+    camera.setAttribute("src", "");
+    $("#shape_camera").hide();
+    shapeCameraNone.style.display = "flex";
 
-    bodyFormData.append("stop", 1);
+    setTimeout(() => {
+        $("#shape_camera").show();
+        $("#shape_camera_none").hide();
+    }, 5000);
 
-    $.ajax({
-        type: "GET",
-        url: "/camera/stop",
-        data: bodyFormData,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-            $("#shape_camera").hide();
-            // $('#shape_camera_none').show();
-            shapeCameraNone.style.display = "flex";
-            camera.setAttribute("src", "");
-        },
-    });
+    camera.setAttribute("src", "/camera/fish_die");
 };
 
 btnDetectCamera.onclick = (e) => {
-    var bodyFormData = new FormData();
-
-    bodyFormData.append("detect", 1);
-
-    $("#loading_open_camera").show();
-    $(".camera-btn_group").hide();
-
-    $.ajax({
-        type: "GET",
-        url: "/camera/play",
-        data: bodyFormData,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-            $("#shape_camera").show();
-            $("#shape_camera_none").hide();
-            $("#loading_open_camera").hide();
-            $(".camera-btn_group").show();
-            camera.setAttribute("src", "/camera/detect");
-        },
-    });
+    $("#shape_camera").show();
+    $("#shape_camera_none").hide();
+    $("#loading_open_camera").hide();
+    $(".camera-btn_group").show();
+    camera.setAttribute("src", "/camera/detect");
 };

@@ -128,8 +128,8 @@ while True:
                     count = count + 1
 
     #! show frame
-    cv2.imshow("Edge", img_cvtc)
-    cv2.imshow("Thresh", fish_contour)
+    # cv2.imshow("Edge", img_cvtc)
+    # cv2.imshow("Thresh", fish_contour)
 
     year, month, day = time.strftime(
         '%Y'), time.strftime('%m'), time.strftime('%d')

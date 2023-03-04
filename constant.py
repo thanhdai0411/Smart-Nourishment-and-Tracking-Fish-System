@@ -13,6 +13,7 @@ PATH_TO_WEIGHT_INIT = "D:\\Studyspace\\DoAn\\Aquarium\\yolov5n.pt"
 PATCH_COUNT_FISH = 'D:\\Studyspace\\DoAn\\Aquarium\\count_fish.py'
 
 PATH_TRAIN_MODEL = "D:\\Studyspace\\DoAn\\Aquarium\\train.py"
+PATH_MODEL_FISH_DIE = "D:\\Studyspace\\DoAn\\Aquarium\\model_fish_die.pt"
 
 CLOUDINARY_NAME = 'img-aquarium'
 CLOUDINARY_API_KEY = '297934749829863'

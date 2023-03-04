@@ -17,6 +17,7 @@ from time import sleep
 import numpy as np
 from multiprocessing import  Value,Process,Queue
 from cron import cron_food
+
 from my_models.foodModel import Food
 
 # from flask_crontab import Crontab
@@ -47,7 +48,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.from_object('config')
 route(app)
 # ==========
-
 
 #! train =======================================================================================
 
@@ -104,6 +104,9 @@ if __name__ == "__main__":
 
     def on_message(client, userdata, msg):
         print(msg.topic + ": " + str(msg.payload))  
+          
+
+
         
     client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
     client.on_connect = on_connect
@@ -118,6 +121,7 @@ if __name__ == "__main__":
     client.on_publish = on_publish
 
     client.subscribe("start_feed_fish", qos=1)
+    # client.subscribe("open_detect_fish", qos=1)
 
 
 
@@ -127,8 +131,9 @@ if __name__ == "__main__":
 
     recording_on = Value('b', True)
     p = Process(target=cron_food, args=(recording_on,))
+    
     connectDB(app)
-    p.start()
+    p.start()   
     app.run(debug=True, threaded=True)
     # app.run(host="0.0.0.0", port=8978,debug=True, threaded=True)
     p.join()

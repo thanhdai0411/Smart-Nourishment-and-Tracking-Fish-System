@@ -787,26 +787,37 @@ a {
                                       background-color: #38604e;
                                       display: flex;
                                       flex-direction: column; }
-                                      .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                        box-shadow: -2px 3px 21px 2px #377D71;
-                                        border: 1.5px solid #46a579;
+                                      .monitor_wrap #monitoring_page #camera #shape_camera_fish_die {
+                                        box-shadow: -2px 3px 21px 2px #38604e;
+                                        border: 1.5px solid #4b7d67;
                                         width: 100%;
                                         height: 100%;
                                         margin-bottom: 10px;
                                         border-radius: 20px;
                                         overflow: hidden;
-                                        background-color: #377D71;
-                                        display: none;
-                                        flex-direction: column;
-                                        justify-content: center;
-                                        text-align: center; }
-                                        @media only screen and (max-width: 600px) {
-                                          .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                            height: 300px;   }
-}
-                                          @media (min-width: 601px) and (max-width: 1000px) {
+                                        background-color: #38604e;
+                                        display: flex;
+                                        flex-direction: column; }
+                                        .monitor_wrap #monitoring_page #camera #shape_camera_none {
+                                          box-shadow: -2px 3px 21px 2px #377D71;
+                                          border: 1.5px solid #46a579;
+                                          width: 100%;
+                                          height: 100%;
+                                          margin-bottom: 10px;
+                                          border-radius: 20px;
+                                          overflow: hidden;
+                                          background-color: #377D71;
+                                          display: none;
+                                          flex-direction: column;
+                                          justify-content: center;
+                                          text-align: center; }
+                                          @media only screen and (max-width: 600px) {
                                             .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                              height: 400px;   }
+                                              height: 300px;   }
+}
+                                            @media (min-width: 601px) and (max-width: 1000px) {
+                                              .monitor_wrap #monitoring_page #camera #shape_camera_none {
+                                                height: 400px;   }
 }
           .monitor_wrap #monitoring_page #food_render {
             width: 100%;

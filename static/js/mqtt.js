@@ -694,7 +694,6 @@ colorLamp.onchange = (ev) => {
 
     const rgbCode = `R${r}G${g}B${b}E`;
     localStorage.setItem("rgb_code", rgbCode);
-    public_message("rgb_control", rgbCode);
 };
 
 //!end control color food
