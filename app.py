@@ -134,6 +134,6 @@ if __name__ == "__main__":
     
     connectDB(app)
     p.start()   
-    app.run(debug=True, threaded=True)
-    # app.run(host="0.0.0.0", port=8978,debug=True, threaded=True)
+    # app.run(debug=True, threaded=True)
+    app.run(host="0.0.0.0", port=8978,debug=False, threaded=True)
     p.join()

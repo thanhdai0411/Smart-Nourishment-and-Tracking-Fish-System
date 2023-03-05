@@ -1,15 +1,26 @@
-import os
+# import the opencv library
+import cv2
 
 
-exist_folder = os.path.isdir('D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train')
-path = ""
-if(exist_folder) :
-    for model in os.listdir("D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights"):
-        if(model == "best.pt") :
-            path = "best.pt"
-else :
-    path = "yolov5s.pt"
+# define a video capture object
+vid = cv2.VideoCapture(0)
 
-print(path)
+while(True):
+	
+	# Capture the video frame
+	# by frame
+	ret, frame = vid.read()
 
+	# Display the resulting frame
+	cv2.imshow('frame', frame)
+	
+	# the 'q' button is set as the
+	# quitting button you may use any
+	# desired button of your choice
+	if cv2.waitKey(1) & 0xFF == ord('q'):
+		break
 
+# After the loop release the cap object
+vid.release()
+# Destroy all the windows
+cv2.destroyAllWindows()

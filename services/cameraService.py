@@ -10,6 +10,9 @@ import torch
 from flask import (Flask, Response, flash, redirect, render_template, request,
                    url_for)
 from PIL import Image
+from cv2 import cuda
+
+cuda.printCudaDeviceInfo(0)
 
 from constant import PATH_MODEL_FISH_DIE
 
@@ -89,6 +92,9 @@ def generate_frames_detect():
             # read image as BGR
             img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
+
+            frame = cv2.resize(frame, (416,416))
+
             # =====================================
 
             yield (b'--frame\r\n'
@@ -143,8 +149,8 @@ def generate_frames():
 
 
     camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
     while True:
         success, frame = camera.read()

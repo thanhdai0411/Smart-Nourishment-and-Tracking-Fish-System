@@ -28,19 +28,7 @@ const modeAIOFF = localStorage.getItem("switchAIForFishEat");
 
 // chart count fish ate
 Highcharts.theme = {
-    colors: [
-        "#FFB100",
-        "#25f192",
-        "#91D8E4",
-        "#90ee7e",
-        "#f45b5b",
-        // '#ff0066',
-        // '#eeaaee',
-        // '#55BF3B',
-        // '#DF5353',
-        // '#7798BF',
-        // '#aaeeee',
-    ],
+    colors: ["#FFB100", "#25f192", "#91D8E4", "#90ee7e", "#f45b5b"],
     chart: {
         backgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
@@ -755,6 +743,9 @@ const getFishCountDetail = (id) => {
 };
 
 const getFishCountByDate = (date) => {
+    // 26-01-2023
+    // const formatDateQuery = moment(date).format("MM-DD-YYYY");
+    // console.log({ formatDateQuery });
     $.ajax({
         type: "GET",
         url: `/count_fish/get_date/${date}`,
