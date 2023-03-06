@@ -42,6 +42,30 @@ body {
   * {
     font-family: 'Poppins', sans-serif; }
 
+.wrap_user_name {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .wrap_user_name .notification_wrap {
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative; }
+    @media only screen and (max-width: 600px) {
+      .wrap_user_name .notification_wrap {
+        margin-right: 15px;   }
+}
+      .wrap_user_name .notification_wrap .dot_new_noti.noti_new {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        background-color: red;
+        border-radius: 50%;
+        top: 3px;
+        right: 4px;
+        border: 1px solid #ccc; }
+        .wrap_user_name .notification_wrap i {
+          font-size: 30px; }
+
 @media only screen and (max-width: 600px) {
   .landing_main {
     height: 50vh;   }
@@ -1135,9 +1159,32 @@ a {
       .nav_monitoring_page .item_nav_title {
         display: none;   }
 }
+.nav_monitoring_page .wrap_user_name {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .nav_monitoring_page .wrap_user_name .notification_wrap {
+    margin-right: 20px;
+    cursor: pointer;
+    position: relative; }
+    @media only screen and (max-width: 600px) {
+      .nav_monitoring_page .wrap_user_name .notification_wrap {
+        margin-right: 15px;   }
+}
+      .nav_monitoring_page .wrap_user_name .notification_wrap .dot_new_noti.noti_new {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        background-color: red;
+        border-radius: 50%;
+        top: 3px;
+        right: 4px;
+        border: 1px solid #ccc; }
+        .nav_monitoring_page .wrap_user_name .notification_wrap i {
+          font-size: 30px; }
 .nav_monitoring_page .nav_img_avatar {
-  width: 50px;
-  height: 50px; }
+  width: 45px;
+  height: 45px; }
   @media only screen and (max-width: 600px) {
     .nav_monitoring_page .nav_img_avatar {
       width: 35px;

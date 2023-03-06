@@ -6,6 +6,7 @@ import os.path
 from services.cameraService import generate_frames, stop_generate_frames, start_generate_frames, capture_screen, record_screen, generate_frames_detect
 from constant import SUCCESS_STATUS, ERROR_STATUS, FOLDER_SAVE_IMAGES, FOLDER_SAVE_LABELS
 from my_models.profileFishModel import ProfileFish
+# from app import email
 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -92,3 +93,15 @@ def record():
     record_screen()
     stop = False
     return render_template('camera.html', stop=stop)
+
+
+def send_mail() :
+    # email.send(
+    #     subject="Smart Aquarium Notification !",
+    #     receivers=["ngothanhdai2001@gmail.com"],
+    #     html="""
+    #         <h1>Hi, I'm Smart Aquarium Notification</h1>
+    #         <p>You will receive a notification from me. Turn on email notifications on your device to receive notifications</p>
+    #     """
+    # )
+    return 'SEND'

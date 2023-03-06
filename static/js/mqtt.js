@@ -16,7 +16,12 @@ const toastContentSuccess2 = document.querySelector("#toast_success_body");
 const timeFoodFail = document.querySelector(".time_upload_fail");
 const toastContentFailFood = document.querySelector("#toast_fail_body");
 
+const usernameMqtt = document.querySelector("#username_login").innerHTML;
+
 const chartShow = document.querySelector(".highcharts-figure");
+
+const dotNewNotify = document.querySelector(".dot_new_noti");
+const contentNotify = document.querySelector(".content_notify");
 
 // !==============================================================================================
 
@@ -382,6 +387,7 @@ const getTimePresentFood = () => {
     let today = new Date();
     let timePresent = today.getHours() + ":" + today.getMinutes();
     var datePresent = today.getDate() + "/" + (today.getMonth() + 1);
+
     return { timePresent, datePresent };
 };
 const toastFailFood = (message) => {
@@ -443,6 +449,7 @@ function onConnect() {
     client.subscribe("Train_model");
     client.subscribe("feed_fish");
     client.subscribe("count_fish");
+    client.subscribe("fish_die");
 }
 
 function onConnectionLost(responseObject) {
@@ -453,28 +460,114 @@ function onConnectionLost(responseObject) {
 
 const valueRange = document.getElementById("value_range");
 
-$('[type="range"]').on("mouseup input", function () {
-    let rangePercent = $('[type="range"]').val();
-    // console.log({ rangePercent: Math.round((rangePercent * 255) / 100) });
+// $('[type="range"]').on("mouseup input", function () {
+//     let rangePercent = $('[type="range"]').val();
+//     // console.log({ rangePercent: Math.round((rangePercent * 255) / 100) });
 
-    function debounce(func, timeout = 300) {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                func.apply(this, args);
-            }, timeout);
-        };
-    }
-    let a = 0;
-    function saveInput() {
-        const brightNess = Math.round((rangePercent * 255) / 100);
-        valueRange.innerHTML = brightNess;
-    }
-    const processChange = debounce(() => saveInput(), 1000);
+//     function debounce(func, timeout = 300) {
+//         let timer;
+//         return (...args) => {
+//             clearTimeout(timer);
+//             timer = setTimeout(() => {
+//                 func.apply(this, args);
+//             }, timeout);
+//         };
+//     }
+//     let a = 0;
+//     function saveInput() {
+//         const brightNess = Math.round((rangePercent * 255) / 100);
+//         valueRange.innerHTML = brightNess;
+//     }
+//     const processChange = debounce(() => saveInput(), 1000);
 
-    processChange();
-});
+//     processChange();
+// });
+
+const renderNotify = () => {
+    $.ajax({
+        type: "GET",
+        url: `/notify/get/${usernameMqtt}`,
+        dataType: "json",
+        success: function ({ data }) {
+            const notify = JSON.parse(data);
+            if (notify && notify.length > 0) {
+                console.log({ notify });
+                const contentNotifyLoop = notify.map(
+                    (v, index) => `
+                
+                    <p>${v}</p>
+                `
+                );
+                contentNotify.innerHTML = contentNotifyLoop.join("");
+            } else {
+                contentNotify.innerHTML = "Chưa có thông báo nào";
+            }
+        },
+    });
+};
+
+const sendMailInit = (email, text) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("text", text);
+    bodyFormData.append("email", email);
+    $.ajax({
+        type: "POST",
+        url: "/send_mail",
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            console.log({ data });
+        },
+    });
+};
+
+const saveDBNotify = (text) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("username", usernameMqtt);
+    bodyFormData.append("text", text);
+
+    $.ajax({
+        type: "POST",
+        url: "/notify/add",
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            if (data == "OK") {
+                localStorage.setItem("new_noti", 1);
+                dotNewNotify.classList.add("noti_new");
+                renderNotify();
+            }
+        },
+    });
+};
+
+const apiSendMail = (text) => {
+    let emailNotify = localStorage.getItem("email_notify");
+
+    if (emailNotify) {
+        sendMailInit(emailNotify, text);
+        saveDBNotify(text);
+    } else {
+        $.ajax({
+            type: "GET",
+            url: `/email_notify/get/${usernameMqtt}`,
+            dataType: "json",
+            success: function ({ data }) {
+                const emailNotify = JSON.parse(data);
+                if (emailNotify && emailNotify.length > 0) {
+                    sendMailInit(emailNotify[0].email, text);
+                    saveDBNotify(text);
+                } else {
+                    toastFail("Vui lòng đăng kí email để nhạn được thông báo");
+                }
+            },
+        });
+    }
+};
 
 function onMessageArrived(message) {
     console.log(
@@ -518,8 +611,6 @@ function onMessageArrived(message) {
         let payload = message.payloadString.split("=");
 
         if (Number(payload[0]) === 1) {
-            // $("#loading_feeder_fish").show();
-            // chartShow.style.display = 'none';
             i = 0;
             localStorage.setItem("id_time_count_fish", payload[1]);
         }
@@ -537,28 +628,14 @@ function onMessageArrived(message) {
             count,
         };
         dataChart(data, true);
-    } else {
-        let stateTrain = message.payloadString;
-        let state = stateTrain.split("/")[0];
-        let time = stateTrain.split("/")[1];
+    } else if (topic == "fish_die") {
+        let today = new Date();
+        const countDie = message.payloadString;
 
-        if (state == "Start") {
-            timeStartToast.innerHTML = time;
-            const toast = new bootstrap.Toast(toastStart);
-            toast.show();
-
-            setTimeout(function () {
-                location.reload();
-            }, 5000);
-        }
-        if (state == "End") {
-            timeEndToast.innerHTML = time;
-            let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
-            localStorage.setItem("complete_train", content);
-
-            const toast = new bootstrap.Toast(toastEnd);
-            toast.show();
-        }
+        const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
+        const text = `[${dateDie}]: Phát hiện ${countDie} cá chết`;
+        console.log({ text });
+        apiSendMail(text);
     }
 }
 
@@ -753,7 +830,8 @@ const getFishCountByDate = (date) => {
         success: function (data) {
             console.log({ data_chart: data });
             if (data.length <= 0) {
-                tableChart.innerHTML = `Không có dữ liệu vào ngày ${date}`;
+                textDateEat.innerHTML = null;
+                tableBodyChart.innerHTML = `Không có dữ liệu vào ngày ${date}`;
                 $("#btn_search_chart").show();
                 $("#table_chart").show();
                 $("#loading_chart").hide();
@@ -762,30 +840,28 @@ const getFishCountByDate = (date) => {
             $("#btn_search_chart").show();
             $("#table_chart").show();
             $("#loading_chart").hide();
-            textDateEat.innerHTML = date;
+            textDateEat.innerHTML = `Những mốc thời gian cho ăn vào ngày ${date}`;
             let content;
             content = data.map((item, index) => {
-                console.log(item.fish_count[0].time);
-                if (item.fish_count.length > 0) {
-                    return `
+                return `
                                 <tr class="text-center">
                                     <th scope="row">${index}</th>
                                     <td id="time_count_fish" data-time_original="${
                                         item._id
                                     }">${moment(item.time_start).format(
-                        "DD/MM/YYYY, HH:mm:ss"
-                    )}</td>
+                    "DD/MM/YYYY, HH:mm:ss"
+                )}</td>
                                     <td>
                                         <button id="btn_chart_choose"
                                             style="border: none; background-color: orange ; border-radius: 5px;color : white;">Watch</button>
                                     </td>
                                 </tr>`;
-                }
 
                 // console.log({ data })
             });
-
+            console.log({ content });
             tableBodyChart.innerHTML = content.join("");
+
             const btnChartChoose =
                 document.querySelectorAll("#btn_chart_choose");
             const timeCountFish = document.querySelectorAll("#time_count_fish");
@@ -816,6 +892,7 @@ btnSearchChart.onclick = (e) => {
     $("#loading_chart").show();
 
     const inputDateValue = inputChart.value.split("-");
+    console.log(inputDateValue);
     const date = `${inputDateValue[2]}-${inputDateValue[1]}-${inputDateValue[0]}`;
     getFishCountByDate(date);
 };
@@ -842,33 +919,33 @@ const updateFoodSettingDaily = () => {
     });
 };
 
-$(document).ready(function () {
-    console.log("reload page");
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
+// $(document).ready(function () {
+//     console.log("reload page");
+//     const date = new Date();
+//     const day = date.getDate();
+//     const month = date.getMonth();
+//     const year = date.getFullYear();
 
-    const dateCurrent = moment(date).format("DD/MM/YYYY");
-    const dateSave = localStorage.getItem("date_current");
+//     const dateCurrent = moment(date).format("DD/MM/YYYY");
+//     const dateSave = localStorage.getItem("date_current");
 
-    if (dateSave != dateCurrent) {
-        updateFoodSettingDaily();
-        localStorage.setItem("date_current", dateCurrent);
-    }
+//     if (dateSave != dateCurrent) {
+//         updateFoodSettingDaily();
+//         localStorage.setItem("date_current", dateCurrent);
+//     }
 
-    if (modeAIOFF == 1) {
-        $("#opacity_loading_page").hide();
-    }
+//     if (modeAIOFF == 1) {
+//         $("#opacity_loading_page").hide();
+//     }
 
-    if (modeAIOFF) {
-        if (id_time_count_fish && modeAIOFF == 0) {
-            $("#opacity_loading_page").show();
-            getFishCountDetail(id_time_count_fish);
-        } else {
-            $("#opacity_loading_page").hide();
-        }
-    } else {
-        $("#opacity_loading_page").hide();
-    }
-});
+//     if (modeAIOFF) {
+//         if (id_time_count_fish && modeAIOFF == 0) {
+//             $("#opacity_loading_page").show();
+//             getFishCountDetail(id_time_count_fish);
+//         } else {
+//             $("#opacity_loading_page").hide();
+//         }
+//     } else {
+//         $("#opacity_loading_page").hide();
+//     }
+// });

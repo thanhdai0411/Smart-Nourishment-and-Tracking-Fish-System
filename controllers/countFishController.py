@@ -30,12 +30,14 @@ def get_count_fish() :
 
 def get_count_fish_by_date(date) : 
     try :
+        print(date)
         item_details = collection_name.find({"date" : date})
         data = []
         for item in item_details:
             item['time_start'] =  str(item['time_start'])
             item['_id'] = str(item['_id'])
             data.append((item))
+        print(data)
         return jsonpickle.encode(data)
     except(Exception):
         return {

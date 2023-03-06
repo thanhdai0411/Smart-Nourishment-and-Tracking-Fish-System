@@ -1,6 +1,36 @@
 @import "responsive";
 $border-color-element-control: #1dc577;
 
+.wrap_user_name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .notification_wrap {
+        margin-right: 20px;
+        cursor: pointer;
+        position: relative;
+
+        @include mobile {
+            margin-right: 15px;
+        }
+
+        .dot_new_noti.noti_new {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            background-color: red;
+            border-radius: 50%;
+            top: 3px;
+            right: 4px;
+            border: 1px solid #ccc;
+        }
+
+        i {
+            font-size: 30px;
+        }
+    }
+}
 .landing_main {
     @include mobile {
         height: 50vh;

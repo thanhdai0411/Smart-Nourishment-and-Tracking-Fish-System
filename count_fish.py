@@ -14,7 +14,9 @@ from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,M
 
 patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
 
-cap = cv2.VideoCapture(patch)
+
+
+cap = cv2.VideoCapture(0)
 
 
 db_client=MongoClient()
@@ -128,8 +130,8 @@ while True:
                     count = count + 1
 
     #! show frame
-    # cv2.imshow("Edge", img_cvtc)
-    # cv2.imshow("Thresh", fish_contour)
+    cv2.imshow("Edge", img_cvtc)
+    cv2.imshow("Thresh", fish_contour)
 
     year, month, day = time.strftime(
         '%Y'), time.strftime('%m'), time.strftime('%d')
@@ -145,6 +147,7 @@ while True:
     fish_count =  {"time" : now,"amount" : count}
 
     data_trans =  str(now) + "=" + str(count)
+    print("fish_eat: " + str(count))
     
     client.publish("count_fish", payload=data_trans, qos=1)
 

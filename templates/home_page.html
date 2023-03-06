@@ -26,6 +26,9 @@
         rel="stylesheet" />
     <!-- b5 -->
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -62,8 +65,8 @@
     <!-- background -->
     <div class="wrap">
 
-      
-        
+
+
         <!-- <canvas id="canvas">
         </canvas> -->
 
@@ -81,10 +84,22 @@
                         </div>
                     </div>
                     <div></div>
-                    <div class="d-flex align-items-center user_login">
+                    <!-- <div class="d-flex align-items-center user_login">
                         <img src="/static/image/icon_fish.png" class="hom_img_avatar" alt="" />
                         <span id="username_login"></span>
                         <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
+                    </div> -->
+                    <div class="wrap_user_name">
+                        <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
+                            <i class="bi bi-bell-fill"></i>
+                            <div class="dot_new_noti noti_new"></div>
+                        </div>
+
+                        <div class="d-flex align-items-center user_login">
+                            <img class="hom_img_avatar" src="/static/image/icon_fish.png" />
+                            <span id="username_login"></span>
+                            <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -251,9 +266,9 @@
                             </div>
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Ngày thả vào hồ</label>
-                                <input type="date" value="" class="form-control" id="input_time_start" 
-                                     placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required />
-                                    
+                                <input type="date" value="" class="form-control" id="input_time_start"
+                                    placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required />
+
                             </div>
                             <div class="mb-3">
                                 <label bel for="exampleFormControlInput1" class="form-label">Tên bạn muốn đặt cho cá của
@@ -664,7 +679,7 @@
                                     <div class="mb-1" style="font-weight: 500;">Ngày gia nhập thành phố</div>
                                     <input class=" form-control start_date_info" type="date" id="exampleInputEmail1"
                                         aria-describedby="emailHelp">
-                                        
+
                                 </div>
                                 <div class="mb-2">
                                     <div class="mb-1" style="font-weight: 500;">Ghi chú</div>
@@ -683,7 +698,7 @@
                 </div>
 
             </div>
-          
+
             <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Sửa</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -692,6 +707,60 @@
     </div>
     </div>
     <!-- end  modal detail profile fish -->
+
+    <!-- modal notification  -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalNoti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Thông báo</h1>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="px-3" style="border-bottom: 1px solid #ccc;">
+                    <div class="mb-3">
+                        <h6 class="my-2 text-dark" id="title_email">Đăng ký gửi thông báo tới email của bạn</h6>
+                        <div class="hide_element" id="loading_email_register">
+                
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group" id="email_register">
+                
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email" id="email_notify">
+                            <button class="btn btn-success" type="button" id="btn_confirm_email">Đăng kí </button>
+                
+                        </div>
+                        <div class="input-group" id="email_already">
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
+                                id="email_notify_already">
+                            <button class="btn btn-success" type="button" id="btn_edit_email">Sửa</button>
+                            <button class="btn btn-danger" type="button" id="btn_delete_email">Xóa</button>
+                
+                
+                        </div>
+                        <div class="form-text" id="subtile_email">Vui lòng nhập đúng email để nhận được thông báo</div>
+                    </div>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+                <div class="modal-body text-dark ">
+                <div class="content_notify">
+                
+                </div>
+
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- end modal notification  -->
 </body>
 <!-- <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
     integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
@@ -724,6 +793,7 @@
 <script src="/static/js/my_swiper.js"></script>
 <script src="/static/js/info_fish.js"></script>
 <script src="/static/js/profile_fish.js"></script>
+<script src="/static/js/email_notify.js"></script>
 
 
 </html>

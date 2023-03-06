@@ -48,6 +48,7 @@ function doFail(e) {
 function onConnect() {
     console.log("Connect successful");
     client.subscribe("Train_model");
+    client.subscribe("fish_die");
 }
 
 function onConnectionLost(responseObject) {
@@ -56,6 +57,92 @@ function onConnectionLost(responseObject) {
     }
 }
 
+const renderNotify = () => {
+    $.ajax({
+        type: "GET",
+        url: `/notify/get/${usernameMqtt}`,
+        dataType: "json",
+        success: function ({ data }) {
+            const notify = JSON.parse(data);
+            if (notify && notify.length > 0) {
+                console.log({ notify });
+                const contentNotifyLoop = notify.map(
+                    (v, index) => `
+                
+                    <p>${v}</p>
+                `
+                );
+                contentNotify.innerHTML = contentNotifyLoop.join("");
+            } else {
+                contentNotify.innerHTML = "Chưa có thông báo nào";
+            }
+        },
+    });
+};
+
+const sendMailInit = (email, text) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("text", text);
+    bodyFormData.append("email", email);
+    $.ajax({
+        type: "POST",
+        url: "/send_mail",
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            console.log({ data });
+        },
+    });
+};
+
+const saveDBNotify = (text) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("username", usernameMqtt);
+    bodyFormData.append("text", text);
+
+    $.ajax({
+        type: "POST",
+        url: "/notify/add",
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            if (data == "OK") {
+                localStorage.setItem("new_noti", 1);
+                dotNewNotify.classList.add("noti_new");
+                renderNotify();
+            }
+        },
+    });
+};
+
+const apiSendMail = (text) => {
+    let emailNotify = localStorage.getItem("email_notify");
+
+    if (emailNotify) {
+        sendMailInit(emailNotify, text);
+        saveDBNotify(text);
+    } else {
+        $.ajax({
+            type: "GET",
+            url: `/email_notify/get/${usernameMqtt}`,
+            dataType: "json",
+            success: function ({ data }) {
+                const emailNotify = JSON.parse(data);
+                if (emailNotify && emailNotify.length > 0) {
+                    sendMailInit(emailNotify[0].email, text);
+                    saveDBNotify(text);
+                } else {
+                    toastFail("Vui lòng đăng kí email để nhạn được thông báo");
+                }
+            },
+        });
+    }
+};
+
 function onMessageArrived(message) {
     console.log(
         ">>>>>>>>> TOPIC: [" +
@@ -63,24 +150,33 @@ function onMessageArrived(message) {
             "] : " +
             message.payloadString
     );
+    if (topic == "fish_die") {
+        let today = new Date();
+        const countDie = message.payloadString;
 
-    let stateTrain = message.payloadString;
-    let state = stateTrain.split("=")[0];
-    let time = stateTrain.split("=")[1];
-    console.log({ state, time });
+        const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
+        const text = `[${dateDie}]: Phát hiện ${countDie} cá chết`;
+        console.log({ text });
+        apiSendMail(text);
+    } else {
+        let stateTrain = message.payloadString;
+        let state = stateTrain.split("=")[0];
+        let time = stateTrain.split("=")[1];
+        console.log({ state, time });
 
-    if (state == "Start") {
-        toastSuccess(`Bắt đầu tiến hành huấn luyện vào lúc ${time}`);
+        if (state == "Start") {
+            toastSuccess(`Bắt đầu tiến hành huấn luyện vào lúc ${time}`);
 
-        setTimeout(function () {
-            location.reload();
-        }, 2000);
-    }
-    if (state == "End") {
-        let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
-        localStorage.setItem("complete_train", content);
-        document.querySelector(".text_complete_train").innerHTML = content;
-        toastSuccess(`Hoàn thành đặt tên cho cá`);
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
+        }
+        if (state == "End") {
+            let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
+            localStorage.setItem("complete_train", content);
+            document.querySelector(".text_complete_train").innerHTML = content;
+            toastSuccess(`Hoàn thành đặt tên cho cá`);
+        }
     }
 }
 

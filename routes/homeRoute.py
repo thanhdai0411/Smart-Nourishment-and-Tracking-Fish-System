@@ -4,7 +4,7 @@ from controllers.homeController import (capture, record, render_home_page,
                                         render_landing_page,
                                         render_view_camera, render_view_home,
                                         start_camera, stop_camera,
-                                        video, video_detect, render_monitor_page, render_profile_page)
+                                        video, video_detect, render_monitor_page, render_profile_page, send_mail)
 
 homeRoute = Blueprint('homeRoute', __name__)
 

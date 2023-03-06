@@ -44,7 +44,6 @@ def add_profile():
         newProfile = ProfileFish(user_system=user_system,username=username, fish_type=fish_type, time_start_farming=time_start_farming, fish_name=fish_name, note=note.strip(), avatar = upload_result["secure_url"])
         newProfile.save()
 
-        result = ProfileFish.objects(user_system=username)
         
 
         return 'OK'

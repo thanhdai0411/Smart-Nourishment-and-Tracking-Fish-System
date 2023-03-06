@@ -55,14 +55,14 @@
     <!-- opacity loading page -->
 
 
-    <div id="opacity_loading_page">
+    <!-- <div id="opacity_loading_page">
         <div class="text-center mt-5">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p>Vui lòng chờ</p>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- end opacity loading page -->
@@ -87,10 +87,17 @@
                         </div>
                     </div>
                     <div></div>
-                    <div class="d-flex align-items-center user_login">
-                        <img class="nav_img_avatar" src="/static/image/icon_fish.png" />
-                        <span id="username_login">{{session.username}}</span>
-                        <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
+                    <div class="wrap_user_name">
+                        <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
+                            <i class="bi bi-bell-fill"   ></i>
+                            <div class="dot_new_noti"></div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center user_login">
+                            <img class="nav_img_avatar" src="/static/image/icon_fish.png" />
+                            <span id="username_login"></span>
+                            <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -253,7 +260,7 @@
                     </div>
 
                     <div id="shape_camera">
-                        <img height="100%" width="100%" src="" id="camera_open" />
+                        <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" />
                     </div>
                     <!-- <div id="shape_camera_fish_die">
                         <img height="100%" width="100%" src="" id="camera_fish_die" />
@@ -396,7 +403,7 @@
                                         <tbody class="text-center" id="table_body_chart">
 
                                         </tbody>
-                                        <p>Những mốc thời gian cho ăn vào ngày <b id="date_eat">...</b></p>
+                                        <p id="date_eat"></p>
                                     </table>
                                 </div>
                             </div>
@@ -548,6 +555,58 @@
     <!-- End Toast message -->
 
     <!-- end modal -->
+
+    <div class="modal fade" id="modalNoti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Thông báo</h1>
+    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="px-3" style="border-bottom: 1px solid #ccc;">
+                    <div class="mb-3">
+                        <h6 class="my-2 text-dark" id="title_email">Đăng ký gửi thông báo tới email của bạn</h6>
+                        <div class="hide_element" id="loading_email_register">
+    
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group" id="email_register">
+    
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
+                                id="email_notify">
+                            <button class="btn btn-success" type="button" id="btn_confirm_email">Đăng kí </button>
+    
+                        </div>
+                        <div class="input-group" id="email_already">
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
+                                id="email_notify_already">
+                            <button class="btn btn-success" type="button" id="btn_edit_email">Sửa</button>
+                            <button class="btn btn-danger" type="button" id="btn_delete_email">Xóa</button>
+    
+    
+                        </div>
+                        <div class="form-text" id="subtile_email">Vui lòng nhập đúng email để nhận được thông báo</div>
+                    </div>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+                <div class="modal-body text-dark ">
+                    <div class="content_notify">
+                            
+                        </div>
+    
+                    
+                </div>
+    
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
@@ -574,6 +633,8 @@
 <script src="/static/js/mqtt.js"></script>
 <script src="/static/js/camera.js"></script>
 <script src="/static/js/food.js" type="text/javascript"></script>
+<script src="/static/js/email_notify.js"></script>
+
 
 
 

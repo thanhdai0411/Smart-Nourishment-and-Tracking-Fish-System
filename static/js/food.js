@@ -146,11 +146,11 @@ modalDeleteFood.addEventListener("show.bs.modal", (event) => {
             success: function (data) {
                 if (data.success == 1) {
                     getValue();
-                    toastSuccessFood("Xóa thành công");
 
                     btnCompleteDelete.classList.remove("d-none");
                     $("#loading_delete_food").hide();
                     $("#modalDeleteFood").modal("hide");
+                    toastSuccessFood("Xóa thành công");
                 } else {
                     $("#modalDeleteFood").modal("hide");
                     toastFailFood("Xóa thất bại");

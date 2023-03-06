@@ -5,26 +5,33 @@ SUCCESS_STATUS = {"success": 1,
 ERROR_STATUS = {"success": 0,
                 "message": "Error !!"}
 
-FOLDER_SAVE_LABELS = '/home/doan/DA/WebServer/Aquarium-Smart/coco128/labels/train2017'
-FOLDER_SAVE_IMAGES = '/home/doan/DA/WebServer/Aquarium-Smart/coco128/images/train2017'
+BASE_PATH = "D:/Studyspace/DoAn/Aquarium"
 
-PATCH_TO_COCO12YAML = "/home/doan/DA/WebServer/Aquarium-Smart/data/coco128.yaml"
-PATH_TO_WEIGHT_INIT = "/home/doan/DA/WebServer/Aquarium-Smart/yolov5s.pt"
-PATCH_COUNT_FISH = '/home/doan/DA/WebServer/Aquarium-Smart/count_fish.py'
+FOLDER_SAVE_LABELS = BASE_PATH + '/coco128/labels/train2017'
+FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
 
-PATH_TRAIN_MODEL = "/home/doan/DA/WebServer/Aquarium-Smart/train.py"
-PATH_MODEL_FISH_DIE = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
+PATCH_TO_COCO12YAML = BASE_PATH + "/data/coco128.yaml"
+PATH_TO_WEIGHT_INIT = BASE_PATH + "/yolov5s.pt"
+PATCH_COUNT_FISH = BASE_PATH + '/count_fish.py'
+
+PATH_TRAIN_MODEL = BASE_PATH + "/train.py"
+PATH_MODEL_FISH_DIE = BASE_PATH + "/model_fish_die.pt"
+
 
 CLOUDINARY_NAME = 'img-aquarium'
 CLOUDINARY_API_KEY = '297934749829863'
 CLOUDINARY_API_SECRET = 'gtbtgeyPmx219CYa67cEqnHZ9xU'
 
-PATCH_FOOD_SETTING = '/home/doan/DA/WebServer/Aquarium-Smart/my_data/food_setting.json'
+PATCH_FOOD_SETTING = BASE_PATH + '/my_data/food_setting.json'
 
 BROKER_URL = 'e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud'
 BROKER_PORT = 8883
 BROKER_USERNAME = 'thanhdai0411'
 BROKER_PASSWORD = 'thanhdai0411'
+
+EMAIL_USERNAME = 'aquarium.smart.service@gmail.com'
+EMAIL_PASSWORD = 'fmklaxodfduvreca'
+
 
 
 def success_status(message):

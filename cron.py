@@ -118,7 +118,6 @@ def cron_food(loop_on):
         client.subscribe("control_ai_food", qos=1)
         client.subscribe("control_food", qos=1)
 
-        # client.publish("encyclopedia/temperature", payload="hot", qos=1)
 
         # client.loop()
         client.loop_start()

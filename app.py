@@ -1,4 +1,4 @@
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL,PATCH_TO_COCO12YAML,PATH_TO_WEIGHT_INIT
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL, EMAIL_USERNAME, EMAIL_PASSWORD
 from subprocess import call,Popen,check_call
 from werkzeug.utils import secure_filename
 from flask_session import Session
@@ -17,8 +17,10 @@ from time import sleep
 import numpy as np
 from multiprocessing import  Value,Process,Queue
 from cron import cron_food
+from flask_redmail import RedMail
+import urllib.request, json
+from my_utils.jsonFile import read_file_json, write_file_json
 
-from my_models.foodModel import Food
 
 # from flask_crontab import Crontab
 
@@ -30,6 +32,19 @@ app = Flask(__name__, static_url_path='/static')
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+# config emaial 
+
+app.config["EMAIL_HOST"] = "smtp.gmail.com"
+app.config["EMAIL_PORT"] = 587
+
+app.config["EMAIL_USERNAME"] = EMAIL_USERNAME
+app.config["EMAIL_PASSWORD"] = EMAIL_PASSWORD
+
+app.config["EMAIL_SENDER"] = EMAIL_USERNAME
+
+email = RedMail()
+email.init_app(app)
 
 # scss config~
 assets = Environment(app)  # create an Environment instance
@@ -75,6 +90,25 @@ def train_model():
 
     return redirect('/home')
 
+
+@app.route("/send_mail", methods=["POST"])
+def send_email():
+    email_receiver = request.form.get('email')
+    text = request.form.get('text')
+    print(email_receiver, text)
+    email.send(
+
+        subject="Hi, I'm Smart Aquarium Notification !",
+        receivers=email_receiver,
+        html="""
+            <p style="font-size : 18px">{{text}}</p>
+        """,
+        body_params={
+                "text": text
+            }
+    )
+    return "Sent"
+
 #! =============================================================================================
 
 
@@ -88,6 +122,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 if __name__ == "__main__":
+
+        
+    
+
+
+
 
     
 
@@ -104,7 +144,7 @@ if __name__ == "__main__":
 
     def on_message(client, userdata, msg):
         print(msg.topic + ": " + str(msg.payload))  
-          
+        
 
 
         
@@ -121,7 +161,7 @@ if __name__ == "__main__":
     client.on_publish = on_publish
 
     client.subscribe("start_feed_fish", qos=1)
-    # client.subscribe("open_detect_fish", qos=1)
+    client.subscribe("fish_die", qos=1)
 
 
 
@@ -134,6 +174,6 @@ if __name__ == "__main__":
     
     connectDB(app)
     p.start()   
-    # app.run(debug=True, threaded=True)
-    app.run(host="0.0.0.0", port=8978,debug=False, threaded=True)
+    app.run(debug=True, threaded=True)
+    # app.run(host="0.0.0.0", port=8978,debug=False, threaded=True)
     p.join()

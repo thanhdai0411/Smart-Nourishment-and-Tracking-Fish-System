@@ -107,6 +107,7 @@ a {
                 flex-direction: column;
 
             }
+
             #shape_camera_fish_die {
                 box-shadow: -2px 3px 21px 2px #38604e;
                 border: 1.5px solid #4b7d67;
@@ -244,7 +245,7 @@ a {
 
             .button_control {
                 // width: 50%;
-                width : 33.33333%;
+                width: 33.33333%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -325,7 +326,7 @@ a {
             .form-check-input:checked {
                 background-color: rgb(205, 129, 43);
                 border: white;
-            
+
             }
 
             .control_switch {
@@ -430,7 +431,7 @@ a {
                     text-align: left;
                     font-size: 27px;
                     margin-top: 20px;
-                    margin :  0px ;
+                    margin: 0px;
                     font-weight: 500;
 
                     @include mobile {
@@ -573,9 +574,40 @@ a {
         @include mobile {}
     }
 
+    .wrap_user_name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .notification_wrap {
+            margin-right: 20px;
+            cursor: pointer;
+            position: relative;
+
+            @include mobile {
+                margin-right: 15px;
+            }
+
+            .dot_new_noti.noti_new {
+                position: absolute;
+                width: 13px;
+                height: 13px;
+                background-color: red;
+                border-radius: 50%;
+                top: 3px;
+                right: 4px;
+                border: 1px solid #ccc;
+            }
+
+            i {
+                font-size: 30px;
+            }
+        }
+    }
+
     .nav_img_avatar {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
 
         @include mobile {
             width: 35px;
@@ -634,6 +666,7 @@ a {
         @include tablet {
             margin: 0 20px;
         }
+
         @include mobile {
             margin: 0 10px;
         }
@@ -819,30 +852,31 @@ a {
 
 #color_table {
     display: block;
-        width: 50px;
-        height: 50px;
-        border: none;
-        background: none;
-        cursor: pointer;
-    
-        @include mobile {
-            width: 40px;
-            height: 40px;
-        }
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    @include mobile {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 input[type="range"] {
-        outline: 0;
-            border: 0;
-            border-radius: 100px;
-            // width: 196px;
-            max-width: 100%;
-            // margin: 35px 0 16px;
-            margin-top: 35px;
-            transition: box-shadow 0.2s ease-in-out;
-            @include mobile {
-                margin-top: 15px;
-                }
+    outline: 0;
+    border: 0;
+    border-radius: 100px;
+    // width: 196px;
+    max-width: 100%;
+    // margin: 35px 0 16px;
+    margin-top: 35px;
+    transition: box-shadow 0.2s ease-in-out;
+
+    @include mobile {
+        margin-top: 15px;
+    }
 
     // Chrome
     @media screen and (-webkit-min-device-pixel-ratio:0) {
