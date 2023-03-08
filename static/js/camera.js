@@ -28,6 +28,13 @@ const showCamera = (src) => {
     $(".camera-btn_group").show();
     camera.setAttribute("src", src);
 };
+const showCameraNoteFrame = (src) => {
+    $("#shape_camera_none").show();
+    $("#shape_camera").hide();
+    $("#loading_open_camera").hide();
+    $(".camera-btn_group").show();
+    camera.setAttribute("src", src);
+};
 
 btnStartCamera.onclick = (e) => {
     hideCamera();
@@ -39,7 +46,10 @@ btnStartCamera.onclick = (e) => {
 btnStopCamera.onclick = (e) => {
     hideCamera();
     setTimeout(() => {
-        showCamera("/camera/fish_die");
+        showCameraNoteFrame("/camera/fish_die");
+        // showCamera("/camera/fish_die");
+
+        // camera.setAttribute("src", "/camera/fish_die");
     }, 5000);
 };
 

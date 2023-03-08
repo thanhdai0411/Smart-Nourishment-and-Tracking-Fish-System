@@ -52,4 +52,4 @@ def update_notify(username):
     
 def delete_notify(username):    
     Notification.objects(username=username).delete()
-    return '123123123123123'
+    return 'OK'

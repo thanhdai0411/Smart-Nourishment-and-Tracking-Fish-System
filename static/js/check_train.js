@@ -49,6 +49,7 @@ function onConnect() {
     console.log("Connect successful");
     client.subscribe("Train_model");
     client.subscribe("fish_die");
+    client.subscribe("start_eat");
 }
 
 function onConnectionLost(responseObject) {
@@ -69,7 +70,7 @@ const renderNotify = () => {
                 const contentNotifyLoop = notify.map(
                     (v, index) => `
                 
-                    <p>${v}</p>
+                    <p>${v.text}</p>
                 `
                 );
                 contentNotify.innerHTML = contentNotifyLoop.join("");
@@ -158,6 +159,42 @@ function onMessageArrived(message) {
         const text = `[${dateDie}]: Phát hiện ${countDie} cá chết`;
         console.log({ text });
         apiSendMail(text);
+    } else if (topic === "start_eat") {
+        let payload = message.payloadString;
+        if (Number(payload) != 0) {
+            let stateTrain = message.payloadString;
+            let id = stateTrain.split("=")[0];
+
+            document.getElementById("camera_open").src = "/camera/count_fish";
+            localStorage.setItem("id_food_run", id);
+        } else if (Number(payload) == 0) {
+            document.getElementById("camera_open").src = "/camera/fish_die";
+
+            let id = localStorage.getItem("id_food_run");
+
+            var bodyFormData = new FormData();
+
+            bodyFormData.append("status", "COMPLETE");
+
+            $.ajax({
+                type: "POST",
+                url: `/food/update_status/${id}`,
+                data: bodyFormData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    if (data === "OK") {
+                        getValue();
+                        toastSuccessFood(`Cho cá ăn thành công`);
+                        $("#modalEditFood").modal("hide");
+                    }
+                },
+            });
+
+            const rgbCode = localStorage.getItem("rgb_code");
+            public_message("rgb_control", rgbCode);
+        }
     } else {
         let stateTrain = message.payloadString;
         let state = stateTrain.split("=")[0];

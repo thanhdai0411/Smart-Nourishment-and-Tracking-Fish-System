@@ -65,6 +65,8 @@ modalNotify.addEventListener("show.bs.modal", (event) => {
     dotNewNotify2.classList.remove("noti_new");
     localStorage.removeItem("new_noti");
 
+    const btnClearNotify = modalNotify.querySelector("#btn_clear_notify");
+
     renderNotifyMain();
 
     if (emailNotify) {
@@ -142,6 +144,17 @@ modalNotify.addEventListener("show.bs.modal", (event) => {
             },
         });
     }
+
+    btnClearNotify.onclick = () => {
+        $.ajax({
+            type: "GET",
+            url: `/notify/delete/${usernameLoginEmailRegister}`,
+            dataType: "json",
+            success: function (data) {
+                renderNotifyMain();
+            },
+        });
+    };
 });
 
 btnConfirmRegisterEmail.onclick = (e) => {

@@ -11,7 +11,7 @@ import torch
 from flask import (Flask, Response, flash, redirect, render_template, request,
                    url_for)
 from PIL import Image
-from cv2 import cuda
+from pymongo import MongoClient
 
 
 # from constant import PATH_MODEL_FISH_DIE
@@ -19,49 +19,14 @@ from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,P
 import paho.mqtt.client as paho
 from paho import mqtt
 
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
 
 
+db_client=MongoClient()
+db_client = MongoClient(MONGODB_URL)
+mydatabase = db_client["test"]
+collection_name = mydatabase["amount_fish"]
 
-
-# STD_DIMENSIONS =  {
-#     "480p": (640, 480),
-#     "720p": (1280, 720),
-#     "1080p": (1920, 1080),
-#     "4k": (3840, 2160),
-# }
-
-# 160.0 x 120.0
-# 176.0 x 144.0
-# 320.0 x 240.0
-# 352.0 x 288.0
-# 640.0 x 480.0
-# 1024.0 x 768.0
-# 1280.0 x 1024.0
-
-# camera = cv2.VideoCapture(0)
-
-
-# camera.set(cv2.CAP_PROP_FRAME_WIDTH, 352)
-# camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 288)
-
-
-
-# camera.release()
-
-
-# try:
-#     os.mkdir('./public/capture_camera')
-#     os.mkdir('./public/record_camera')
-# except OSError as error:
-#     pass
-
-
-# Load Pre-trained Model
-# model = torch.hub.load('ultralytics/yolov5',
-#                        'yolov5s', force_reload=True, pretrained=True)
-
-# model_url = "/home/doan/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt"
-# model_url = "/home/doan/DA/WebServer/Aquarium-Smart/model_fish_die.pt"
 
 
 
@@ -139,7 +104,7 @@ def generate_frames_detect():
             img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
 
-            frame = cv2.resize(frame, (416,416))
+
 
             # =====================================
 
@@ -189,18 +154,17 @@ def generate_frames_detect_fish_die():
                 client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
 
             print(time_send)
+
             img = np.squeeze(results.render())  # RGB
-            # read image as BGR
+           
             img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
-            # =====================================
 
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
         else:
             pass
-
 
 def generate_frames():
 
@@ -227,22 +191,117 @@ def generate_frames():
             # print(success)
             pass
 
-
 def generate_frames_count_fish():
 
 
     camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+    # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+    
+        
+
+    year, month, day = time.strftime(
+            '%Y'), time.strftime('%m'), time.strftime('%d')
+
+    date_start =  str(day) + "-" + str(month) + "-" + str(year) 
+    # now_start = datetime.datetime.now().strftime("%H:%M:%S.%f")
+    now_start = datetime.datetime.now()
+
+
+
+    init_data = {
+        "date" : date_start,
+        "time_start" : now_start,
+        "fish_count" : []
+    }
+
+    collection_name.insert_one(init_data)
+
+    item_details = collection_name.find_one({"time_start" : now_start})
+    data_start_trans = str(1)+"="+str(item_details["_id"])
+    client.publish("feed_fish", payload=data_start_trans, qos=1)
+
+
+
+
+    DURATION = 30
+
+    EDGE_TOP = 50
+    EDGE_RIGHT = 500
+    EDGE_BOTTOM = 350
+    EDGE_LEFT = 100
+
+    TIME_DURATION = datetime.datetime.now() + datetime.timedelta(seconds=DURATION)
+    # time_duration = datetime.datetime.now()+datetime.timedelta(minutes=DURATION)
 
     
 
     while True:
         success, frame = camera.read()
         if success:
+            img_cvt = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            img_cvtc = img_cvt.copy()
+            cv2.rectangle(img_cvtc, (EDGE_LEFT, EDGE_TOP),
+                  (EDGE_RIGHT, EDGE_BOTTOM), (0, 0, 255), 5)
+
+            ROI = img_cvt[EDGE_TOP:EDGE_BOTTOM, EDGE_LEFT:EDGE_RIGHT]
+
+            gray = cv2.cvtColor(ROI, cv2.COLOR_RGB2GRAY)
+            blur = cv2.GaussianBlur(gray, (15, 15), 0)
+
+            ret, threshold = cv2.threshold(blur, 100, 255, cv2.THRESH_BINARY_INV)
+
+            contours, hierarchy = cv2.findContours(
+                threshold.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+            cnt_info = []
+
+            fish_contour = np.zeros(threshold.shape)
+            count = 0
+            for cnt in contours:
+
+                area = round(cv2.contourArea(cnt))
+
+                if area > 50 and 0 not in cnt:
+
+                    if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
+
+                        if 0 or threshold.shape[0] - 1 not in (cnt[i][0][1] for i in range(len(cnt))):
+
+                            cv2.drawContours(fish_contour, [cnt], 0, 255, -1)
+
+                            count = count + 1
 
 
-            ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
+            print("Count fish : " + str(count))
+            
+            year, month, day = time.strftime(
+                '%Y'), time.strftime('%m'), time.strftime('%d')
+
+            # now = datetime.datetime.now().strftime("%H:%M:%S.%f")
+            now = datetime.datetime.now()
+
+            date_push =  str(day) + "-" + str(month) + "-" + str(year) 
+            fish_count =  {"time" : now,"amount" : count}
+
+            data_trans =  str(now) + "=" + str(count)
+
+            client.publish("count_fish", payload=data_trans, qos=1)
+
+            collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
+            
+
+            time.sleep(0.3)
+
+            if datetime.datetime.now() > TIME_DURATION:
+                data_start_trans = str(0)+"="+str(item_details["_id"])
+                # client.publish("feed_fish", payload=data_start_trans, qos=1)
+                client.publish("start_eat", payload='0', qos=1)
+                break
+
+
+
+            ret, buffer = cv2.imencode('.jpg', cv2.flip(img_cvtc, 1))
             frame = buffer.tobytes()
 
             yield (b'--frame\r\n'
@@ -253,7 +312,6 @@ def generate_frames_count_fish():
             # print(success)
             pass
 
-
 def handle_fail_open_camera() :
     print("")
 
@@ -261,16 +319,10 @@ def start_generate_frames():
     global camera, state_open_camera
     camera = cv2.VideoCapture(0)
 
-
 def stop_generate_frames():
     global camera, state_open_camera
     camera.release()
     cv2.destroyAllWindows()
-
-
-# def camera_detect():
-#     return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 def record(out):
     global rec_frame
@@ -278,11 +330,9 @@ def record(out):
         time.sleep(0.05)
         out.write(rec_frame)
 
-
 def capture_screen():
     global capture
     capture = 1
-
 
 def record_screen():
     global rec, out

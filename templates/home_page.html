@@ -55,6 +55,7 @@
     <!-- cropper -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" />
     <link rel="stylesheet" href="" />
+
     <!-- scss -->
     {% assets "scss_all" %}
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
@@ -63,12 +64,14 @@
 
 <body style="margin: 0; padding: 0; color: white">
     <!-- background -->
+    
     <div class="wrap">
 
 
 
         <!-- <canvas id="canvas">
         </canvas> -->
+        <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" class="d-none" />
 
         <!-- banner -->
         <div class="landing_main" id="landing_main_home">
@@ -92,7 +95,7 @@
                     <div class="wrap_user_name">
                         <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
                             <i class="bi bi-bell-fill"></i>
-                            <div class="dot_new_noti noti_new"></div>
+                            <div class="dot_new_noti"></div>
                         </div>
 
                         <div class="d-flex align-items-center user_login">
@@ -730,7 +733,7 @@
                             </div>
                         </div>
                         <div class="input-group" id="email_register">
-                
+                            
                             <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="email" id="email_notify">
                             <button class="btn btn-success" type="button" id="btn_confirm_email">Đăng kí </button>
@@ -750,8 +753,9 @@
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 </div>
                 <div class="modal-body text-dark ">
+                    <button class="btn btn-outline-danger mb-2 w-100" id="btn_clear_notify">CLEAR NOTIFICATION</button>
                 <div class="content_notify">
-                
+                    
                 </div>
 
                     
@@ -787,6 +791,7 @@
 </script>
 
 <script src="/static/js/upload_labels.js" type="text/javascript"></script>
+<!-- <script src="/static/js/mqtt.js" type="text/javascript"></script> -->
 <!-- <script src="/static/js/food.js" type="text/javascript"></script> -->
 
 <script src="/static/js/check_train.js"></script>

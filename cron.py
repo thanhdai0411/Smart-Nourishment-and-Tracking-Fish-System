@@ -49,14 +49,10 @@ def cron_food(loop_on):
 
         def on_message(client, userdata, msg):
             print(msg.topic + ": " + str(msg.payload))
-            controlLamp = msg.topic == "control_lamp"
             controlAIFood = msg.topic == "control_ai_food"
-            controlFood = msg.topic == "control_food"
+            # controlFood = msg.topic == "control_food"
 
-            if(controlLamp and msg.payload == b'1'):
-                print('ON LAMP')
-            if(controlLamp and msg.payload == b'0'):
-                print('OFF LAMP')
+           
 
             # !===============================================================
             if(controlAIFood and msg.payload == b'1'):
@@ -96,10 +92,7 @@ def cron_food(loop_on):
 
             # !===============================================================
 
-            if(controlFood and msg.payload == b'1'):
-                print('ON FOOD TIME')
-            if(controlFood and msg.payload == b'0'):
-                print('OFF FOOD TIME')
+            
 
         client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
         client.on_connect = on_connect
@@ -114,9 +107,8 @@ def cron_food(loop_on):
         client.on_publish = on_publish
 
         # subscribe to all topics of encyclopedia by using the wildcard "#"
-        client.subscribe("control_lamp", qos=1)
         client.subscribe("control_ai_food", qos=1)
-        client.subscribe("control_food", qos=1)
+        # client.subscribe("control_food", qos=1)
 
 
         # client.loop()
@@ -164,12 +156,14 @@ def cron_food(loop_on):
                                 json_object = read_file_json()
                                 json_object.append({'username': "START_CRON"})
                                 write_file_json(json_object)
-
-                                call(['python', PATCH_COUNT_FISH])
-
+                                
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"
-                                client.publish("food_complete", payload=complete, qos=1)
+                                client.publish("start_eat", payload=complete, qos=1)
+
+                                # call(['python', PATCH_COUNT_FISH])
+
+                                # client.publish("food_complete", payload=complete, qos=1)
                                 
                     else:
                         print('Not setting food')
