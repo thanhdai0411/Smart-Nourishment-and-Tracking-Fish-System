@@ -195,3 +195,16 @@ btnConfirmRegisterEmail.onclick = (e) => {
         },
     });
 };
+
+//
+
+// $(document).ready(function () {
+//     $.ajax({
+//         type: "GET",
+//         url: `/camera/fish_die`,
+//         dataType: "json",
+//         success: function (data) {
+//             console.log({ die: data });
+//         },
+//     });
+// });

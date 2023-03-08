@@ -79,7 +79,7 @@ def train_model():
 
     # python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt
 
-    call(["python",PATH_TRAIN_MODEL])
+    call(["python3",PATH_TRAIN_MODEL])
 
     dt_obj_2 = datetime.now()
     timeComplete = dt_obj_2.strftime("%d/%m/%Y - %H:%M")
@@ -122,14 +122,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 if __name__ == "__main__":
-
-        
-    
-
-
-
-
-    
 
     #!MQTT SETUP ==========================================================
 

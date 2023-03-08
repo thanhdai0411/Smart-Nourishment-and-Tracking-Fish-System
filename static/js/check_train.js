@@ -6,6 +6,7 @@ const timeEndToast = document.querySelector(".time_end_toast");
 
 const toastBodyStart = document.querySelector(".toast-body-start");
 const toastBodyEnd = document.querySelector(".toast-body-end");
+const usernameMqtt1 = document.querySelector("#username_login").innerHTML;
 
 let text = localStorage.getItem("complete_train");
 document.querySelector(".text_complete_train").innerHTML = text;
@@ -61,7 +62,7 @@ function onConnectionLost(responseObject) {
 const renderNotify = () => {
     $.ajax({
         type: "GET",
-        url: `/notify/get/${usernameMqtt}`,
+        url: `/notify/get/${usernameMqtt1}`,
         dataType: "json",
         success: function ({ data }) {
             const notify = JSON.parse(data);
@@ -100,7 +101,7 @@ const sendMailInit = (email, text) => {
 
 const saveDBNotify = (text) => {
     var bodyFormData = new FormData();
-    bodyFormData.append("username", usernameMqtt);
+    bodyFormData.append("username", usernameMqtt1);
     bodyFormData.append("text", text);
 
     $.ajax({
@@ -129,7 +130,7 @@ const apiSendMail = (text) => {
     } else {
         $.ajax({
             type: "GET",
-            url: `/email_notify/get/${usernameMqtt}`,
+            url: `/email_notify/get/${usernameMqtt1}`,
             dataType: "json",
             success: function ({ data }) {
                 const emailNotify = JSON.parse(data);
@@ -137,7 +138,7 @@ const apiSendMail = (text) => {
                     sendMailInit(emailNotify[0].email, text);
                     saveDBNotify(text);
                 } else {
-                    toastFail("Vui lòng đăng kí email để nhạn được thông báo");
+                    saveDBNotify(text);
                 }
             },
         });
@@ -151,12 +152,13 @@ function onMessageArrived(message) {
             "] : " +
             message.payloadString
     );
+    const topic = message.destinationName;
     if (topic == "fish_die") {
         let today = new Date();
         const countDie = message.payloadString;
 
         const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
-        const text = `[${dateDie}]: Phát hiện ${countDie} cá chết`;
+        const text = `[${dateDie}]: Found dead fish`;
         console.log({ text });
         apiSendMail(text);
     } else if (topic === "start_eat") {

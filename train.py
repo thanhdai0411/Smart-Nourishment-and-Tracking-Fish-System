@@ -430,18 +430,17 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     return results
 
 
-exist_folder = os.path.isdir('D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train')
+base_path = "/home/doan/DA/WebServer/Aquarium-Smart/"
+
+exist_folder = os.path.isdir(base_path + 'train_complete/train')
 path_model_init = ""
 
 if(exist_folder) :
-    for model in os.listdir("D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights"):
+    for model in os.listdir(base_path+"train_complete/train/weights"):
         if(model == "last.pt") :
-            path_model_init = "D:\\Studyspace\\DoAn\\Aquarium\\train_complete\\train\\weights\\last.pt"
+            path_model_init = base_path + "train_complete/train/weights/last.pt"
 else :
-    path_model_init = "D:\\Studyspace\\DoAn\\Aquarium\\yolov5n.pt"
-
-print(path_model_init)
-
+    path_model_init = base_path + "yolov5n.pt"
 
 
 def parse_opt(known=False):

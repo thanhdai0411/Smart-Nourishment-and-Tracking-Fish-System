@@ -5,7 +5,7 @@ SUCCESS_STATUS = {"success": 1,
 ERROR_STATUS = {"success": 0,
                 "message": "Error !!"}
 
-BASE_PATH = "D:/Studyspace/DoAn/Aquarium"
+BASE_PATH = "/home/doan/DA/WebServer/Aquarium-Smart"
 
 FOLDER_SAVE_LABELS = BASE_PATH + '/coco128/labels/train2017'
 FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
@@ -16,6 +16,7 @@ PATCH_COUNT_FISH = BASE_PATH + '/count_fish.py'
 
 PATH_TRAIN_MODEL = BASE_PATH + "/train.py"
 PATH_MODEL_FISH_DIE = BASE_PATH + "/model_fish_die.pt"
+PATH_SAVE_MODEL_FISH_DIE = BASE_PATH + "/my_data/save_load_model_fish_die.json"
 
 
 CLOUDINARY_NAME = 'img-aquarium'

@@ -150,7 +150,7 @@ def cron_food(loop_on):
                                 print('Hey Hey , Cron Food'  + str(time_on) + " Lượng thức ăn: " + str(amount_food))
 
                                 controlMotor =  "M" + str(int(int(amount_food)*1000)) + "E"
-                                print(controlMotor)
+
                                 client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 json_object = read_file_json()
@@ -160,6 +160,7 @@ def cron_food(loop_on):
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"
                                 client.publish("start_eat", payload=complete, qos=1)
+                                client.publish("rgb_control", payload="R255G255B255E", qos=1)
 
                                 # call(['python', PATCH_COUNT_FISH])
 

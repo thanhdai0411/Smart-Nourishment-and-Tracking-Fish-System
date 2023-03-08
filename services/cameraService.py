@@ -12,14 +12,16 @@ from flask import (Flask, Response, flash, redirect, render_template, request,
                    url_for)
 from PIL import Image
 from pymongo import MongoClient
+from flask_session import Session
+from my_utils.jsonFile import write_file_json,read_file_json
+
 
 
 # from constant import PATH_MODEL_FISH_DIE
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,MONGODB_URL, PATH_SAVE_MODEL_FISH_DIE
 import paho.mqtt.client as paho
 from paho import mqtt
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
 
 
 db_client=MongoClient()
@@ -69,7 +71,6 @@ DURATION = 60
 TIME_DURATION = datetime.datetime.now() + datetime.timedelta(minutes=DURATION)
 
 
-
 def generate_frames_detect():
 
     # model = torch.hub.load('ultralytics/yolov5',
@@ -116,55 +117,56 @@ def generate_frames_detect():
 
 def generate_frames_detect_fish_die():
 
-    # model = torch.hub.load('ultralytics/yolov5',
-    #                        'yolov5s')
-    model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
-    
-    camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
-    time_send = None
 
-    while True:
-        success, frame = camera.read()
-        if success:
-            ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
-            frame = buffer.tobytes()
+    have_model = read_file_json(PATH_SAVE_MODEL_FISH_DIE)
+    if(not have_model['load_model_fish_die']) :
+        model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
+        write_file_json(PATH_SAVE_MODEL_FISH_DIE ,{'load_model_fish_die': "true"})
+        camera = cv2.VideoCapture(0)
+        camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+        camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        time_send = None
 
-            # =====================================
+        while True:
+            success, frame = camera.read()
+            if success:
+                ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
+                frame = buffer.tobytes()
 
-            img = Image.open(io.BytesIO(frame))
-            results = model(img)
-            # results = model(img)
-            # results.print()
+                # =====================================
 
-            count_detect = results.pandas().xyxy[0]['name']
-            list_count_detect = list(count_detect) 
-            # if datetime.datetime.now() > TIME_DURATION:
-            
-            if time_send is not None : 
+                img = Image.open(io.BytesIO(frame))
+                results = model(img)
+                # results = model(img)
+                # results.print()
 
-                if(len(list_count_detect) > 0 and  datetime.datetime.now() >= time_send ) :
+                count_detect = results.pandas().xyxy[0]['name']
+                list_count_detect = list(count_detect) 
+                # if datetime.datetime.now() > TIME_DURATION:
+                
+                if time_send is not None : 
+
+                    if(len(list_count_detect) > 0 and  datetime.datetime.now() >= time_send ) :
+                        time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
+                        print('Die count: ' + str(len(list_count_detect)))
+                        client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
+                elif(len(list_count_detect) > 0) :
                     time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
                     print('Die count: ' + str(len(list_count_detect)))
                     client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
-            elif(len(list_count_detect) > 0) :
-                time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
-                print('Die count: ' + str(len(list_count_detect)))
-                client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
 
-            print(time_send)
+                print(time_send)
 
-            img = np.squeeze(results.render())  # RGB
-           
-            img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-            frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
+                img = np.squeeze(results.render())  # RGB
+            
+                img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+                frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
 
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-        else:
-            pass
+            else:
+                pass
 
 def generate_frames():
 
@@ -198,7 +200,6 @@ def generate_frames_count_fish():
     # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
     
-        
 
     year, month, day = time.strftime(
             '%Y'), time.strftime('%m'), time.strftime('%d')
