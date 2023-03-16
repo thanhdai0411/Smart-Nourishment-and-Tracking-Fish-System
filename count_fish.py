@@ -15,11 +15,9 @@ from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,M
 patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
 
 
+db_client=MongoClient()
 
 cap = cv2.VideoCapture(0)
-
-
-db_client=MongoClient()
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
 collection_name = mydatabase["amount_fish"]
@@ -93,76 +91,80 @@ client.loop_start()
     
 while True:
 
-    _, img = cap.read()
+    success, img = cap.read()
 
-    img_cvt = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    if success :
 
-    img_cvtc = img_cvt.copy()
-    cv2.rectangle(img_cvtc, (EDGE_LEFT, EDGE_TOP),
-                  (EDGE_RIGHT, EDGE_BOTTOM), (0, 0, 255), 5)
+        img_cvt = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    ROI = img_cvt[EDGE_TOP:EDGE_BOTTOM, EDGE_LEFT:EDGE_RIGHT]
+        img_cvtc = img_cvt.copy()
+        cv2.rectangle(img_cvtc, (EDGE_LEFT, EDGE_TOP),
+                    (EDGE_RIGHT, EDGE_BOTTOM), (0, 0, 255), 5)
 
-    gray = cv2.cvtColor(ROI, cv2.COLOR_RGB2GRAY)
-    blur = cv2.GaussianBlur(gray, (15, 15), 0)
+        ROI = img_cvt[EDGE_TOP:EDGE_BOTTOM, EDGE_LEFT:EDGE_RIGHT]
 
-    ret, threshold = cv2.threshold(blur, 100, 255, cv2.THRESH_BINARY_INV)
+        gray = cv2.cvtColor(ROI, cv2.COLOR_RGB2GRAY)
+        blur = cv2.GaussianBlur(gray, (15, 15), 0)
 
-    contours, hierarchy = cv2.findContours(
-        threshold.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        ret, threshold = cv2.threshold(blur, 100, 255, cv2.THRESH_BINARY_INV)
 
-    cnt_info = []
+        contours, hierarchy = cv2.findContours(
+            threshold.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    fish_contour = np.zeros(threshold.shape)
-    count = 0
-    for cnt in contours:
+        cnt_info = []
 
-        area = round(cv2.contourArea(cnt))
+        fish_contour = np.zeros(threshold.shape)
+        count = 0
+        for cnt in contours:
 
-        if area > 50 and 0 not in cnt:
+            area = round(cv2.contourArea(cnt))
 
-            if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
+            if area > 50 and 0 not in cnt:
 
-                if 0 or threshold.shape[0] - 1 not in (cnt[i][0][1] for i in range(len(cnt))):
+                if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
-                    cv2.drawContours(fish_contour, [cnt], 0, 255, -1)
+                    if 0 or threshold.shape[0] - 1 not in (cnt[i][0][1] for i in range(len(cnt))):
 
-                    count = count + 1
+                        cv2.drawContours(fish_contour, [cnt], 0, 255, -1)
 
-    #! show frame
-    cv2.imshow("Edge", img_cvtc)
-    cv2.imshow("Thresh", fish_contour)
+                        count = count + 1
 
-    year, month, day = time.strftime(
-        '%Y'), time.strftime('%m'), time.strftime('%d')
+        #! show frame
+        cv2.imshow("Edge", img_cvtc)
+        cv2.imshow("Thresh", fish_contour)
 
-    # now = datetime.datetime.now().strftime("%H:%M:%S.%f")
-    now = datetime.datetime.now()
+        year, month, day = time.strftime(
+            '%Y'), time.strftime('%m'), time.strftime('%d')
 
-    # timing = time.strftime('%H:%M:%S:%F')
+        # now = datetime.datetime.now().strftime("%H:%M:%S.%f")
+        now = datetime.datetime.now()
 
-
-    
-    date_push =  str(day) + "-" + str(month) + "-" + str(year) 
-    fish_count =  {"time" : now,"amount" : count}
-
-    data_trans =  str(now) + "=" + str(count)
-    print("fish_eat: " + str(count))
-    
-    client.publish("count_fish", payload=data_trans, qos=1)
+        # timing = time.strftime('%H:%M:%S:%F')
 
 
-    collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
+        
+        date_push =  str(day) + "-" + str(month) + "-" + str(year) 
+        fish_count =  {"time" : now,"amount" : count}
+
+        data_trans =  str(now) + "=" + str(count)
+        print("fish_eat: " + str(count))
+        
+        client.publish("count_fish", payload=data_trans, qos=1)
 
 
-    time.sleep(0.3)
+        collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
 
-    if datetime.datetime.now() > TIME_DURATION:
-        data_start_trans = str(0)+"="+str(item_details["_id"])
-        client.publish("feed_fish", payload=data_start_trans, qos=1)
-        break
-    if cv2.waitKey(1) == ord('q'):
-        break
+
+        time.sleep(0.3)
+
+        if datetime.datetime.now() > TIME_DURATION:
+            data_start_trans = str(0)+"="+str(item_details["_id"])
+            client.publish("feed_fish", payload=data_start_trans, qos=1)
+            break
+        if cv2.waitKey(1) == ord('q'):
+            break
+    else : 
+        print('Without open camera')
 
 cap.release()
 cv2.destroyAllWindows()

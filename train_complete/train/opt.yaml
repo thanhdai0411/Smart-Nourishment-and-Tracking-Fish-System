@@ -1,4 +1,4 @@
-weights: D:\Studyspace\DoAn\Aquarium\train_complete\train\weights\last.pt
+weights: D:\Studyspace\DoAn\Aquarium\yolov5n.pt
 cfg: ''
 data: data\coco128.yaml
 hyp:

@@ -1,5 +1,4 @@
-train: /home/doan/DA/WebServer/Aquarium-Smart/coco128
-val: /home/doan/DA/WebServer/Aquarium-Smart/coco128
+train: D:/Studyspace/DoAn/Aquarium/coco128/images/train2017
+val: D:/Studyspace/DoAn/Aquarium/coco128/images/train2017
 names:
-    0: FishGold
-    1: FishBlue
+    0: FishBig

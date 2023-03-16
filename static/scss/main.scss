@@ -156,6 +156,15 @@ $border-color-element-control: #1dc577;
             display: block;
             padding: 5px;
         }
+        .seen-sataus {
+            color: orange;
+                font-weight: 500;
+                cursor: pointer;
+                display: inline-block;
+                &:hover {
+                    color : red;
+                }
+        }
 
         .train_name-form-body {
             // background-color: #009a92;

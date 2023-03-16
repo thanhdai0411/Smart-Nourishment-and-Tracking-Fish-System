@@ -6,10 +6,10 @@ const timeEndToast = document.querySelector(".time_end_toast");
 
 const toastBodyStart = document.querySelector(".toast-body-start");
 const toastBodyEnd = document.querySelector(".toast-body-end");
-const usernameMqtt1 = document.querySelector("#username_login").innerHTML;
 
 let text = localStorage.getItem("complete_train");
-document.querySelector(".text_complete_train").innerHTML = text;
+// document.querySelector(".text_complete_train").innerHTML = text;
+const usernameMqtt1 = document.querySelector("#username_login").innerHTML;
 
 function makeid() {
     var text = "";
@@ -158,8 +158,7 @@ function onMessageArrived(message) {
         const countDie = message.payloadString;
 
         const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
-        const text = `[${dateDie}]: Found dead fish`;
-        console.log({ text });
+        const text = `[${dateDie}]: Dead fish found`;
         apiSendMail(text);
     } else if (topic === "start_eat") {
         let payload = message.payloadString;
@@ -167,12 +166,11 @@ function onMessageArrived(message) {
             let stateTrain = message.payloadString;
             let id = stateTrain.split("=")[0];
 
-            document.getElementById("camera_open").src = "/camera/count_fish";
+            document.getElementById("camera_open").src = "";
             localStorage.setItem("id_food_run", id);
         } else if (Number(payload) == 0) {
-            document.getElementById("camera_open").src = "/camera/fish_die";
-
             let id = localStorage.getItem("id_food_run");
+            document.getElementById("camera_open").src = "/camera/fish_die";
 
             var bodyFormData = new FormData();
 
@@ -201,20 +199,22 @@ function onMessageArrived(message) {
         let stateTrain = message.payloadString;
         let state = stateTrain.split("=")[0];
         let time = stateTrain.split("=")[1];
-        console.log({ state, time });
+        let name_fish = stateTrain.split("=")[2];
+        let action = stateTrain.split("=")[3];
 
         if (state == "Start") {
-            toastSuccess(`Bắt đầu tiến hành huấn luyện vào lúc ${time}`);
-
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+            toastSuccess(`Start ${action}`);
         }
         if (state == "End") {
-            let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
-            localStorage.setItem("complete_train", content);
-            document.querySelector(".text_complete_train").innerHTML = content;
-            toastSuccess(`Hoàn thành đặt tên cho cá`);
+            // let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
+            // localStorage.setItem("complete_train", content);
+            // document.querySelector(".text_complete_train").innerHTML = content;
+
+            let today = new Date();
+            const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
+            const text = `[${dateDie}]: Complete ${action}`;
+            apiSendMail(text);
+            toastSuccess(text);
         }
     }
 }

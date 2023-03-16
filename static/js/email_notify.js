@@ -24,7 +24,7 @@ const hideRegister = (emailNotify) => {
     $("#email_register").hide();
     $("#subtile_email").hide();
     modalNotify.querySelector("#email_notify_already").value = emailNotify;
-    titleEmail.innerHTML = "Email gửi thông báo bạn đã đăng kí";
+    titleEmail.innerHTML = "Email notifying you that you have registered";
 };
 
 const showRegister = () => {
@@ -33,7 +33,8 @@ const showRegister = () => {
     $("#email_register").show();
     $("#subtile_email").show();
     modalNotify.querySelector("#email_notify_already").value = null;
-    titleEmail.innerHTML = "Vui lòng nhập đúng email để nhận được thông báo";
+    titleEmail.innerHTML =
+        "Please enter the correct email to receive notifications";
 };
 
 const renderNotifyMain = () => {
@@ -53,7 +54,7 @@ const renderNotifyMain = () => {
                 );
                 contentNotify2.innerHTML = contentNotifyLoop.join("");
             } else {
-                contentNotify2.innerHTML = "Chưa có thông báo nào";
+                contentNotify2.innerHTML = "Not notification";
             }
         },
     });
@@ -151,9 +152,11 @@ modalNotify.addEventListener("show.bs.modal", (event) => {
             url: `/notify/delete/${usernameLoginEmailRegister}`,
             dataType: "json",
             success: function (data) {
+                $("#modalNoti").modal("hide");
                 renderNotifyMain();
             },
         });
+        $("#modalNoti").modal("hide");
     };
 });
 

@@ -429,18 +429,28 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     torch.cuda.empty_cache()
     return results
 
+from constant import FOLDER_TRAIN_COMPLETE, PATH_TO_WEIGHT_INIT_5N, EPOCH_TRAIN
 
-base_path = "/home/doan/DA/WebServer/Aquarium-Smart/"
 
-exist_folder = os.path.isdir(base_path + 'train_complete/train')
+exist_folder = os.path.isdir(FOLDER_TRAIN_COMPLETE + "/train")
 path_model_init = ""
 
+
 if(exist_folder) :
-    for model in os.listdir(base_path+"train_complete/train/weights"):
-        if(model == "last.pt") :
-            path_model_init = base_path + "train_complete/train/weights/last.pt"
+    if not os.listdir(FOLDER_TRAIN_COMPLETE + "/train/weights") :
+        path_model_init = PATH_TO_WEIGHT_INIT_5N
+    else : 
+        for model in os.listdir(FOLDER_TRAIN_COMPLETE + "/train/weights"):
+            if(model == "last.pt") :
+                path_model_init = FOLDER_TRAIN_COMPLETE + "/train/weights/last.pt"
+            else : 
+                path_model_init = PATH_TO_WEIGHT_INIT_5N
+
 else :
-    path_model_init = base_path + "yolov5n.pt"
+    path_model_init = PATH_TO_WEIGHT_INIT_5N
+
+print("path_model_init: " + path_model_init )
+
 
 
 def parse_opt(known=False):
@@ -450,7 +460,7 @@ def parse_opt(known=False):
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch-low.yaml', help='hyperparameters path')
-    parser.add_argument('--epochs', type=int, default=1, help='total training epochs')
+    parser.add_argument('--epochs', type=int, default=EPOCH_TRAIN, help='total training epochs')
     parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs, -1 for autobatch')
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='train, val image size (pixels)')
     parser.add_argument('--rect', action='store_true', help='rectangular training')

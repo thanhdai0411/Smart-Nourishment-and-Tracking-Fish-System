@@ -9,7 +9,7 @@ from paho import mqtt
 import paho.mqtt.client as paho
 from config.db import connectDB
 from routes.main import route
-from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT
+from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT, FOLDER_SAVE_LABELS,FOLDER_SAVE_IMAGES, PATH_SAVE_STATE_LOAD_FISH_DIE
 from flask import Flask, render_template, Response, flash, request, redirect, url_for, session
 from flask_cors import CORS, cross_origin
 from datetime import datetime
@@ -19,8 +19,10 @@ from multiprocessing import  Value,Process,Queue
 from cron import cron_food
 from flask_redmail import RedMail
 import urllib.request, json
+import os
 from my_utils.jsonFile import read_file_json, write_file_json
-
+from my_models.statusTrainModel import StatusTrain
+from my_utils.deleteNameTrainModel import deleteNameTrainModel
 
 # from flask_crontab import Crontab
 
@@ -66,29 +68,63 @@ route(app)
 
 #! train =======================================================================================
 
-@app.route('/upload/train', methods=['GET'])
+@app.route('/upload/train', methods=['POST'])
 def train_model():
+    print('Start train')
+    
+    check_status = StatusTrain.objects(status="WAITING")
+
+    if check_status : 
+        return 'TRAIN_BUSY'
+
     dt_obj = datetime.now()
     timeCurrent = dt_obj.strftime("%d/%m/%Y - %H:%M")
+    name_fish = request.form.get("name_fish")
+    action = request.form.get("action")
+    
+    action_text = ""
 
-    pl = 'Start=' + str(timeCurrent)
+    if action == "TRAIN" :
+        action_text = "Train model name " + name_fish
+    else : 
+        action_text = "Delete model name " + name_fish
+        deleteNameTrainModel(name_fish)
 
-    print('Start train')
+    exist_folder_image_train = os.path.isdir(FOLDER_SAVE_IMAGES)
+    if not exist_folder_image_train :
+       
+        return "NOT_LABEL_TRAIN"
+
+    
+
+
+    pl = 'Start=' + str(timeCurrent) + '=' + str(name_fish) + '=' + str(action_text)
+
     client.publish("Train_model", payload=pl, qos=1)
-    sleep(5)
 
+    username = request.cookies.get('username', None)
+
+    newStatus = StatusTrain(status="WAITING",dateStart=timeCurrent, username=username,name_fish=name_fish,action=action_text)
+    newStatus.save()
+    
+    sleep(5)
+    
     # python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt
 
     call(["python3",PATH_TRAIN_MODEL])
 
+
     dt_obj_2 = datetime.now()
     timeComplete = dt_obj_2.strftime("%d/%m/%Y - %H:%M")
 
-    pl2 = 'End=' + str(timeComplete)
+    pl2 = 'End=' + str(timeComplete)+ '=' + str(name_fish) + '=' + str(action_text)
     client.publish("Train_model", payload=pl2, qos=1)
-    sleep(10)
 
-    return redirect('/home')
+    updateStatus = StatusTrain.objects(name_fish=name_fish,status="WAITING")
+    updateStatus.update(status="COMPLETE",dateEnd=timeComplete)
+    # sleep(10)
+
+    return 'ok'
 
 
 @app.route("/send_mail", methods=["POST"])
@@ -122,7 +158,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 if __name__ == "__main__":
-
     #!MQTT SETUP ==========================================================
 
     def on_connect(client, userdata, flags, rc, properties=None):

@@ -164,26 +164,33 @@ body {
                 display: block;
                 padding: 5px;   }
 }
-              .content #train_name .train_name-form-body {
-                color: white; }
+              .content #train_name .seen-sataus {
+                color: orange;
+                font-weight: 500;
+                cursor: pointer;
+                display: inline-block; }
+                .content #train_name .seen-sataus:hover {
+                  color: red; }
+          .content #train_name .train_name-form-body {
+            color: white; }
+            .content #train_name .train_title {
+              font-size: 30px;
+              margin: 0;
+              font-weight: bold; }
+              @media only screen and (max-width: 600px) {
                 .content #train_name .train_title {
-                  font-size: 30px;
-                  margin: 0;
-                  font-weight: bold; }
-                  @media only screen and (max-width: 600px) {
+                  font-size: 20px;
+                  font-weight: 600;   }
+}
+                @media (min-width: 601px) and (max-width: 1000px) {
+                  .content #train_name .train_title {
+                    font-size: 25px;
+                    font-weight: 600;   }
+}
+                  @media (min-width: 1001px) and (max-width: 1240px) {
                     .content #train_name .train_title {
-                      font-size: 20px;
+                      font-size: 30px;
                       font-weight: 600;   }
-}
-                    @media (min-width: 601px) and (max-width: 1000px) {
-                      .content #train_name .train_title {
-                        font-size: 25px;
-                        font-weight: 600;   }
-}
-                      @media (min-width: 1001px) and (max-width: 1240px) {
-                        .content #train_name .train_title {
-                          font-size: 30px;
-                          font-weight: 600;   }
 }
           .content #train_name #btn_complete {
             border: 1.5px solid #25f192; }
@@ -765,83 +772,101 @@ a {
               .monitor_wrap #monitoring_page {
                 margin-top: 10px;   }
 }
-              .monitor_wrap #monitoring_page #camera {
-                padding: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column; }
+              .monitor_wrap #monitoring_page .img_chat_bot {
+                width: 80px;
+                height: 80px;
+                position: fixed;
+                z-index: 100000000000000000;
+                bottom: 34px;
+                right: 41px;
+                cursor: pointer; }
                 @media only screen and (max-width: 600px) {
-                  .monitor_wrap #monitoring_page #camera {
-                    padding: 5px;   }
+                  .monitor_wrap #monitoring_page .img_chat_bot {
+                    margin-top: 10px;
+                    width: 50px;
+                    height: 50px;
+                    position: fixed;
+                    z-index: 100000000000000000;
+                    bottom: 34px;
+                    right: 35px;   }
 }
-                  @media (min-width: 601px) and (max-width: 1000px) {
-                    .monitor_wrap #monitoring_page #camera {
-                      padding: 5px;   }
+          .monitor_wrap #monitoring_page #camera {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; }
+            @media only screen and (max-width: 600px) {
+              .monitor_wrap #monitoring_page #camera {
+                padding: 5px;   }
 }
-                    .monitor_wrap #monitoring_page #camera #camera_btn {
-                      display: flex;
-                      align-items: center;
-                      justify-content: center; }
-                      .monitor_wrap #monitoring_page #camera .camera-btn_group {
-                        display: flex;
-                        border: 1.5px solid #25f192; }
-                        .monitor_wrap #monitoring_page #camera #camera_open {
-                          height: 100%; }
-                          .monitor_wrap #monitoring_page #camera .btn_detect_camera {
+              @media (min-width: 601px) and (max-width: 1000px) {
+                .monitor_wrap #monitoring_page #camera {
+                  padding: 5px;   }
+}
+                .monitor_wrap #monitoring_page #camera #camera_btn {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
+                  .monitor_wrap #monitoring_page #camera .camera-btn_group {
+                    display: flex;
+                    border: 1.5px solid #25f192; }
+                    .monitor_wrap #monitoring_page #camera #camera_open {
+                      height: 100%; }
+                      .monitor_wrap #monitoring_page #camera .btn_detect_camera {
+                        background-color: #0d995a; }
+                        .monitor_wrap #monitoring_page #camera .btn_start_camera:hover {
+                          background-color: orange; }
+                          .monitor_wrap #monitoring_page #camera .btn_stop_camera {
                             background-color: #0d995a; }
-                            .monitor_wrap #monitoring_page #camera .btn_start_camera:hover {
-                              background-color: orange; }
-                              .monitor_wrap #monitoring_page #camera .btn_stop_camera {
-                                background-color: #0d995a; }
-                                .monitor_wrap #monitoring_page #camera .btn_stop_camera:hover {
-                                  transition: all 0.5 ease-in;
-                                  background-color: #b11111; }
-                                  .monitor_wrap #monitoring_page #camera .btn_detect_camera:hover {
-                                    transition: all 0.5 ease-in;
-                                    background-color: #11b1b1; }
-                                    .monitor_wrap #monitoring_page #camera #shape_camera {
-                                      box-shadow: -2px 3px 21px 2px #38604e;
-                                      border: 1.5px solid #4b7d67;
+                            .monitor_wrap #monitoring_page #camera .btn_stop_camera:hover {
+                              transition: all 0.5 ease-in;
+                              background-color: #b11111; }
+                              .monitor_wrap #monitoring_page #camera .btn_detect_camera:hover {
+                                transition: all 0.5 ease-in;
+                                background-color: #11b1b1; }
+                                .monitor_wrap #monitoring_page #camera #shape_camera {
+                                  box-shadow: -2px 3px 21px 2px #38604e;
+                                  border: 1.5px solid #4b7d67;
+                                  width: 100%;
+                                  height: 100%;
+                                  margin-bottom: 10px;
+                                  border-radius: 20px;
+                                  overflow: hidden;
+                                  background-color: #38604e;
+                                  display: flex;
+                                  flex-direction: column; }
+                                  .monitor_wrap #monitoring_page #camera #shape_camera_fish_die {
+                                    box-shadow: -2px 3px 21px 2px #38604e;
+                                    border: 1.5px solid #4b7d67;
+                                    width: 100%;
+                                    height: 100%;
+                                    margin-bottom: 10px;
+                                    border-radius: 20px;
+                                    overflow: hidden;
+                                    background-color: #38604e;
+                                    display: flex;
+                                    flex-direction: column; }
+                                    .monitor_wrap #monitoring_page #camera #shape_camera_none {
+                                      box-shadow: -2px 3px 21px 2px #377D71;
+                                      border: 1.5px solid #46a579;
                                       width: 100%;
                                       height: 100%;
                                       margin-bottom: 10px;
                                       border-radius: 20px;
                                       overflow: hidden;
-                                      background-color: #38604e;
-                                      display: flex;
-                                      flex-direction: column; }
-                                      .monitor_wrap #monitoring_page #camera #shape_camera_fish_die {
-                                        box-shadow: -2px 3px 21px 2px #38604e;
-                                        border: 1.5px solid #4b7d67;
-                                        width: 100%;
-                                        height: 100%;
-                                        margin-bottom: 10px;
-                                        border-radius: 20px;
-                                        overflow: hidden;
-                                        background-color: #38604e;
-                                        display: flex;
-                                        flex-direction: column; }
+                                      background-color: #377D71;
+                                      display: none;
+                                      flex-direction: column;
+                                      justify-content: center;
+                                      text-align: center; }
+                                      @media only screen and (max-width: 600px) {
                                         .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                          box-shadow: -2px 3px 21px 2px #377D71;
-                                          border: 1.5px solid #46a579;
-                                          width: 100%;
-                                          height: 100%;
-                                          margin-bottom: 10px;
-                                          border-radius: 20px;
-                                          overflow: hidden;
-                                          background-color: #377D71;
-                                          display: none;
-                                          flex-direction: column;
-                                          justify-content: center;
-                                          text-align: center; }
-                                          @media only screen and (max-width: 600px) {
-                                            .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                              height: 300px;   }
+                                          height: 300px;   }
 }
-                                            @media (min-width: 601px) and (max-width: 1000px) {
-                                              .monitor_wrap #monitoring_page #camera #shape_camera_none {
-                                                height: 400px;   }
+                                        @media (min-width: 601px) and (max-width: 1000px) {
+                                          .monitor_wrap #monitoring_page #camera #shape_camera_none {
+                                            height: 400px;   }
 }
           .monitor_wrap #monitoring_page #food_render {
             width: 100%;

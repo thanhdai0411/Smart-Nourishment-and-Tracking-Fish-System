@@ -4,17 +4,19 @@ import mongoengine as me
 
 class StatusTrain(me.Document):
     status = me.StringField()
-    dateEnd = me.DateTimeField()
-    dateStart = me.DateTimeField()
-    seen = me.BooleanField()
-    title = me.StringField()
+    dateEnd = me.StringField()
+    dateStart = me.StringField()
+    username = me.StringField()
+    action = me.StringField()
+    name_fish = me.StringField()
+    
 
     def to_json(self):
         return {
-            "status": self.username,
+            "status": self.status,
             "dateEnd": self.dateEnd,
             "dateStart": self.dateStart,
-            "seen": self.seen,
-            "title": self.title
-
+            "username": self.username,
+            "action": self.action,
+            "name_fish": self.name_fish,
         }

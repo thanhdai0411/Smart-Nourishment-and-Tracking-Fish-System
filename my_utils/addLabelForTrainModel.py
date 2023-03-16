@@ -12,11 +12,18 @@ from my_models.userModel import User
 
 def saveLabelToDB(username, label):
     user = User.objects(username=username).first()
+    
+    exist_label = LabelFish.objects(name=label)
+
+    if(exist_label) :
+        return "EXIST_LABEL"
+
     LabelFish(name=label, user_id=user.id, username=username).save()
 
 
 def addLabelFileCoCo128(imageFromUserName, coordinate, index):
     coor = str(index) + coordinate
+    # name_file = 
 
     completeName = os.path.join(
         FOLDER_SAVE_LABELS, imageFromUserName + ".txt")
@@ -36,14 +43,18 @@ def addImageForCoCo128(imgFromUser, newLabel):
                                   secure_filename(newLabel + '_' + imgFromUser.filename)))
 
 
+# main
 def addLabelForTrainModel(newLabel, coordinate, imgFromUser, imageFromUserName, username):
 
     WHITE_SPACE = "    "
-    nameFile = newLabel + '_' + imageFromUserName
+    nameFile = secure_filename(newLabel + '_' + imageFromUserName)
+    # nameFile = newLabel + '_' + imgFromUser.filename
 
     saveCoco128Read = open(PATCH_TO_COCO12YAML, 'r')
 
     a = saveCoco128Read.read()
+
+    print(a)
 
     if a:
 
@@ -71,10 +82,19 @@ def addLabelForTrainModel(newLabel, coordinate, imgFromUser, imageFromUserName, 
         for value in arr:
             if value == newLabel:
                 exist = True
+        
+        print(listLabel)
 
         if exist:
             print("exist item. Save label file")
-            addLabelFileCoCo128(nameFile, coordinate, f + " ")
+            label_index = None
+            for item in listLabel:
+                e = item.split(":")
+                if(e[1].strip() ==newLabel) :
+                    label_index = e[0].strip()
+            print("label index : ", str(label_index))
+
+            addLabelFileCoCo128(nameFile, coordinate, str(label_index) + " ")
             addImageForCoCo128(imgFromUser, newLabel)
         else:
             add = WHITE_SPACE + str(int(f) + 1) + ": " + newLabel

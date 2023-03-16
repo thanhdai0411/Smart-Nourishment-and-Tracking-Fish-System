@@ -12,6 +12,15 @@ shapeCameraNone.style.display = "flex";
 $("#loading_open_camera").hide();
 $("#shape_camera").hide();
 // $("#shape_camera_fish_die").hide();
+console.log(camera.src);
+let check_cam = camera.src.split("/");
+
+if (check_cam[3] == "camera" && check_cam[4] == "fish_die") {
+    $("#shape_camera_none").show();
+    $("#shape_camera").hide();
+    $("#loading_open_camera").hide();
+    $(".camera-btn_group").show();
+}
 
 const hideCamera = () => {
     camera.setAttribute("src", "");
@@ -40,7 +49,7 @@ btnStartCamera.onclick = (e) => {
     hideCamera();
     setTimeout(() => {
         showCamera("/camera/video");
-    }, 5000);
+    }, 3000);
 };
 
 btnStopCamera.onclick = (e) => {
@@ -50,12 +59,12 @@ btnStopCamera.onclick = (e) => {
         // showCamera("/camera/fish_die");
 
         // camera.setAttribute("src", "/camera/fish_die");
-    }, 5000);
+    }, 3000);
 };
 
 btnDetectCamera.onclick = (e) => {
     hideCamera();
     setTimeout(() => {
         showCamera("/camera/detect");
-    }, 5000);
+    }, 3000);
 };

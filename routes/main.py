@@ -10,6 +10,7 @@ from routes.countFishRoute import countFishRoute
 from routes.profileFishRoute import profileFishRoute
 from routes.emailNotifyRoute import emailNotifyRoute
 from routes.notifyRoute import notifyRoute
+from routes.statusTrainRoute import statusTrainRoute
 
 
 def route(app):
@@ -25,3 +26,4 @@ def route(app):
     app.register_blueprint(profileFishRoute, url_prefix='/profile_fish/')
     app.register_blueprint(emailNotifyRoute, url_prefix='/email_notify/')
     app.register_blueprint(notifyRoute, url_prefix='/notify/')
+    app.register_blueprint(statusTrainRoute, url_prefix='/status_train/')

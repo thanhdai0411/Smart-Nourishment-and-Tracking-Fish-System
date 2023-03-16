@@ -11,7 +11,7 @@ import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE
 
 from bson.objectid import ObjectId
 
@@ -146,12 +146,9 @@ def cron_food(loop_on):
                                                         second=dt_obj.second, microsecond=0)
                             if(time_on == time_present ):
 
-                            
+                                open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
                                 print('Hey Hey , Cron Food'  + str(time_on) + " Lượng thức ăn: " + str(amount_food))
 
-                                controlMotor =  "M" + str(int(int(amount_food)*1000)) + "E"
-
-                                client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 json_object = read_file_json()
                                 json_object.append({'username': "START_CRON"})
@@ -162,9 +159,17 @@ def cron_food(loop_on):
                                 client.publish("start_eat", payload=complete, qos=1)
                                 client.publish("rgb_control", payload="R255G255B255E", qos=1)
 
-                                # call(['python', PATCH_COUNT_FISH])
+                                # RUN MOTOR
+                                controlMotor =  "M" + str(int(int(amount_food)*1000)) + "E"
+                                print(controlMotor)
+                                client.publish("motor_control", payload=str(controlMotor), qos=1)
 
-                                # client.publish("food_complete", payload=complete, qos=1)
+                                # CALL COUNT FISH
+                                call(['python3', PATCH_COUNT_FISH])
+
+                                # COMPLETE COUNT FISH
+                                open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
+                                client.publish("start_eat", payload='0', qos=1)
                                 
                     else:
                         print('Not setting food')

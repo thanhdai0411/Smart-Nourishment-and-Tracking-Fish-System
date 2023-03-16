@@ -124,9 +124,6 @@ const wrapLabelShow = document.querySelector("#label_show");
 const tableBody = document.querySelector("#table_body");
 
 const modalDeleteFishName = document.querySelector("#modalDeleteFishName");
-const btnDeleteFishNameComplete = document.querySelector(
-    "#btn_delete_fish_name"
-);
 
 labelPresent.innerHTML = localStorage.getItem("label");
 
@@ -153,9 +150,39 @@ modalDeleteFishName.addEventListener("show.bs.modal", (event) => {
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
     const recipient = button.getAttribute("data-name-fish");
+    const nameFish = localStorage.getItem("label");
 
+    const btnDeleteFishNameComplete = modalDeleteFishName.querySelector(
+        "#btn_delete_fish_name"
+    );
+    const textConfirm = modalDeleteFishName.querySelector(
+        "#text_confirm_delete_label"
+    );
+    textConfirm.innerHTML = `Bạn chắn muốn xóa tên ${recipient}. Khi xóa mọi dữ liệu về cá tên ${recipient} sẽ mất`;
+    var bodyFormData = new FormData();
+
+    bodyFormData.append("name_fish", nameFish);
+    bodyFormData.append("action", "DELETE");
     btnDeleteFishNameComplete.onclick = () => {
-        console.log({ recipient });
+        $.ajax({
+            type: "POST",
+            url: "/upload/train",
+            data: bodyFormData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log({ train: data });
+
+                if (data == "TRAIN_BUSY") {
+                    toastFail("The system is busy at the moment");
+                } else if (data == "NOT_LABEL_TRAIN") {
+                    toastFail("Not data train name");
+                }
+            },
+        });
+
+        $("#modalDeleteFishName").modal("hide");
     };
 });
 
@@ -175,15 +202,18 @@ btnShowLabel.onclick = (e) => {
                         (v, index) =>
                             `
                                 <tr class="text-center">
-                                    <th scope="row">${index}</th>
                                     <td id="name_label_show"  >${v.name}</td>
-                                    <td>${moment(v.created_at.$date).format(
-                                        "DD/MM/YYYY, HH:mm:ss"
-                                    )}
+                                    <td style="font-size: 14px;">${moment(
+                                        v.created_at.$date
+                                    ).format("DD/MM/YYYY, HH:mm:ss")}
                                     </td>
                                     <td>
                                         <button id="btn_add_data"
-                                            style="border: none; background-color: orange ; border-radius: 5px">ADD</button>
+                                            style="border: none; background-color: orange ; border-radius: 5px; font-size: 14px ; font-weight: 500; color : white; ">ADD</button>
+                                        <button id="btn_delete_data" data-name-fish="${
+                                            v.name
+                                        }"
+                                            style="border: none; background-color: red ; border-radius: 5px;font-size: 15px ; font-weight: 500; color : white; " data-bs-toggle="modal" data-bs-target="#modalDeleteFishName">DELETE</button>
                                         
                                     </td>
                                 </tr>`
@@ -207,20 +237,14 @@ btnShowLabel.onclick = (e) => {
                     handleDeleteFishName(btnDeleteData);
                 } else {
                     // khong co
-                    wrapLabelShow.innerHTML =
-                        "Hiện bạn chưa có tên nào trong hệ thống";
+                    wrapLabelShow.innerHTML = "Not train status";
                 }
             } else {
                 // that bai
-                wrapLabelShow.innerHTML =
-                    "Hiện bạn chưa có tên nào trong hệ thống";
+                wrapLabelShow.innerHTML = "Not train status";
             }
         },
     });
-
-    const handleClickAddData = (e) => {
-        console.log(e);
-    };
 };
 
 btnSaveLabel.onclick = (e) => {
@@ -348,6 +372,10 @@ btnSubmitLabel.addEventListener("click", (e) => {
             console.log({ data });
             if (data == "FAIL") {
                 toastFail("Ảnh đã tồn tại");
+            } else if (data == "EXIST_LABEL") {
+                toastFail("Tên đã tồn tại");
+            } else if (data == "LIMIT_LABEL") {
+                toastFail("Name fish maximum is 5");
             } else {
                 $("#file-input").val("");
                 $(".box-2").hide();
@@ -367,13 +395,14 @@ const btnComplete = document.querySelector("#btn_complete");
 const viewDataPresentForTrain = document.querySelector(
     "#data_present_for_train"
 );
-const btnAgreeTrain = document.querySelector("#btn_agree_train");
 
 btnComplete.onclick = (e) => {
-    const MIN_TRAIN = 5;
+    const MIN_TRAIN = 2;
     const minTrainLabel = document.querySelector("#min_train_label");
     minTrainLabel.innerHTML = MIN_TRAIN;
     const nameFish = localStorage.getItem("label");
+    const btnAgreeTrain = document.querySelector("#btn_agree_train");
+
     $.ajax({
         type: "GET",
         url: `/label/get/data_fish/${nameFish}`,
@@ -392,4 +421,103 @@ btnComplete.onclick = (e) => {
             viewDataPresentForTrain.innerHTML = content;
         },
     });
+
+    var bodyFormData = new FormData();
+
+    bodyFormData.append("name_fish", nameFish);
+    bodyFormData.append("action", "TRAIN");
+
+    btnAgreeTrain.onclick = (e) => {
+        $.ajax({
+            type: "POST",
+            url: "/upload/train",
+            data: bodyFormData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                console.log({ train: data });
+                if (data == "TRAIN_BUSY") {
+                    toastFail("The system is busy at the moment");
+                } else if (data == "NOT_LABEL_TRAIN") {
+                    toastFail("Not data train name");
+                }
+            },
+        });
+
+        $("#modalAuthTrain").modal("hide");
+    };
+};
+
+//! status train
+
+const btnShowStatusTrain = document.getElementById("show_status_train");
+const tableStatusTrain = document.getElementById("table_status_train");
+btnShowStatusTrain.onclick = (e) => {
+    const userNameLogin = document.querySelector("#username_login").innerHTML;
+
+    $.ajax({
+        type: "GET",
+        url: `/status_train/get/${userNameLogin}`,
+        dataType: "json",
+        success: function (data) {
+            const { data: statusTrain, success } = data;
+            if (success === 1) {
+                const status = JSON.parse(statusTrain);
+                if (status.length) {
+                    const tableContent = status.map((v, index) => {
+                        let style =
+                            v.status === "WAITING"
+                                ? "#e8733b"
+                                : v.status === "COMPLETE"
+                                ? "#54B435"
+                                : "#8B7E74";
+
+                        return `
+                                <tr class="text-center">
+                                    <td id="name_label_show" style="font-size: 15px;"   >${
+                                        v.name_fish
+                                    }</td>
+                                    <td  style="font-size: 15px;">${
+                                        v.dateStart
+                                    }</td>
+                                    <td  style="font-size: 15px;">${
+                                        v.dateEnd ? v.dateEnd : "Process..."
+                                    }</td>
+                                    <td>
+                                        <span style="border-radius : 5px ; padding: 3px;font-size: 15px; background-color : ${style}; color : white ;font-weight : 500 ">${
+                            v.status
+                        }</span>
+                                    </td>
+                                    <td  style="font-size: 15px;"> <span>${
+                                        v.action
+                                    }</span> </td>
+                                    
+                                </tr>`;
+                    });
+                    tableStatusTrain.innerHTML = tableContent.join("");
+                } else {
+                    // khong co
+                    tableStatusTrain.innerHTML = "Not train status";
+                }
+            } else {
+                // that bai
+                tableStatusTrain.innerHTML = "Not train status";
+            }
+        },
+    });
+
+    const btnClearStatus = document.querySelector("#btn_clear_status_train");
+    btnClearStatus.onclick = () => {
+        $.ajax({
+            type: "GET",
+            url: `/status_train/delete/${userNameLogin}`,
+            dataType: "json",
+            success: function (data) {
+                $("#modalNoti").modal("hide");
+                renderNotifyMain();
+            },
+        });
+        $("#modalStatusTrain").modal("hide");
+    };
 };

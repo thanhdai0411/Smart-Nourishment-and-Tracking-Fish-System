@@ -80,10 +80,10 @@
                     <div class="d-flex align-items-center">
                         <a href="/home" class="home_title">Aquarium Smart</a>
                         <div class="home_nav_group">
-                            <a href="#info_fish" id="item_nav">Thông tin
-                                cá</a>
+                            <a href="#info_fish" id="item_nav">Information
+                            fish</a>
 
-                            <a href="/monitoring" id="item_nav">Giám sát</a>
+                            <a href="/monitoring" id="item_nav">Monitor</a>
                         </div>
                     </div>
                     <div></div>
@@ -139,7 +139,7 @@
 
             <div id="info_fish">
                 <div class="header_info_fish">
-                    <h3 class="title_info_fish">CƯ DÂN TRONG THÀNH PHỐ</h3>
+                    <h3 class="title_info_fish">RESIDENTS IN THE CITY</h3>
 
                 </div>
 
@@ -181,7 +181,7 @@
 
                 </div>
                 <div class="text-center">
-                    <a href="/profile" class="btn_all_profile">XEM TẤT CẢ</a>
+                    <a href="/profile" class="btn_all_profile">SEE ALL</a>
 
                 </div>
             </div>
@@ -226,26 +226,23 @@
 
                 <div class="train_name-header">
                     <div>
-                        <p>NỘP HỒ SƠ VÀO THÀNH PHỐ</p>
+                        <p>SUBMISSION TO THE CITY</p>
                     </div>
                 </div>
                 <div id="train_name" class="profile_fish">
 
                     <div id="train_name-info">
                         <p class="train_title" id="title_profile">
-                            HỒ SƠ GIA NHẬP THÀNH PHỐ THÔNG MINH</p>
+                            PROFILE FOR JOINING A SMART CITY</p>
                         <div class="content_description">
-                            <p>Mỗi cư dân trong thành phố đều có hồ sơ lý lịch riêng của mình, trước khi thả vào hồ, hãy
-                                nhập hồ sơ cho cá của mình để tiến hành gia nhập thành phố thông minh nhé!. Hãy lưu lại
-                                nhưng thông tin, ghi chú nhưng thứ cần thiết về cá, để khi cần dễ dàng có
-                                thể tra cứu</p>
+                            <p>Every resident in the city has his own profile, before releasing into the lake, please enter your profile for your fish
+                            to proceed to join the smart city!. Please save the necessary information and notes about the fish, so that you can
+                            easily look up when needed</p>
 
                             <p>
-                                Để khi không có bạn, người khác cũng có thể xem thông tin và dễ dàng chăm sóc cho cá của
-                                bạn
+                                So that when you are not around, other people can also see the information and easily care for your fish
                             </p>
-                            <p>Những thông tin này có thể sửa bất cứ khi nào bạn muốn. Hãy nhập thông tin và nhấn <B>LƯU
-                                    THÔNG TIN</B> bạn nhé !. Đừng để cá của mình là vô gia cứ nhé</p>
+                            <p>This information can be edited whenever you want. Please enter information and press <B>SAVE INFOMATION</B> you !. Don't let your fish be homeless</p>
 
                         </div>
 
@@ -256,33 +253,32 @@
                         <form id="upload_profile" method="POST" enctype="multipart/form-data">
 
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Họ và tên người khai
-                                    báo</label>
-                                <input type="text" class="form-control" id="input_username" placeholder="Nhập tên..."
+                                <label bel for="exampleFormControlInput1" class="form-label">Name and surname of the declarant
+                                    </label>
+                                <input type="text" class="form-control" id="input_username" placeholder="Enter your name ..."
                                     required />
                             </div>
 
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Tên loại cá</label>
-                                <input type="text" class="form-control" id="input_fish_type" placeholder="Nhập tên..."
+                                <label bel for="exampleFormControlInput1" class="form-label">Name of the fish</label>
+                                <input type="text" class="form-control" id="input_fish_type" placeholder="Enter name of the fish..."
                                     required />
                             </div>
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Ngày thả vào hồ</label>
+                                <label bel for="exampleFormControlInput1" class="form-label">Release date in the lake</label>
                                 <input type="date" value="" class="form-control" id="input_time_start"
                                     placeholder="dd-mm-yyyy" min="1997-01-01" max="2030-12-31" required />
 
                             </div>
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Tên bạn muốn đặt cho cá của
-                                    bạn</label>
-                                <input type="text" class="form-control" id="input_fish_name" placeholder="Nhập tên..."
+                                <label bel for="exampleFormControlInput1" class="form-label">Identifier for your fish</label>
+                                <input type="text" class="form-control" id="input_fish_name" placeholder="Enter identifier..."
                                     required />
                             </div>
 
 
                             <div class="mb-3">
-                                <label for="file" class="form-label">Hình đại diện cho cá</label>
+                                <label for="file" class="form-label">Avatar for fish</label>
                                 <input class="form-control" accept="image/*" type="file" required id="file-input_avatar"
                                     name="avatar_fish" />
                             </div>
@@ -295,9 +291,9 @@
 
 
                             <div class="mb-3">
-                                <label bel for="exampleFormControlInput1" class="form-label">Ghi chú thêm về cá</label>
+                                <label bel for="exampleFormControlInput1" class="form-label">More notes on fish</label>
                                 <textarea style="color : black ;" class="form-control" name="" id="input_not_fish"
-                                    cols="30" rows="2" placeholder="Ghi chú thông tin về cá của bạn"></textarea>
+                                    cols="30" rows="2" placeholder="Enter notes..."></textarea>
                             </div>
                             <div class="loading_profile hide_element">
                                 <div class="text-center">
@@ -308,9 +304,9 @@
                             </div>
 
 
-                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
+                            <input style="background-color: #009a92; color: white; font-weight: 500;  border: 1.5px solid #25f192;"
                                 type="button" class="btn save-profile w-100 shadow-lg" id="btn_submit_profile"
-                                value="NHÁP ĐỂ LƯU HỒ SƠ" />
+                                value="CLICK TO SAVE PROFILE" />
 
 
                         </form>
@@ -336,44 +332,44 @@
 
                 <div class="train_name-header">
                     <div>
-                        <p>ĐẶT TÊN CHO CƯ DÂN</p>
+                        <p>NAME RESIDENTS</p>
                     </div>
                 </div>
                 <div id="train_name">
                     <div id="train_name-info">
                         <p class="train_title" id="title_profile" style="text-transform: uppercase;">
-                            Bạn
-                            muốn tên cá của bạn đặt có thể quan sát từ camera</p>
+                            You want your fish name to be visible from the camera</p>
                         <p class="train_description">
-                            Không có gì là không thể ! Bạn hãy cung cấp thông tin vào form bên cạnh. Hãy thu
-                            thập hình ảnh cá bạn muốn đặt tên và upload lên. Càng nhiều dữ liệu thì
-                            tỉ lệ thành công càng cao và đương nhiên nếu quá ít dữ liệu tỉ lệ thành
-                            công s ẽ thấp.
+                            Nothing is impossible ! Please provide information in the form below. Collect pictures of fish you want to name and
+                            upload. The more data, the higher the success rate and of course if too little data the success rate will be low.
                         </p>
                         <p>
-                            Bạn hãy nhớ chỉ nhấp <b> HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</b> khi bạn
-                            hoàn thành tập dữ liệu của bạn.
+                            Remember to click <b> COMPLETE TRAINING PROFILE</b> only when you
+                            complete your dataset.
                         </p>
                         <p>
-                            <b>Lưu ý</b>: Dữ liệu cá bạn muốn đặt phải được chụp từ hồ cá, tránh dữ liệu không liên quan
+                            <b>Note</b>: The fish data you want to order must be taken from the aquarium, avoid extraneous data
                         </p>
-                        <p style="color: orange" class="text_complete_train"></p>
+
+                        <p class="seen-sataus" data-bs-toggle="modal" data-bs-target="#modalStatusTrain" id="show_status_train">Click to view training status</p>
+
+                        <!-- <p style="color: orange" class="text_complete_train"></p> -->
                     </div>
                     <div class="form-group text-start" id="train_name-form">
                         <!-- label -->
 
                         <div class="train_name-form-body">
-                            <label bel for="exampleFormControlInput1" class="form-label">Nhập tên bạn muốn</label>
-                            <input type="email" class="form-control" id="input_label" placeholder="Nhập tên..."
+                            <label bel for="exampleFormControlInput1" class="form-label">Enter the name you want</label>
+                            <input type="email" class="form-control" id="input_label" placeholder="Enter name fish..."
                                 required />
                             <div>
-                                <label for="exampleFormControlInput1" class="form-label mt-2">Tên
-                                    cho lần đào tạo này:
+                                <label for="exampleFormControlInput1" class="form-label mt-2">Name
+                                for this training:
                                     <span id="label_present" style="color: orange; font-size: 20px"></span>
                                 </label>
                                 <p style="margin: 0; padding-bottom: 10px; font-size: 14px; text-align: justify">
-                                    Lưu ý: Bạn chỉ cần nhập tên một lần duy nhất, tiêp sau đó
-                                    chi cân tải hình ảnh lên
+                                    Note: You only need to enter the name once, then
+                                    please upload pictures
                                 </p>
                             </div>
                             <div class="d-flex justify-content-lg-between align-content-center">
@@ -381,19 +377,21 @@
                                            
                                             background-color: #009a92;
                                             color: white;
+                                            font-weight: 500;
                                             border: 1.5px solid #25f192;
                                         " class="btn mt-1 w-100 me-1" data-bs-toggle="modal" id="btn_save_label_temp"
                                     data-bs-target="#modalSaveName">
-                                    LƯU TÊN
+                                    Save name
                                 </button>
                                 <button style="
                                             
-                                            background-color: #0d6efd;
+                                            background-color: #009a92;
                                             color: white;
+                                            font-weight: 500;
                                             border: 1.5px solid #25f192;
                                         " class="btn mt-1 w-100" data-bs-toggle="modal"
                                     data-bs-target="#modalShowLabel" id="btn_show_label">
-                                    TÊN ĐÃ ĐẶT
+                                    Given name
                                 </button>
 
                             </div>
@@ -408,11 +406,11 @@
                                     box-shadow: 1px 3px 21px #48bf88;*/
                                     margin-top: 20px; 
                                 ">
-                            <label for="file" class="form-label">Tải hình cá lên</label>
+                            <label for="file" class="form-label">Upload fish pictures</label>
                             <input class="form-control" accept="image/*" type="file" required id="file-input"
                                 name="file" />
                             <p style="margin: 0; padding-top: 10px; font-size: 14px; text-align: justify">
-                                Lưu ý: Bạn cần khoanh đúng vùng cá bạn muôn đặt tên
+                                Note: You need to circle the correct fish area you want to name
                             </p>
                             <!-- preview image -->
                             <div class="box-2">
@@ -425,11 +423,11 @@
 
                             <p class="coordinates" style="font-size: 20px"></p>
 
-                            <input style="background-color: #009a92; color: white;  border: 1.5px solid #25f192;"
-                                type="button" class="btn save w-100 shadow-lg" value="NHÁP ĐỂ LƯU DỮ LIỆU" />
+                            <input style="background-color: #009a92;  font-weight: 500; color: white;  border: 1.5px solid #25f192;"
+                                type="button" class="btn save w-100 shadow-lg" value="CLICK TO SAVE DATA" />
                         </form>
-                        <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style="" id="btn_complete"
-                            data-bs-target="#modalAuthTrain">HOÀN THÀNH HỒ SƠ TIẾN HÀNH ĐÀO TẠO</a>
+                        <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style=" font-weight: 500;" id="btn_complete"
+                            data-bs-target="#modalAuthTrain">COMPLETE DOCUMENTATION IMPLEMENTATION OF TRAINING</a>
                     </div>
                 </div>
 
@@ -528,7 +526,7 @@
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Quay lại
                     </button>
-                    <a type="button" href="http://127.0.0.1:5000/upload/train" id="btn_agree_train"
+                    <a type="button" id="btn_agree_train"
                         class="btn btn-success">Đã đủ thông tin đào tạo ngay</a>
                 </div>
             </div>
@@ -543,22 +541,22 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
-                        Lưu tên thú cưng
+                        Save pet name
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
-                    <b style="font-size: 18px">Bạn chắc chắn muốn lưu tên này cho thú cưng của bạn
+                    <b style="font-size: 18px">You definitely want to save this name for your pet
                         ?</b>
-                    <br />Nếu bạn đã đặt tên cho lần đào tạo rồi thì không cần đặt lại nữa và
-                    chỉ cần tải dữ liệu hình ảnh. Bạn có thể kiểm tra ở phần
-                    <b>"Tên cho lần đào tạo này"</b>
+                    <br />If you've already given your training a name, there's no need to reset it and
+                    just load the image data. You can check in
+                    <b>"Name for this training"</b>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        Quay lại
+                        Back
                     </button>
-                    <a type="button" id="btn_save_label" class="btn btn-success">Lưu tên</a>
+                    <a type="button" id="btn_save_label" class="btn btn-success">Save</a>
                 </div>
             </div>
         </div>
@@ -572,7 +570,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
-                        Tên đã đào tạo có trong hệ thống
+                        Trained name is in the system
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -586,8 +584,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col">STT</th>
-                                    <th scope="col">Tên</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Edit</th>
                                 </tr>
@@ -595,8 +592,8 @@
                             <tbody class="text-center" id="table_body">
 
                             </tbody>
-                            <p>Nhấp <b>ADD</b> để chọn tên đào tạo và thêm dữ liệu cho tên cá
-                                đó</p>
+                            <p>Click <b>ADD</b> to select the training name and add data for the individual name
+                                that</p>
                         </table>
                     </div>
                 </div>
@@ -613,23 +610,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
-                        Xóa tên cá trong hệ thống
+                        Xóa tên cá 
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
-                    <!-- <div id="label_show_intro">
-
-                        Nhấp <b>Hiện thị tên đã đào
-                            tạo</b> để hiện thị tên thú cưng đã có trong hệ thống
-                    </div> -->
+                   <p id="text_confirm_delete_label" style="margin : 0"></p>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        BACK
+                    Back
                     </button>
-                    <a type="button" id="btn_save_label" class="btn btn-danger" id="btn_delete_fish_name">DELETE</a>
+                    <a type="button"  class="btn btn-danger" id="btn_delete_fish_name">Delete</a>
                 </div>
             </div>
         </div>
@@ -714,16 +707,16 @@
     <!-- modal notification  -->
     <!-- Modal -->
     <div class="modal fade" id="modalNoti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Thông báo</h1>
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Notification</h1>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="px-3" style="border-bottom: 1px solid #ccc;">
                     <div class="mb-3">
-                        <h6 class="my-2 text-dark" id="title_email">Đăng ký gửi thông báo tới email của bạn</h6>
+                        <h6 class="my-2 text-dark" id="title_email">Sign up for notifications to your email</h6>
                         <div class="hide_element" id="loading_email_register">
                 
                             <div class="d-flex justify-content-center mb-2">
@@ -734,26 +727,27 @@
                         </div>
                         <div class="input-group" id="email_register">
                             
-                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                            <input type="email" class="form-control" placeholder="Enter your email..."
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="email" id="email_notify">
-                            <button class="btn btn-success" type="button" id="btn_confirm_email">Đăng kí </button>
+                            <button class="btn btn-success" type="button" id="btn_confirm_email">Register</button>
                 
                         </div>
                         <div class="input-group" id="email_already">
-                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                            <input type="email" class="form-control" placeholder="Enter your email..."
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
                                 id="email_notify_already">
-                            <button class="btn btn-success" type="button" id="btn_edit_email">Sửa</button>
-                            <button class="btn btn-danger" type="button" id="btn_delete_email">Xóa</button>
+                            <button class="btn btn-success" type="button" id="btn_edit_email">Edit</button>
+                            <button class="btn btn-danger" type="button" id="btn_delete_email">Delete</button>
                 
                 
                         </div>
-                        <div class="form-text" id="subtile_email">Vui lòng nhập đúng email để nhận được thông báo</div>
+                        <div class="form-text" id="subtile_email">Please enter the correct email to receive notifications</div>
                     </div>
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 </div>
+                
                 <div class="modal-body text-dark ">
-                    <button class="btn btn-outline-danger mb-2 w-100" id="btn_clear_notify">CLEAR NOTIFICATION</button>
+                    <button class="btn btn-danger mb-2 " id="btn_clear_notify">Clear all notification</button>
                 <div class="content_notify">
                     
                 </div>
@@ -765,6 +759,51 @@
         </div>
     </div>
     <!-- end modal notification  -->
+
+    <!-- modal status train -->
+    <div class="modal fade text-dark" id="modalStatusTrain" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                        Training status
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: justify">
+                    <!-- <div id="label_show_intro">
+    
+                            Nhấp <b>Hiện thị tên đã đào
+                                tạo</b> để hiện thị tên thú cưng đã có trong hệ thống
+                        </div> -->
+                        <button class="btn btn-danger mb-2" id="btn_clear_status_train">Clear all training status</button>
+                    <div id="label_show">
+                        <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">End</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center" id="table_status_train">
+    
+                            </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal status train -->
+
+
 </body>
 <!-- <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
     integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI"
@@ -788,6 +827,9 @@
     }
     const usernameLogin = getCookie("username").split('"')[1];
     document.querySelector("#username_login").innerHTML = usernameLogin;
+    
+    
+
 </script>
 
 <script src="/static/js/upload_labels.js" type="text/javascript"></script>

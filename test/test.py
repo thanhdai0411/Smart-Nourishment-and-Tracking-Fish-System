@@ -1,26 +1,110 @@
-# import the opencv library
-import cv2
+import os 
+BASE_PATH = "D:/Studyspace/DoAn/Aquarium"
+
+FOLDER_SAVE_IMAGES =BASE_PATH+ "/coco128/images/train2017"
+FOLDER_SAVE_LABELS =BASE_PATH+ "/coco128/labels/train2017"
+
+PATCH_TO_COCO12YAML = BASE_PATH + "/data/coco128.yaml"
 
 
-# define a video capture object
-vid = cv2.VideoCapture(0)
+name_fish = "FishGold"
 
-while(True):
+
+# delete image 
+for images in os.listdir(FOLDER_SAVE_IMAGES):
+	base_path = FOLDER_SAVE_IMAGES + "/"
+	name_image = images.split('_')[0]
+
+	if(name_image.strip() == name_fish) :
+		os.remove(base_path + images)
 	
-	# Capture the video frame
-	# by frame
-	ret, frame = vid.read()
+# delete label 
+for labels in os.listdir(FOLDER_SAVE_LABELS):
+	base_path = FOLDER_SAVE_LABELS + "/"
 
-	# Display the resulting frame
-	cv2.imshow('frame', frame)
+	name_image = labels.split('_')[0]
+
+	if(name_image.strip() == name_fish) :
+		os.remove(base_path + labels)
+
+# rewrite file coco128.yaml
+saveCoco128Read = open(PATCH_TO_COCO12YAML, 'r')
+WHITE_SPACE = "    "
+
+a = saveCoco128Read.read()
+
+if a:
+
+	b = a.split("\n")
+	b.pop()
+
+	c = len(b)
+	d = b[c - 1]
+
+	e = d.split(":")
+
+	f = e[0].strip()
+	g = e[1].strip()
+
+	listLabel = b[3:]
+
 	
-	# the 'q' button is set as the
-	# quitting button you may use any
-	# desired button of your choice
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-		break
+	for item in listLabel:
+		e = item.split(":")
+		if(e[1].strip() == name_fish) :
+			b.remove(item)
+			listLabel.remove(item)
+	
 
-# After the loop release the cap object
-vid.release()
-# Destroy all the windows
-cv2.destroyAllWindows()
+	if len(b) > 3 :
+
+	
+		coco128 = [
+				'train: ' + FOLDER_SAVE_IMAGES, 'val: ' + FOLDER_SAVE_IMAGES, 'names:']
+		
+		for index, item in enumerate(listLabel):
+			e = item.split(":")
+			new = WHITE_SPACE + str(index) + ": " + e[1].strip()
+			coco128.append(new)
+
+
+		saveCoco128Write = open(PATCH_TO_COCO12YAML, 'w')
+
+		for value in coco128:
+			saveCoco128Write.write(value)
+			saveCoco128Write.write('\n')
+		saveCoco128Write.close()
+		
+
+		# update index label 
+		newCocoYaml = open(PATCH_TO_COCO12YAML, 'r').read()
+		list_new = newCocoYaml.split("\n")
+		list_new.pop()
+
+		newListLabel = list_new[3:]
+		print(newListLabel)
+
+		for item in (newListLabel):
+			e = item.split(":")
+			
+			index_label = e[0].strip()
+			name_label = e[1].strip()
+			# delete label 
+			for labels in os.listdir(FOLDER_SAVE_LABELS):
+				base_path = FOLDER_SAVE_LABELS + "/"
+				name_image = labels.split('_')[0]
+
+				data_file = open(base_path + labels , 'r').read()
+				if(name_image == name_label) :
+					read_file = data_file.split(" ")
+					read_file[0] = str(index_label)
+				
+					my_string = " "
+					for x in read_file :
+						my_string+= " " + x
+					open(base_path + labels , 'w').write(my_string.strip())
+	else :
+		open(PATCH_TO_COCO12YAML, 'w').write("")
+
+
+	

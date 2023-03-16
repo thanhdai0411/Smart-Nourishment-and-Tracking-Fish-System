@@ -5,19 +5,24 @@ SUCCESS_STATUS = {"success": 1,
 ERROR_STATUS = {"success": 0,
                 "message": "Error !!"}
 
-BASE_PATH = "/home/doan/DA/WebServer/Aquarium-Smart"
+BASE_PATH = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart"
+
+EPOCH_TRAIN = 1
 
 FOLDER_SAVE_LABELS = BASE_PATH + '/coco128/labels/train2017'
 FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
 
 PATCH_TO_COCO12YAML = BASE_PATH + "/data/coco128.yaml"
-PATH_TO_WEIGHT_INIT = BASE_PATH + "/yolov5s.pt"
+PATH_TO_WEIGHT_INIT_5N = BASE_PATH + "/yolov5n.pt"
 PATCH_COUNT_FISH = BASE_PATH + '/count_fish.py'
 
 PATH_TRAIN_MODEL = BASE_PATH + "/train.py"
 PATH_MODEL_FISH_DIE = BASE_PATH + "/model_fish_die.pt"
-PATH_SAVE_MODEL_FISH_DIE = BASE_PATH + "/my_data/save_load_model_fish_die.json"
 
+PATH_SAVE_STATE_LOAD_FISH_DIE = BASE_PATH + "/my_data/load_fish_die.txt"
+PATH_SAVE_TIME_SEND_MAIL = BASE_PATH + "/my_data/time_send_mail.txt"
+
+FOLDER_TRAIN_COMPLETE = BASE_PATH+ '/train_complete'
 
 CLOUDINARY_NAME = 'img-aquarium'
 CLOUDINARY_API_KEY = '297934749829863'
