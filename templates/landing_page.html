@@ -45,10 +45,10 @@
                         data-bs-target="#login_modal">
                         LOGIN
                     </button>
-                    <button class="landing_register" data-bs-toggle="modal"
+                    <!-- <button class="landing_register" data-bs-toggle="modal"
                         data-bs-target="#register_modal">
                         REGISTER
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </nav>
@@ -97,7 +97,7 @@
                         <div class="text-center mb-1">
 
                             <h1 class="modal-title pb-3 modal_login_title" id="exampleModalLabel">
-                                ĐĂNG NHẬP
+                                LOGIN
                             </h1>
                             <!-- <button style="background-color: #fff; " type="button" class="btn-close"
                             data-bs-dismiss="modal" aria-label="Close"></button> -->
@@ -105,27 +105,27 @@
                         <form style="width: 100% ;" action="/auth/login"
                             method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Nhập tên đăng nhập</label>
+                                <label for="username" class="form-label">Enter username</label>
                                 <input type="text" class="form-control" id="username"
                                     name="username" placeholder="Nhập tên của bạn..." />
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Nhập mật khẩu</label>
+                                <label for="password" class="form-label">Enter password</label>
                                 <input type="password" class="form-control" id="password"
                                     name="password" placeholder="Nhập mật khẩu..." />
                             </div>
                             <button type="submit" class="btn  btn-success w-100 btn_modal_login">
-                                ĐĂNG NHẬP NGAY
+                                LOGIN NOW
                             </button>
                         </form>
-                        <p class="my-2 text-center modal_text_not_acount" style="margin:0;">Chưa có tài khoản ?</p>
+                        <p class="my-2  modal_text_not_acount" style="margin:0;">No account ? Please contact admin to register</p>
 
                         <div class="">
-                            <button type="button" style="background-color: #009a92 ; color : white"
+                            <!-- <button type="button" style="background-color: #009a92 ; color : white"
                                 class="btn w-100 btn_modal_register" data-bs-toggle="modal"
                                 data-bs-target="#register_modal">
-                                ĐĂNG KÝ
-                            </button>
+                                REGISTER
+                            </button> -->
                         </div>
                     </div>
 
@@ -152,7 +152,7 @@
 
                         <div class="text-center">
                             <h1 class="modal-title pb-3" id="exampleModalLabel">
-                                ĐĂNG KÝ
+                                REGISTER
                             </h1>
                             <!-- <button
                                 type="button"
@@ -163,33 +163,32 @@
                         </div>
                         <form action="/auth/register" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Nhập tên đăng ký</label>
+                                <label for="username" class="form-label">Enter your name</label>
                                 <input type="text" class="form-control" id="username"
-                                    name="username" placeholder="Nhập tên của bạn" required />
+                                    name="username" placeholder="Enter your name" required />
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Mật khẩu</label>
+                                <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password"
-                                    name="password" placeholder="Nhập mật khẩu" required />
+                                    name="password" placeholder="Enter password" required />
                             </div>
                             <div class="mb-3">
-                                <label for="password_again" class="form-label">Nhập lại mật
-                                    khẩu</label>
+                                <label for="password_again" class="form-label">Re-enter password</label>
                                 <input type="password" class="form-control" id="password_again"
-                                    name="password_again" placeholder="Nhập lại mật khẩu"
+                                    name="password_again" placeholder="Re-enter password"
                                     required />
                             </div>
                             <button type="submit" class="btn btn-success w-100 fs-6">
-                                ĐĂNG KÝ NGAY
+                                REGISTER NOW
                             </button>
                         </form>
-                        <p class="my-2 text-center" style="margin:0;">Đã có tài khoản ?</p>
+                        <p class="my-2 text-center" style="margin:0;">Already have an account?</p>
 
                         <div class="">
                             <button style="background-color: #009a92 ; color : white" type="button"
                                 class="btn w-100 fs-6" data-bs-toggle="modal"
                                 data-bs-target="#login_modal">
-                                TRỞ VỀ ĐĂNG NHẬP
+                            BACK LOGIN
                             </button>
                         </div>
                     </div>

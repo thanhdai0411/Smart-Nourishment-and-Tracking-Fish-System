@@ -186,7 +186,7 @@ function onMessageArrived(message) {
                 success: function (data) {
                     if (data === "OK") {
                         getValue();
-                        toastSuccessFood(`Cho cá ăn thành công`);
+                        toastSuccessFood(`Feed the fish successfully`);
                         $("#modalEditFood").modal("hide");
                     }
                 },

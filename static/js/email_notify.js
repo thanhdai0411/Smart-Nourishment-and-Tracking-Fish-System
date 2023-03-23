@@ -164,7 +164,9 @@ btnConfirmRegisterEmail.onclick = (e) => {
     const email = modalNotify.querySelector("#email_notify").value;
 
     if (!usernameLoginEmailRegister || !email) {
-        toastFail("Vui lòng điền dây đủ thông tin trước khi lưu hồ sơ");
+        toastFail(
+            "Please fill in the required information before saving your application."
+        );
         return;
     }
     loadingEmailRegister.classList.remove("hide_element");

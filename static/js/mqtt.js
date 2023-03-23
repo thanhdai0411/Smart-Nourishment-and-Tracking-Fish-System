@@ -241,7 +241,7 @@ chart = new Highcharts.Chart({
     },
     title: {
         useHTML: true,
-        text: `Biều đồ số lượng cá ăn vào ${time_count_fish}`,
+        text: `Chart of the amount of fish eaten on ${time_count_fish}`,
         style: { color: "white", fontSize: "18px", fontWeight: "600" },
     },
     time: {
@@ -257,7 +257,7 @@ chart = new Highcharts.Chart({
     },
     xAxis: {
         title: {
-            text: "Thời gian",
+            text: "Time",
         },
 
         type: "datetime",
@@ -273,7 +273,7 @@ chart = new Highcharts.Chart({
 
     yAxis: {
         title: {
-            text: "Số lượng",
+            text: "Amount",
         },
     },
 
@@ -307,7 +307,7 @@ chart = new Highcharts.Chart({
 
                     title: {
                         useHTML: true,
-                        text: `Biều đồ số lượng cá ăn vào ${time_count_fish}`,
+                        text: `Chart of the amount of fish eaten on ${time_count_fish}`,
                         style: {
                             color: "white",
                             fontSize: "14px",
@@ -347,7 +347,9 @@ async function dataChart(data, realtime = false) {
 
             console.log({ timeStart });
 
-            chart.setTitle({ text: `Biều đồ số lượng cá ăn vào ${timeStart}` });
+            chart.setTitle({
+                text: `Chart of the amount of fish eaten on ${timeStart}`,
+            });
             chart.series[0].update({
                 name: String(timeStart),
             });
@@ -375,7 +377,7 @@ async function dataChart(data, realtime = false) {
                 name: String(data.fish_count[0].time),
             });
             chart.setTitle({
-                text: `Biều đồ số lượng cá ăn vào ${timeCount}`,
+                text: `Chart of the amount of fish eaten on ${timeCount}`,
             });
         });
     }
@@ -501,7 +503,7 @@ const renderNotify = () => {
                 );
                 contentNotify.innerHTML = contentNotifyLoop.join("");
             } else {
-                contentNotify.innerHTML = "Chưa có thông báo nào";
+                contentNotify.innerHTML = "There are no notification yet";
             }
         },
     });
@@ -596,7 +598,7 @@ function onMessageArrived(message) {
             success: function (data) {
                 if (data === "OK") {
                     getValue();
-                    toastSuccessFood(`Cho cá ăn thành công`);
+                    toastSuccessFood(`Feed the fish successfully`);
                     $("#modalEditFood").modal("hide");
                 }
             },
@@ -606,7 +608,7 @@ function onMessageArrived(message) {
         public_message("rgb_control", rgbCode);
 
         // getValue();
-        // toastSuccessFood(`Cho cá ăn thành công`);
+        // toastSuccessFood(`Feed the fish successfully`);
         // $("#modalEditFood").modal("hide");
     } else if (topic === "feed_fish") {
         let payload = message.payloadString.split("=");
@@ -662,7 +664,7 @@ function onMessageArrived(message) {
                 success: function (data) {
                     if (data === "OK") {
                         getValue();
-                        toastSuccessFood(`Cho cá ăn thành công`);
+                        toastSuccessFood(`Feed the fish successfully`);
                         $("#modalEditFood").modal("hide");
                     }
                 },
@@ -680,9 +682,7 @@ function onMessageArrived(message) {
         console.log({ state, time });
 
         if (state == "Start") {
-            toastSuccessFood(
-                `Bắt đầu tiến hành huấn luyện tên ${name_fish} vào lúc ${time}`
-            );
+            toastSuccessFood(`Start training the name ${name_fish} at ${time}`);
         }
         if (state == "End") {
             // let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
@@ -691,9 +691,9 @@ function onMessageArrived(message) {
 
             let today = new Date();
             const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
-            const text = `[${dateDie}]: Đã hoàn thành đào tạo tên ${name_fish}`;
+            const text = `[${dateDie}]: Completed name training ${name_fish}`;
             apiSendMail(text);
-            toastSuccessFood(`Hoàn thành đặt tên ${name_fish} cho cá`);
+            toastSuccessFood(`Complete naming ${name_fish} for fish`);
         }
     }
 }
@@ -711,6 +711,9 @@ const switchForFishEat = document.getElementById("for_fish_eat");
 const textForFishEat = document.getElementById("text-for_fish_eat");
 const stateForFishEat = document.querySelector(".state-for_fish_eat");
 
+const stateForPreesEat = document.querySelector(".state-for_press_eat");
+const textForPreesEat = document.querySelector("#text-for_press_eat");
+
 const switchAIForFishEat = document.getElementById("ai_fish_eat");
 const textAI = document.getElementById("text-ai_fish_eat");
 const stateAI = document.querySelector(".state-ai_fish_eat");
@@ -718,6 +721,60 @@ const stateAI = document.querySelector(".state-ai_fish_eat");
 const onOffDevice = document.getElementById("on_off_device");
 const textDevice = document.getElementById("text-on_off_device");
 const stateDevice = document.querySelector(".state-on_off_device");
+
+const btnPressFeeder = document.querySelector(".btn_press_food");
+
+//!press feeder
+
+btnPressFeeder.onmousedown = (e) => {
+    const timePress = new Date();
+    const startPress = moment(timePress).format("DD/MM/YYYY HH:mm:ss");
+
+    const pressPrevius =
+        localStorage.getItem("time_click") ||
+        moment(timePress).format("DD/MM/YYYY HH:mm:ss");
+
+    if (startPress >= pressPrevius) {
+        const endPress = moment()
+            .add(30, "minutes")
+            .format("DD/MM/YYYY HH:mm:ss");
+        localStorage.setItem("time_click", endPress);
+
+        btnPressFeeder.textContent = "Release";
+        stateForPreesEat.classList.remove("control_switch");
+        stateForPreesEat.classList.add("control_switch-off");
+        textForPreesEat.innerHTML = "ON";
+
+        public_message("motor_control", "M100E");
+
+        setTimeout(() => {
+            public_message("rgb_control", "R255G255B255E");
+        }, 1000);
+
+        $.ajax({
+            type: "GET",
+            url: "/camera/cnt_fish_press",
+            dataType: "json",
+            success: function ({ data }) {
+                // localStorage.getItem("rgb");
+                const rgbCode = localStorage.getItem("rgb_code");
+                public_message("rgb_control", rgbCode);
+            },
+        });
+    } else {
+        toastFailFood(`Between 2 click is 30 minutes`);
+        return;
+        // alert("Please betweent 2 click is 5 minutes");
+    }
+};
+btnPressFeeder.onmouseup = (e) => {
+    btnPressFeeder.textContent = "Press";
+    stateForPreesEat.classList.remove("control_switch-off");
+    stateForPreesEat.classList.add("control_switch");
+    textForPreesEat.innerHTML = "OFF";
+};
+
+//
 
 const stateOff = (input, text, state) => {
     input.removeAttribute("checked");
@@ -763,18 +820,18 @@ const stateSave = (local) => {
 stateSave(["switchAIForFishEat", "switchForFishEat", "onOffDevice"]);
 
 // ai for fish eat
-switchAIForFishEat.onchange = (e) => {
-    let state = stateSwitch(
-        switchAIForFishEat,
-        textAI,
-        stateAI,
-        "switchAIForFishEat"
-    );
-    getValue();
-    public_message("control_ai_food", state.toString());
-};
+// switchAIForFishEat.onchange = (e) => {
+//     let state = stateSwitch(
+//         switchAIForFishEat,
+//         textAI,
+//         stateAI,
+//         "switchAIForFishEat"
+//     );
+//     getValue();
+//     public_message("control_ai_food", state.toString());
+// };
 
-// for fish eat
+// control relay
 switchForFishEat.onchange = (e) => {
     let state = stateSwitch(
         switchForFishEat,
@@ -788,10 +845,11 @@ switchForFishEat.onchange = (e) => {
     } else if (state == 0) {
         console.log("OFF may bomm");
     }
-    // public_message("control_food", state.toString());
+    const relayControl = `L${state}E`;
+    public_message("relay_control", relayControl);
 };
 
-// control device
+// control device led rgb
 onOffDevice.onchange = (e) => {
     let state = stateSwitch(
         onOffDevice,
@@ -802,11 +860,15 @@ onOffDevice.onchange = (e) => {
     console.log({ state });
 
     if (state == 1) {
-        console.log("ON may bomm");
+        console.log("ON rgb");
+        const rgbCode = localStorage.getItem("rgb_code");
+        public_message("rgb_control", rgbCode);
     } else if (state == 0) {
-        console.log("OFF may bomm");
+        const rgbCode = `R${0}G${0}B${0}E`;
+
+        console.log("OFF rgb");
+        public_message("rgb_control", rgbCode);
     }
-    // public_message("control_lamp", state.toString());
 };
 
 //! end handle control
@@ -817,18 +879,17 @@ const colorLamp = document.querySelector("#control_color");
 colorLamp.onchange = (ev) => {
     let localState = localStorage.getItem("onOffDevice");
 
-    if (localState != 1) {
-        toastFailFood("Vui lòng bật đèn để tiên hành đổi màu");
-        return;
-    }
-    const color = ev.target.value;
-    const r = parseInt(color.substr(1, 2), 16);
-    const g = parseInt(color.substr(3, 2), 16);
-    const b = parseInt(color.substr(5, 2), 16);
-    console.log(`red: ${r}, green: ${g}, blue: ${b}`);
+    if (localState == 1) {
+        const color = ev.target.value;
+        const r = parseInt(color.substr(1, 2), 16);
+        const g = parseInt(color.substr(3, 2), 16);
+        const b = parseInt(color.substr(5, 2), 16);
+        console.log(`red: ${r}, green: ${g}, blue: ${b}`);
 
-    const rgbCode = `R${r}G${g}B${b}E`;
-    localStorage.setItem("rgb_code", rgbCode);
+        const rgbCode = `R${r}G${g}B${b}E`;
+        localStorage.setItem("rgb_code", rgbCode);
+        public_message("rgb_control", rgbCode);
+    }
 };
 
 //!end control color food
@@ -901,7 +962,7 @@ const getFishCountByDate = (date) => {
             console.log({ data_chart: data });
             if (data.length <= 0) {
                 textDateEat.innerHTML = null;
-                tableBodyChart.innerHTML = `Không có dữ liệu vào ngày ${date}`;
+                tableBodyChart.innerHTML = `No data on date ${date}`;
                 $("#btn_search_chart").show();
                 $("#table_chart").show();
                 $("#loading_chart").hide();
@@ -910,7 +971,8 @@ const getFishCountByDate = (date) => {
             $("#btn_search_chart").show();
             $("#table_chart").show();
             $("#loading_chart").hide();
-            textDateEat.innerHTML = `Những mốc thời gian cho ăn vào ngày ${date}`;
+            textDateEat.innerHTML = `
+Feeding timelines for the day ${date}`;
             let content;
             content = data.map((item, index) => {
                 return `
@@ -955,7 +1017,7 @@ const getFishCountByDate = (date) => {
 
 btnSearchChart.onclick = (e) => {
     if (!inputChart.value) {
-        toastFailFood(`Vui lòng chọn ngày muốn truy vấn`);
+        toastFailFood(`Please select the date you want to query`);
         return;
     }
     $("#btn_search_chart").hide();
@@ -989,33 +1051,27 @@ const updateFoodSettingDaily = () => {
     });
 };
 
-$(document).ready(function () {
-    console.log("reload page");
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
+// $(document).ready(function () {
+//     console.log("reload page");
+//     const date = new Date();
+//     const day = date.getDate();
+//     const month = date.getMonth();
+//     const year = date.getFullYear();
 
-    const dateCurrent = moment(date).format("DD/MM/YYYY");
-    const dateSave = localStorage.getItem("date_current");
+//     const dateCurrent = moment(date).format("DD/MM/YYYY");
+//     const dateSave = localStorage.getItem("date_current");
 
-    if (dateSave != dateCurrent) {
-        updateFoodSettingDaily();
-        localStorage.setItem("date_current", dateCurrent);
-    }
+//     if (dateSave != dateCurrent) {
+//         updateFoodSettingDaily();
+//         localStorage.setItem("date_current", dateCurrent);
+//     }
 
-    if (modeAIOFF == 1) {
-        $("#opacity_loading_page").hide();
-    }
-
-    if (modeAIOFF) {
-        if (id_time_count_fish && modeAIOFF == 0) {
-            $("#opacity_loading_page").show();
-            getFishCountDetail(id_time_count_fish);
-        } else {
-            $("#opacity_loading_page").hide();
-        }
-    } else {
-        $("#opacity_loading_page").hide();
-    }
-});
+//     if (modeAIOFF == 1) {
+//         $("#opacity_loading_page").hide();
+//     } else if (modeAIOFF == 0 && id_time_count_fish) {
+//         $("#opacity_loading_page").show();
+//         getFishCountDetail(id_time_count_fish);
+//     } else {
+//         $("#opacity_loading_page").hide();
+//     }
+// });

@@ -22,6 +22,15 @@ if (check_cam[3] == "camera" && check_cam[4] == "fish_die") {
     $(".camera-btn_group").show();
 }
 
+const callOpenCamera = (url) => {
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: function ({ data }) {},
+    });
+};
+
 const hideCamera = () => {
     camera.setAttribute("src", "");
     $("#shape_camera").hide();
@@ -47,24 +56,26 @@ const showCameraNoteFrame = (src) => {
 
 btnStartCamera.onclick = (e) => {
     hideCamera();
+    // callOpenCamera("/camera/play");
     setTimeout(() => {
         showCamera("/camera/video");
-    }, 3000);
+    }, 1000);
 };
 
 btnStopCamera.onclick = (e) => {
     hideCamera();
+    // callOpenCamera("/camera/stop");
     setTimeout(() => {
         showCameraNoteFrame("/camera/fish_die");
         // showCamera("/camera/fish_die");
 
         // camera.setAttribute("src", "/camera/fish_die");
-    }, 3000);
+    }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {
     hideCamera();
     setTimeout(() => {
         showCamera("/camera/detect");
-    }, 3000);
+    }, 1000);
 };

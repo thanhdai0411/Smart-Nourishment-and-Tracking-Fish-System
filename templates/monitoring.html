@@ -24,12 +24,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"></script>
+    
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
@@ -56,14 +51,7 @@
     {% endassets %}
 </head>
 <style>
-     .custom-tooltip {
-                    --bs-tooltip-bg: #5bd178;
-                    font-size: 16px;
-                    text-align: justify;
-                    color : black;
-                    font-weight: 500;
-
-                }
+     
 
 </style>
 
@@ -73,14 +61,14 @@
     <!-- opacity loading page -->
 
 
-    <div id="opacity_loading_page">
+    <!-- <div id="opacity_loading_page">
         <div class="text-center mt-5">
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p>Vui lòng chờ</p>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- end opacity loading page -->
@@ -97,11 +85,10 @@
                     <div class="d-flex align-items-center">
                         <a href="/home" class="item_nav_title" style="">Aquarium Smart</a>
                         <div class="nav_item_group">
-                            <a href="/home" id="item_nav">Thông tin
-                                cá</a>
+                            <a href="/home" id="item_nav">Infomation Fish</a>
                             <!-- <a href="/home" id="item_nav">Đặt
                                 tên</a> -->
-                            <a href="/monitoring" id="item_nav">Giám sát</a>
+                            <a href="/monitoring" id="item_nav">Monitor</a>
                         </div>
                     </div>
                     <div></div>
@@ -133,7 +120,7 @@
             <div class="row" id="monitoring_page">
                 <div class="col-sm-12 col-lg-12  monitoring-header">
                     <div>
-                        <p class="title_monitor">GIÁM SÁT VÀ ĐIỀU KHIỂN HỆ THỐNG</p>
+                        <p class="title_monitor">SYSTEM MONITORING AND CONTROL</p>
                     </div>
                 </div>
                 <!-- control -->
@@ -152,12 +139,12 @@
 
                             <div class="text-left">
                                 <p class="control_text_who" style="">
-                                    Động cơ bơm
+                                    Water Purifier
                                 </p>
                             </div>
 
                         </div>
-                        <div class="form-check form-switch button_control  state-ai_fish_eat control_switch-off">
+                        <!-- <div class="form-check form-switch button_control  state-ai_fish_eat control_switch-off">
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="control_text_state" id="text-ai_fish_eat">OFF</p>
@@ -166,7 +153,6 @@
                                     id="ai_fish_eat" />
                             </div>
                             <div class="text-start">
-                                <!-- <i id="control_lamp_icon" class="bi bi-lightning control_lamp_icon"></i> -->
                             </div>
 
                             <div>
@@ -175,7 +161,26 @@
                                     AI cho cá ăn
                                 </p>
                             </div>
+                        </div> -->
+                        <div class="form-check form-switch button_control  state-for_press_eat control_switch">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="control_text_state" style="" id="text-for_press_eat">OFF</p>
+                                <button class="btn_press_food">Press</button>
+                                <!-- <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch" id="for_fish_eat" /> -->
+                            </div>
+                        
+                            <div class="text-start">
+                            </div>
+                        
+                            <div class="text-left">
+                                <p class="control_text_who" style="">
+                                    Press Feed
+                                </p>
+                            </div>
+                        
                         </div>
+
+
                         <div class="form-check form-switch button_control  state-on_off_device control_switch-off">
                             <div class="d-flex justify-content-between align-items-center">
                                 <input type="color" id="control_color" value="#ffffff" />
@@ -198,7 +203,7 @@
                             <div class="text-start">
 
                                 <p class="control_text_who">
-                                    Điều khiển đèn
+                                    RGB Lights
                                 </p>
                             </div>
 
@@ -209,12 +214,12 @@
 
                     <div class="control_time shadow-lg">
                         <p class="control_time-title" style="">
-                            Cài đặt thời gian tự động cho cá ăn
+                            Set the time to automatically feed the fish
                         </p>
                         <div class="control_time-item">
                             <table class="table table-bordered text-light" style="">
                                 <tr>
-                                    <td>Thời gian cho ăn</td>
+                                    <td>Feeding time</td>
                                     <td>
                                         <input class="w-100" type="time" name="" id="set_time" value="00:00"
                                             placeholder="Đặt thời gian"
@@ -222,7 +227,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Lượng thức ăn</td>
+                                    <td>Food Amount</td>
                                     <td>
                                         <input class="w-100" type="number" name="" id="amount_food"
                                             placeholder="Nhập lượng thức ăn"
@@ -232,18 +237,18 @@
 
 
                             </table>
-                            <p style="text-align: justify;">Lưu ý: Lượng thức ăn được cài đặt dựa trên thòi gian quay
-                                của máy cho ăn. Khi cài đặt <b>1</b> thì máy sẽ quay <b>1s</b> ,<b>0.5</b> thì máy sẽ
-                                quay <b>0.5s</b>,... Thời gian càng lâu cho ăn càng nhiều . <b>Hãy cài dặt lượng thứ ăn
-                                    vừa đủ nhé</b></p>
+                            <p style="text-align: justify;" class="text_food_setting">Note: The amount of food is set based on the shooting time
+                                of the feeding machine. When setting <b>1</b>, the camera will rotate <b>1s</b> ,<b>0.5</b> then the camera will
+                                spin <b>0.5s</b>,... The longer the time to feed, the more . <b>Please set the amount of food
+                                    just enough</b></p>
                             <div class="d-flex align-items-center">
 
                                 <!-- <input class="form-check-input control_switch-checkbox"
                                                         style="font-size: 20px;" type="checkbox" role="switch"
                                                         id="flexSwitchCheckDefault" checked /> -->
-                                <span class="" id="label_btn_setting_food"><b>NHẤP ĐỂ LƯU CÀI ĐẶT</b> khi điền đẩy
-                                    đủ thông
-                                    tin
+                                <span class="" id="label_btn_setting_food"><b>CLICK TO SAVE SETTINGS</b> on push fill
+                                    enough information
+                                    believe
                                 </span>
                             </div>
 
@@ -251,9 +256,9 @@
 
                         <div>
                             <button class="btn btn-success w-100" id="btn_complete_setting"
-                                style=" border: 1.5px solid #25f192;">
+                                style=" border: 1.5px solid #25f192; font-weight: 500;">
                                 <span>
-                                    NHẤP ĐỂ LƯU CÀI ĐĂT
+                                    CLICK TO SAVE SETTINGS
                                 </span>
                             </button>
                         </div>
@@ -272,14 +277,14 @@
                                 <path fill-rule="evenodd"
                                     d="M10.961 12.365a1.99 1.99 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l.714 1H9.5a1 1 0 0 1 1 1v6a1 1 0 0 1-.144.518l.605.847zM1.428 4.18A.999.999 0 0 0 1 5v6a1 1 0 0 0 1 1h5.014l.714 1H2a2 2 0 0 1-2-2V5c0-.675.334-1.272.847-1.634l.58.814zM15 11.73l-3.5-1.555v-4.35L15 4.269v7.462zm-4.407 3.56-10-14 .814-.58 10 14-.814.58z" />
                             </svg>
-                            <p class="mt-2">Bạn chưa bật Camera</p>
+                            <p class="mt-2">You have not turned on the Camera</p>
                         </div>
 
                     </div>
 
                     <div id="shape_camera">
-                        <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" />
-                        <!-- <img height="100%" width="100%" src="" id="camera_open" /> -->
+                        <!-- <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" /> -->
+                        <img height="100%" width="100%" src="" id="camera_open" />
                     </div>
                     <!-- <div id="shape_camera_fish_die">
                         <img height="100%" width="100%" src="" id="camera_fish_die" />
@@ -327,7 +332,7 @@
             <div class="row" id="monitoring_page">
                 <div class="col-12 monitoring-header">
                     <div>
-                        <p>QUẢN LÝ THỜI GIAN CHO CÁ ĂN</p>
+                        <p>TIME MANAGEMENT FEED FISH</p>
                     </div>
                 </div>
 
@@ -352,10 +357,10 @@
                 </div>
                 <!-- end table render food setting  -->
                 <!-- bot -->
-                <div>
+                <!-- <div>
                     <img src="/static/image/chatbot-icon.png" alt="" class="img_chat_bot" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip" data-bs-title="Hãy nhấp vào tôi. Tôi sẽ phân tích tình trạng sưc khỏe cá trong hồ của bạn từ thói quen ăn của cá">
                     
-                </div>
+                </div> -->
                 <!-- end bot -->
                 <!-- control -->
                 <div class="col-12" id="food_chart">
@@ -381,8 +386,8 @@
                         <div class="text-center mt-2 ">
                             <button class="btn btn-success fw-bold"
                                 style="cursor: pointer; font-size: 16px; border: 1px solid #25f192; "
-                                data-bs-toggle="modal" data-bs-target="#modalChart">THAY ĐỔI THỜI GIAN HIỆN THỊ BIỂU
-                                ĐỒ</button>
+                                data-bs-toggle="modal" data-bs-target="#modalChart">CHANGING THE DISPLAY TIME
+                                THING</button>
                         </div>
                     </figure>
                 </div>
@@ -395,20 +400,19 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable ">
                         <div class="modal-content ">
                             <div class="modal-header ">
-                                <h1 class="modal-title fs-5 text-dark" id="modalChartLabel">Thay đổi thời gian tra cứu
+                                <h1 class="modal-title fs-5 text-dark" id="modalChartLabel">Change lookup time
                                 </h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-dark">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label" style="font-size: 15px;">Chọn
-                                        ngày muốn truy vấn</label>
+                                    <label for="exampleInputEmail1" class="form-label" style="font-size: 15px;">Select
+                                    date want to query</label>
                                     <input type="date" id="input_date_chart" class="form-control"
                                         id="exampleInputEmail1" aria-describedby="emailHelp">
                                     <button id="btn_search_chart"
-                                        class="btn btn-outline-success fw-semibold w-100 mt-2 shadow-sm">TRUY VẤN THÔNG
-                                        TIN</button>
+                                        class="btn btn-outline-success fw-semibold w-100 mt-2 shadow-sm">QUERY INFOMATION</button>
 
                                 </div>
                                 <div id="loading_chart" class="text-center">
@@ -525,13 +529,13 @@
         <div id="toastStart" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-animation="true" data-bs-delay="10000">
             <div class="toast-header">
-                <strong class="me-auto">Thông báo</strong>
+                <strong class="me-auto">Notification</strong>
                 <small class="time_start_toast"></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-start p-2">
-                Bắt đầu tiến hành đào tạo bạn sẽ sớm nhận được kết quả. Hãy kiên nhẫn chờ đợi
-                nhé !!
+                Start conducting training you will soon get results. Please wait patiently
+                Please !
             </div>
         </div>
     </div>
@@ -540,13 +544,13 @@
         <div id="toastEnd" class="toast text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true"
             data-bs-animation="true" data-bs-delay="10000">
             <div class="toast-header">
-                <strong class="me-auto">Thông báo</strong>
+                <strong class="me-auto">Notification</strong>
                 <small class="time_end_toast"></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body-end p-2">
-                Đào tạo hoàn thành ! Nếu chưa thành công nhận dạng đúng, bạn hãy đào tạo lại với
-                dữ liệu nhiều hơn nhé. Cám ơn bạn !
+                Training completed ! If the correct identification is not successful, retrain with
+                more data. Thank you
             </div>
         </div>
     </div>
@@ -556,7 +560,7 @@
         <div id="toastUploadLabel" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
             <div class="toast-header">
-                <strong class="me-auto">Thông báo</strong>
+                <strong class="me-auto">Notification</strong>
                 <small class="time_upload"></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -569,7 +573,7 @@
         <div id="toastUploadLabelFail" class="toast text-bg-danger border-0" role="alert" aria-live="assertive"
             aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
             <div class="toast-header">
-                <strong class="me-auto">Thất bại</strong>
+                <strong class="me-auto">Failure</strong>
                 <small class="time_upload_fail"></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -585,13 +589,13 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Thông báo</h1>
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">Notification</h1>
     
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="px-3" style="border-bottom: 1px solid #ccc;">
                     <div class="mb-3">
-                        <h6 class="my-2 text-dark" id="title_email">Đăng ký gửi thông báo tới email của bạn</h6>
+                        <h6 class="my-2 text-dark" id="title_email">Sign up for notifications to your email</h6>
                         <div class="hide_element" id="loading_email_register">
     
                             <div class="d-flex justify-content-center mb-2">
@@ -605,19 +609,19 @@
                             <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
                                 id="email_notify">
-                            <button class="btn btn-success" type="button" id="btn_confirm_email">Đăng kí </button>
+                            <button class="btn btn-success" type="button" id="btn_confirm_email">Register</button>
     
                         </div>
                         <div class="input-group" id="email_already">
                             <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
                                 id="email_notify_already">
-                            <button class="btn btn-success" type="button" id="btn_edit_email">Sửa</button>
-                            <button class="btn btn-danger" type="button" id="btn_delete_email">Xóa</button>
+                            <button class="btn btn-success" type="button" id="btn_edit_email">Edit</button>
+                            <button class="btn btn-danger" type="button" id="btn_delete_email">Delete</button>
     
     
                         </div>
-                        <div class="form-text" id="subtile_email">Vui lòng nhập đúng email để nhận được thông báo</div>
+                        <div class="form-text" id="subtile_email">Please enter the correct email to receive notifications</div>
                     </div>
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 </div>

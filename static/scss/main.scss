@@ -1,6 +1,7 @@
 @import "responsive";
 $border-color-element-control: #1dc577;
 
+
 .wrap_user_name {
     display: flex;
     justify-content: center;
@@ -595,7 +596,8 @@ $border-color-element-control: #1dc577;
             box-shadow: -2px 3px 21px 2px #56947f;
 
             @include mobile {
-                font-size: 16px;
+                font-size: 12px;
+            padding: 5px 10px;
                 
                 }
             

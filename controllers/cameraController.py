@@ -1,10 +1,11 @@
 from flask import (Flask, Response, flash, redirect, render_template, request,
                    session, url_for)
 
-from constant import PATH_SAVE_STATE_LOAD_FISH_DIE
+from constant import PATH_SAVE_STATE_LOAD_FISH_DIE,PATCH_COUNT_FISH
 import time
 from services.cameraService import (generate_frames, generate_frames_detect,generate_frames_detect_fish_die, generate_frames_count_fish, stop_generate_frames  )
 # from app import gen
+from subprocess import call
 
 
 def start_camera():
@@ -14,6 +15,16 @@ def start_camera():
 def stop_camera():
     # stop_generate_frames()
     return 'stop_success'
+
+def cnt_fish_press():
+    # stop_generate_frames()
+
+    open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
+    time.sleep(5)
+    open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
+    
+    call(["python3",PATCH_COUNT_FISH])
+    return 'success'
 
 
 def video():

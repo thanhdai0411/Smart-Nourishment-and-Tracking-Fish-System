@@ -101,7 +101,7 @@ btnInfoProfile.forEach((btn) => {
                 // delete info
                 btnDeleteProfile.onclick = (e) => {
                     const askConfirm = confirm(
-                        "Chắc chắn muốn xóa cư dân này ra khỏi thành phố"
+                        "Definitely want to remove this resident from the city"
                     );
                     if (askConfirm == true) {
                         btnDeleteProfile.disable = true;
@@ -137,7 +137,9 @@ btnSubmitProfileFish.onclick = (e) => {
     const noteFish = document.getElementById("input_not_fish").value;
 
     if (!userSubmitProfile || !fishType || !fishName || !timeStartFarm) {
-        toastFail("Vui lòng điền dây đủ thông tin trước khi lưu hồ sơ");
+        toastFail(
+            "Please fill in the required information before saving your application"
+        );
         return;
     }
     loadingProfile.classList.remove("hide_element");
@@ -145,7 +147,7 @@ btnSubmitProfileFish.onclick = (e) => {
     let note = noteFish;
 
     if (!noteFish) {
-        note = "Không có ghi chú gì về cư dân này trong thành phố";
+        note = "There is no record of this resident in the city";
     }
     // var bodyFormData = new FormData();
 
@@ -166,7 +168,7 @@ btnSubmitProfileFish.onclick = (e) => {
         processData: false,
         success: function (data) {
             if (data == "EXIST_FISH_NAME") {
-                toastFail("Tên đã tồn tại");
+                toastFail("Name already exists");
                 return;
             } else if (data == "OK") {
                 location.reload();
@@ -179,7 +181,7 @@ btnSubmitProfileFish.onclick = (e) => {
 
 const getProfileFish = () => {
     if (!userNameSystem) {
-        toastFail("Có lỗi !. Vui lòng đăng nhập lại");
+        toastFail("Error! Please log in again");
         return;
     }
 
@@ -215,9 +217,9 @@ const getProfileFish = () => {
                                 <p class="note_profile">${
                                     v.note
                                         ? v.note
-                                        : "Không có ghi chú cho cư dân này"
+                                        : "No notes for this resident"
                                 }</p>
-                                <button>XEM THÊM THÔNG TIN</button>
+                                <button>MORE INFOMATION</button>
                         </div>
 
                     </div>
@@ -225,7 +227,7 @@ const getProfileFish = () => {
                 });
                 wrapProfileCarousel.innerHTML = profileFishRender.join("");
             } else {
-                toastFail("Tên đã tồn tại");
+                toastFail("Name already exists");
                 return;
             }
         },

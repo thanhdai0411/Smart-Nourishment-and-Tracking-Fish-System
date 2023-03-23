@@ -58,7 +58,7 @@ modalEditFood.addEventListener("show.bs.modal", (event) => {
         const completeAmountEdit = amountFoodEdit.value;
 
         if (completeTimeEdit === time) {
-            toastFailFood("Sửa đổi thất bại. Bạn không có sự thay đổi nào");
+            toastFailFood("Modification failed. You have no change");
             $("#modalEditFood").modal("hide");
             $("#loading_edit_food").hide();
             btnCompleteEdit.classList.remove("d-none");
@@ -106,20 +106,20 @@ modalEditFood.addEventListener("show.bs.modal", (event) => {
                 success: function (data) {
                     if (data === "OK") {
                         getValue();
-                        toastSuccessFood("Sửa đổi thành công");
+                        toastSuccessFood("Successful modification");
 
                         btnCompleteEdit.classList.remove("d-none");
                         $("#loading_edit_food").hide();
                         $("#modalEditFood").modal("hide");
                     } else {
-                        toastFailFood("Sửa đổi thất bại");
+                        toastFailFood("Modification failed");
                         $("#modalEditFood").modal("hide");
                     }
                 },
             });
         } else {
             toastFailFood(
-                "Sửa thất bại. Các mốc thời gian phải cách nhau 30 phút"
+                "Fix failure. Timelines must be spaced 30 minutes apart"
             );
             $("#modalEditFood").modal("hide");
             $("#loading_edit_food").hide();
@@ -150,10 +150,10 @@ modalDeleteFood.addEventListener("show.bs.modal", (event) => {
                     btnCompleteDelete.classList.remove("d-none");
                     $("#loading_delete_food").hide();
                     $("#modalDeleteFood").modal("hide");
-                    toastSuccessFood("Xóa thành công");
+                    toastSuccessFood("Delete successfully");
                 } else {
                     $("#modalDeleteFood").modal("hide");
-                    toastFailFood("Xóa thất bại");
+                    toastFailFood("Delete failed");
                 }
             },
         });
@@ -170,14 +170,14 @@ const getValue = () => {
     const settingFoodLength = localStorage.getItem("length_setting_food");
 
     if (modeAI == 1) {
-        tableBodyFood.innerHTML = `<td colspan="5">Bạn đang trong chế đố cho ăn tự động bằng AI</td>`;
+        tableBodyFood.innerHTML = `<td colspan="5">You are in AI Auto Feeding</td>`;
         chartElement.classList.add("d-none");
 
         return;
     }
 
     if (!userNameLogin) {
-        tableBodyFood.innerHTML = `<td colspan="5">Có lỗi xảy ra. Vui lòng Logout và đăng nhập lại</td>`;
+        tableBodyFood.innerHTML = `<td colspan="5">An error occurred. Please Logout and login again</td>`;
         return;
     }
 
@@ -226,7 +226,7 @@ const getValue = () => {
                 chartElement.classList.remove("d-none");
             } else {
                 console.log("not data");
-                tableBodyFood.innerHTML = `<td colspan="5">Chưa có cài đặt nào</td>`;
+                tableBodyFood.innerHTML = `<td colspan="5">No settings yet</td>`;
                 // chartElement.classList.add('d-none');
             }
         },
@@ -234,7 +234,7 @@ const getValue = () => {
 };
 
 if (modeAI == 1) {
-    tableBodyFood.innerHTML = `<td colspan="5">Bạn đang trong chế đố cho ăn tự động bằng AI</td>`;
+    tableBodyFood.innerHTML = `<td colspan="5">You are in AI Auto Feeding</td>`;
     chartElement.classList.add("d-none");
 } else {
     getValue();
@@ -242,10 +242,10 @@ if (modeAI == 1) {
 // emd get render value when reload
 
 const checkTimeSet = (date1, date2) => {
-    var diff = date1.getTime() + date2.getTime();
+    var diff = date1.getTime() - date2.getTime();
 
     if (diff < 0) {
-        diff = date2.getTime() + date1.getTime();
+        diff = date2.getTime() - date1.getTime();
     }
 
     var msec = diff;
@@ -270,22 +270,27 @@ btnCompleteSetting.onclick = (e) => {
     const userAmountFoodSet = amountFood.value;
 
     if (!userTimeSet) {
-        toastFailFood("Vui lòng cài thời gian cho cá ăn");
+        toastFailFood("Please set the fish feeding time");
+        return;
+    }
+
+    if (userTimeSet <= 0) {
+        toastFailFood("Please setting food greater 0");
         return;
     }
 
     if (!userAmountFoodSet) {
-        toastFailFood("Vui lòng cài lượng thức ăn cho cá");
+        toastFailFood("Please set the amount of fish food");
         return;
     }
 
     if (settingFoods.length > 10) {
-        toastFailFood("Tối đa chỉ được 10 cài đặt");
+        toastFailFood("Only 10 settings max");
         return;
     }
 
     if (modeAI == 1) {
-        toastFailFood("Bạn đang trong chế độ cho ăn bằng AI không thể cài đặt");
+        toastFailFood("You are in AI feeding mode that cannot be set");
         return;
     }
 
@@ -324,18 +329,20 @@ btnCompleteSetting.onclick = (e) => {
                 success: function (data) {
                     if (data === "OK") {
                         getValue();
-                        toastSuccessFood("Cài đặt thời gian cho ăn thành công");
+                        toastSuccessFood("Successful feeding time setting");
                     } else if (data == "LIMIT") {
-                        toastFailFood("Cài đặt tối đa là 10");
+                        toastFailFood("Max setting is 10");
                     } else if (data == "EXIST_TIME") {
-                        toastFailFood("Thời gian cài đặt đã tồn tại");
+                        toastFailFood("Setup time already exists");
                     } else {
-                        toastFailFood("Cài đặt thời gian cho ăn thất bại");
+                        toastFailFood("Feeding time setting failed");
                     }
                 },
             });
         } else {
-            return toastFailFood("Các môc thời gian phải cách nhau 30 phút");
+            return toastFailFood(
+                "The timestamps must be spaced 30 minutes apart."
+            );
         }
     } else {
         var bodyFormData = new FormData();
@@ -354,13 +361,13 @@ btnCompleteSetting.onclick = (e) => {
             success: function (data) {
                 if (data === "OK") {
                     getValue();
-                    toastSuccessFood("Cài đặt thời gian cho ăn thành công");
+                    toastSuccessFood("Successful feeding time setting");
                 } else if (data == "LIMIT") {
-                    toastFailFood("Cài đặt tối đa là 10");
+                    toastFailFood("Max setting is 10");
                 } else if (data == "EXIST_TIME") {
-                    toastFailFood("Thời gian cài đặt đã tồn tại");
+                    toastFailFood("Setup time already exists");
                 } else {
-                    toastFailFood("Cài đặt thời gian cho ăn thất bại");
+                    toastFailFood("Feeding time setting failed");
                 }
             },
         });

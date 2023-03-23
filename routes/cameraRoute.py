@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from controllers.cameraController import (start_camera, stop_camera, video,
-                                          video_detect, video_detect_fish_die, video_count_fish)
+                                          video_detect, video_detect_fish_die, video_count_fish, cnt_fish_press)
 
 cameraRoute = Blueprint('cameraRoute', __name__)
 
@@ -10,4 +10,5 @@ cameraRoute.route('play', methods=['GET'])(start_camera)
 cameraRoute.route('stop', methods=['GET'])(stop_camera)
 cameraRoute.route('video', methods=['GET'])(video)
 cameraRoute.route('detect', methods=['GET'])(video_detect)
+cameraRoute.route('cnt_fish_press', methods=['GET'])(cnt_fish_press)
 cameraRoute.route('count_fish', methods=['GET'])(video_count_fish)

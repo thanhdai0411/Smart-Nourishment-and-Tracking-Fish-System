@@ -135,9 +135,8 @@ def cron_food(loop_on):
                             hour = time_setting.split(":")[0]
                             minute = time_setting.split(":")[1]
                             amount_food = food["amount_food"]
-
-                            # print(time_setting, amount_food)
-
+                            
+                           
                             dt_obj = datetime.datetime.now()
 
                             time_on = dt_obj.replace(hour=int(hour), minute=int(minute), second=0,microsecond=0)
@@ -158,10 +157,11 @@ def cron_food(loop_on):
                                 complete = str(id) + "=COMPLETE"
                                 client.publish("start_eat", payload=complete, qos=1)
                                 client.publish("rgb_control", payload="R255G255B255E", qos=1)
+                                sleep(1)
 
                                 # RUN MOTOR
-                                controlMotor =  "M" + str(int(int(amount_food)*1000)) + "E"
-                                print(controlMotor)
+                                controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
+                                print( "motor control : "+ str(controlMotor))
                                 client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 # CALL COUNT FISH

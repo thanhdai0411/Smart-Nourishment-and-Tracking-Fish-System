@@ -158,7 +158,7 @@ modalDeleteFishName.addEventListener("show.bs.modal", (event) => {
     const textConfirm = modalDeleteFishName.querySelector(
         "#text_confirm_delete_label"
     );
-    textConfirm.innerHTML = `Bạn chắn muốn xóa tên ${recipient}. Khi xóa mọi dữ liệu về cá tên ${recipient} sẽ mất`;
+    textConfirm.innerHTML = `You definitely want to remove the name ${recipient}. When deleting all data about the name ${recipient} will be lost`;
     var bodyFormData = new FormData();
 
     bodyFormData.append("name_fish", nameFish);
@@ -254,7 +254,7 @@ btnSaveLabel.onclick = (e) => {
 
     if (inputLabel.value == "") {
         // alert('Vui lòng nhập tên mới nhấp lưu');
-        toastFail("Vui lòng nhập tên mới nhấp lưu");
+        toastFail("Please enter a new name and click save");
         $("#modalSaveName").modal("hide");
 
         return;
@@ -262,7 +262,7 @@ btnSaveLabel.onclick = (e) => {
     const valueInputLabel = inputLabel.value.replace(/\s/g, "");
 
     if (!valueInputLabel) {
-        toastFail("Vui lòng nhập tên hoặc tên nhập không hợp lệ");
+        toastFail("Please enter an invalid name or username");
         $("#modalSaveName").modal("hide");
     }
 
@@ -298,7 +298,7 @@ btnSaveLabel.onclick = (e) => {
                         localStorage.setItem("label", valueInputLabel);
                         labelPresent.innerHTML = valueInputLabel;
                         toastSuccess(
-                            "Lưu tên thú cưng thành công. Bây giờ bạn có thể tải dữ liệu hình ảnh"
+                            "Save the pet name successfully. Now you can download image data"
                         );
 
                         $("#modalSaveName").modal("hide");
@@ -308,7 +308,7 @@ btnSaveLabel.onclick = (e) => {
 
                     $("#modalSaveName").modal("hide");
                     toastSuccess(
-                        "Lưu tên thú cưng thành công. Bây giờ bạn có thể tải dữ liệu hình ảnh"
+                        "Save the pet name successfully. Now you can download image data"
                     );
 
                     localStorage.setItem("label", valueInputLabel);
@@ -332,7 +332,7 @@ btnSubmitLabel.addEventListener("click", (e) => {
     const labelStorage = localStorage.getItem("label");
 
     if (!labelStorage) {
-        toastFail("Vui lòng đặt tên cho cá trước khi upload image");
+        toastFail("Please name the fish before uploading the image");
         return;
     }
 
@@ -340,7 +340,7 @@ btnSubmitLabel.addEventListener("click", (e) => {
 
     let check = $("#file-input").val();
     if (check == "") {
-        toastFail("Vui lòng chọn ảnh và khoanh vùng cá trước khi lưu dữ liệu");
+        toastFail("Please select photo and fish area before saving data");
         return;
     }
     const coordinatesBox = `${x.toFixed(6)} ${y.toFixed(6)} ${w.toFixed(
@@ -371,9 +371,9 @@ btnSubmitLabel.addEventListener("click", (e) => {
         success: function (data) {
             console.log({ data });
             if (data == "FAIL") {
-                toastFail("Ảnh đã tồn tại");
+                toastFail("Picture already exists");
             } else if (data == "EXIST_LABEL") {
-                toastFail("Tên đã tồn tại");
+                toastFail("Name already exists");
             } else if (data == "LIMIT_LABEL") {
                 toastFail("Name fish maximum is 5");
             } else {
@@ -385,7 +385,7 @@ btnSubmitLabel.addEventListener("click", (e) => {
                 timeUpload.innerHTML = timePresent + " - " + datePresent;
                 const toast = new bootstrap.Toast(toastUploadSuccess);
                 toast.show();
-                toastSuccess("Tải dữ liệu thành công");
+                toastSuccess("Download data successfully");
             }
         },
     });
@@ -403,6 +403,14 @@ btnComplete.onclick = (e) => {
     const nameFish = localStorage.getItem("label");
     const btnAgreeTrain = document.querySelector("#btn_agree_train");
 
+    if (!nameFish) {
+        $("#modalAuthTrain").modal("hide");
+        $("#btn_agree_train").hide();
+
+        // $("#modalAuthTrain").modal("hide");
+        toastFail("No name for training yet");
+        return;
+    }
     $.ajax({
         type: "GET",
         url: `/label/get/data_fish/${nameFish}`,
@@ -411,10 +419,10 @@ btnComplete.onclick = (e) => {
             const { data } = v;
             let content = "";
             if (data < MIN_TRAIN) {
-                content = `Hiện tại dữ liệu cho tên ${nameFish} là ${v.data} hình. Chưa đủ để huấn luyện`;
+                content = `Currently the data for the name ${nameFish} is ${v.data} figure. Not enough to train`;
                 $("#btn_agree_train").hide();
             } else {
-                content = `Hiện tại dữ liệu cho tên ${nameFish} là ${v.data} hình`;
+                content = `Currently the data for the name ${nameFish} is ${v.data} image`;
                 $("#btn_agree_train").show();
             }
 

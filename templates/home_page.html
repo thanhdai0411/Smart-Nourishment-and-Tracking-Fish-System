@@ -71,7 +71,7 @@
 
         <!-- <canvas id="canvas">
         </canvas> -->
-        <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" class="d-none" />
+        <!-- <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" class="d-none" /> -->
 
         <!-- banner -->
         <div class="landing_main" id="landing_main_home">
@@ -81,7 +81,7 @@
                         <a href="/home" class="home_title">Aquarium Smart</a>
                         <div class="home_nav_group">
                             <a href="#info_fish" id="item_nav">Information
-                            fish</a>
+                            Fish</a>
 
                             <a href="/monitoring" id="item_nav">Monitor</a>
                         </div>
@@ -155,7 +155,7 @@
                             <h4>{{item.fish_name}}</h4>
                             <p class="fish_name_origin">{{item.fish_type}}</p>
                             <p class="note_profile">{{item.note }}</p>
-                            <button class="info_profile" data-id_info={{item.id}}>XEM THÊM THÔNG TIN</button>
+                            <button class="info_profile" data-id_info={{item.id}}>MORE INFORMATION</button>
                         </div>
 
                     </div>
@@ -167,9 +167,9 @@
                         </div>
                         <div class="content_profile">
                             <h4>NoName</h4>
-                            <p class="fish_name_origin">Chủng loại cá</p>
+                            <p class="fish_name_origin">Types of fish</p>
                             <p class="note_profile">01/01/2021</p>
-                            <button>XEM THÊM THÔNG TIN</button>
+                            <button>MORE INFORMATION</button>
 
                         </div>
 
@@ -507,27 +507,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark " id="exampleModalLabel">
-                        Hoàn thành hồ sơ tiến hành đào tạo
+                        Complete the training profile
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="text-align: justify">
-                    <b style="font-size: 18px">Bạn chắc chắn muốn đào tạo ?</b> <br />
-                    Thông tin bạn cũng cấp phải đủ nhiều và tốt tối thiểu là <b id="min_train_label">10</b> hình thì mới
-                    có thể
-                    thành công <br />
-                    Nếu thông tin bạn cũng cấp cho chúng tôi không đủ thì tỉ lệ thất bại là rất
-                    cao? Hay suy nghĩ kĩ trước khi nhấn xác nhận nhế
+                    <b style="font-size: 18px">Are you sure you want to train ?</b> <br />
+                    The information you also provide must be good enough and at least <b id="min_train_label">10</b> the new image
+                    maybe
+                    success <br />
+                    If the information you also give us is not enough, the failure rate is very
+                    High? Or think carefully before pressing confirm
                     <div id="data_present_for_train" style="color : #136965; font-size : 20px; font-weight: 500;">
                         Waiting...
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        Quay lại
+                        Back
                     </button>
                     <a type="button" id="btn_agree_train"
-                        class="btn btn-success">Đã đủ thông tin đào tạo ngay</a>
+                        class="btn btn-success">Enough training information now</a>
                 </div>
             </div>
         </div>
@@ -662,31 +662,26 @@
                             <form id="update_profile" method="POST" enctype="multipart/form-data">
                                 <h4 class="fish_name_info">Fish Gold</h4>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Người nộp hồ sơ</div>
-                                    <input class=" form-control username_info" type="text" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp">
+                                    <div class="mb-1" style="font-weight: 500;">The Applicant</div>
+                                    <input class=" form-control username_info" type="text" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Loại cá</div>
-                                    <input class=" form-control fish_type_info" type="text" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp">
+                                    <div class="mb-1" style="font-weight: 500;">Type of fish</div>
+                                    <input class=" form-control fish_type_info" type="text" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Ngày gia nhập thành phố</div>
-                                    <input class=" form-control start_date_info" type="date" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp">
-
+                                    <div class="mb-1" style="font-weight: 500;">Date of joining the city</div>
+                                    <input class=" form-control start_date_info" type="date" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Ghi chú</div>
-                                    <textarea class="form-control note_info" name="" id="" cols="30"
-                                        rows="2"></textarea>
+                                    <div class="mb-1" style="font-weight: 500;">Note</div>
+                                    <textarea class="form-control note_info" name="" id="" cols="30" rows="2"></textarea>
                                     <!-- <textarea class="form-control note_info" type="email"  id="exampleInputEmail1" aria-describedby="emailHelp"> -->
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Thay đổi hình đại diện</div>
-                                    <input class="form-control" accept="image/*" type="file" required
-                                        id="file-input_avatar" name="avatar_fish_update" />
+                                    <div class="mb-1" style="font-weight: 500;">Change Avatar</div>
+                                    <input class="form-control" accept="image/*" type="file" required id="file-input_avatar"
+                                        name="avatar_fish_update" />
                                 </div>
                             </form>
                         </div>
@@ -763,7 +758,7 @@
     <!-- modal status train -->
     <div class="modal fade text-dark" id="modalStatusTrain" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg ">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
@@ -779,7 +774,7 @@
                         </div> -->
                         <button class="btn btn-danger mb-2" id="btn_clear_status_train">Clear all training status</button>
                     <div id="label_show">
-                        <div class="table-responsive">
+                        <!-- <div class="table-responsive"> -->
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="text-center">
@@ -795,7 +790,7 @@
                             </tbody>
                             
                         </table>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>

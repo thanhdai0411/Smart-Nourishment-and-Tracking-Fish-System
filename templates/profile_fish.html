@@ -71,11 +71,10 @@
                     <div class="d-flex align-items-center">
                         <a href="/home" class="item_nav_title" style="">Aquarium Smart</a>
                         <div class="nav_item_group">
-                            <a href="/home" id="item_nav">Thông tin
-                                cá</a>
+                            <a href="/home" id="item_nav">Infomaiton Fish</a>
                             <!-- <a href="/home" id="item_nav">Đặt
                                         tên</a> -->
-                            <a href="/monitoring" id="item_nav">Giám sát</a>
+                            <a href="/monitoring" id="item_nav">Monitor</a>
                         </div>
                     </div>
                     <div></div>
@@ -94,7 +93,7 @@
 
             <div id="info_fish">
                 <div class="header_info_fish">
-                    <h3 class="title_info_fish">CƯ DÂN TRONG THÀNH PHỐ</h3>
+                    <h3 class="title_info_fish">RESIDENTS IN THE CITY</h3>
 
                 </div>
 
@@ -115,7 +114,7 @@
                             <h4>{{item.fish_name}}</h4>
                             <p class="fish_name_origin">{{item.fish_type}}</p>
                             <p class="note_profile">{{item.note }}</p>
-                            <button class="info_profile" data-id_info={{item.id}}>XEM THÊM THÔNG TIN</button>
+                            <button class="info_profile" data-id_info={{item.id}}>MORE INFOMATION</button>
                         </div>
                         </div>
 
@@ -130,9 +129,9 @@
                         </div>
                         <div class="content_profile">
                             <h4>NoName</h4>
-                            <p class="fish_name_origin">Chủng loại cá</p>
+                            <p class="fish_name_origin">Types of fish</p>
                             <p class="note_profile">01/01/2021</p>
-                            <button>XEM THÊM THÔNG TIN</button>
+                            <button>MORE INFOMATION</button>
 
                         </div>
 
@@ -260,28 +259,28 @@
                             <form id="update_profile" method="POST" enctype="multipart/form-data">
                                 <h4 class="fish_name_info">Fish Gold</h4>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Người nộp hồ sơ</div>
+                                    <div class="mb-1" style="font-weight: 500;">The Applicant</div>
                                     <input class=" form-control username_info" type="text" id="exampleInputEmail1"
                                         aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Loại cá</div>
+                                    <div class="mb-1" style="font-weight: 500;">Type of fish</div>
                                     <input class=" form-control fish_type_info" type="text" id="exampleInputEmail1"
                                         aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Ngày gia nhập thành phố</div>
+                                    <div class="mb-1" style="font-weight: 500;">Date of joining the city</div>
                                     <input class=" form-control start_date_info" type="date" id="exampleInputEmail1"
                                         aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Ghi chú</div>
+                                    <div class="mb-1" style="font-weight: 500;">Note</div>
                                     <textarea class="form-control note_info" name="" id="" cols="30"
                                         rows="2"></textarea>
                                     <!-- <textarea class="form-control note_info" type="email"  id="exampleInputEmail1" aria-describedby="emailHelp"> -->
                                 </div>
                                 <div class="mb-2">
-                                    <div class="mb-1" style="font-weight: 500;">Thay đổi hình đại diện</div>
+                                    <div class="mb-1" style="font-weight: 500;">Change Avatar</div>
                                     <input class="form-control" accept="image/*" type="file" required
                                         id="file-input_avatar" name="avatar_fish_update" />
                                 </div>

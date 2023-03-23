@@ -12,7 +12,7 @@ from pymongo import MongoClient
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
 
-patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
+# patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
 
 
 db_client=MongoClient()
@@ -46,12 +46,13 @@ if not cap.isOpened():
     exit()
 
 
-DURATION = 30
+DURATION = 60
 
-EDGE_TOP = 50
-EDGE_RIGHT = 500
-EDGE_BOTTOM = 350
-EDGE_LEFT = 100
+EDGE_TOP = 150
+EDGE_RIGHT = 700
+EDGE_BOTTOM = 600
+EDGE_LEFT = 200
+
 
 TIME_DURATION = datetime.datetime.now() + datetime.timedelta(seconds=DURATION)
 # time_duration = datetime.datetime.now()+datetime.timedelta(minutes=DURATION)
@@ -119,7 +120,7 @@ while True:
 
             area = round(cv2.contourArea(cnt))
 
-            if area > 50 and 0 not in cnt:
+            if area > 200 and 0 not in cnt:
 
                 if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
@@ -130,8 +131,8 @@ while True:
                         count = count + 1
 
         #! show frame
-        cv2.imshow("Edge", img_cvtc)
-        cv2.imshow("Thresh", fish_contour)
+        # cv2.imshow("Edge", img_cvtc)
+        # cv2.imshow("Thresh", fish_contour)
 
         year, month, day = time.strftime(
             '%Y'), time.strftime('%m'), time.strftime('%d')
@@ -155,7 +156,7 @@ while True:
         collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
 
 
-        time.sleep(0.3)
+        time.sleep(0.5)
 
         if datetime.datetime.now() > TIME_DURATION:
             data_start_trans = str(0)+"="+str(item_details["_id"])

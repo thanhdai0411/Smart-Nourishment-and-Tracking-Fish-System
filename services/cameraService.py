@@ -207,8 +207,13 @@ def generate_frames():
     # open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
 
     camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+    
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
+
+
+    # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
     
 
@@ -217,8 +222,13 @@ def generate_frames():
         if success:
 
 
-            ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
+            ret, buffer = cv2.imencode('.png', cv2.flip(frame, 1))
             frame = buffer.tobytes()
+
+            already_load = open(PATH_SAVE_STATE_LOAD_FISH_DIE , 'r').read()
+            if already_load :
+                camera.release()
+                break
 
             
 
