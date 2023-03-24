@@ -1022,7 +1022,6 @@ btnSearchChart.onclick = (e) => {
     }
     $("#btn_search_chart").hide();
     $("#loading_chart").show();
-
     const inputDateValue = inputChart.value.split("-");
     console.log(inputDateValue);
     const date = `${inputDateValue[2]}-${inputDateValue[1]}-${inputDateValue[0]}`;
@@ -1045,33 +1044,21 @@ const updateFoodSettingDaily = () => {
                 getValue();
                 // toastSuccessFood('Update daily food');
             } else {
-                toastFail("Update thất bại");
+                toastFail("Update fail");
             }
         },
     });
 };
+$("#opacity_loading_page").hide();
+$(document).ready(function () {
+    console.log("reload page");
+    const date = new Date();
 
-// $(document).ready(function () {
-//     console.log("reload page");
-//     const date = new Date();
-//     const day = date.getDate();
-//     const month = date.getMonth();
-//     const year = date.getFullYear();
+    const dateCurrent = moment(date).format("DD/MM/YYYY");
+    const dateSave = localStorage.getItem("date_current");
 
-//     const dateCurrent = moment(date).format("DD/MM/YYYY");
-//     const dateSave = localStorage.getItem("date_current");
-
-//     if (dateSave != dateCurrent) {
-//         updateFoodSettingDaily();
-//         localStorage.setItem("date_current", dateCurrent);
-//     }
-
-//     if (modeAIOFF == 1) {
-//         $("#opacity_loading_page").hide();
-//     } else if (modeAIOFF == 0 && id_time_count_fish) {
-//         $("#opacity_loading_page").show();
-//         getFishCountDetail(id_time_count_fish);
-//     } else {
-//         $("#opacity_loading_page").hide();
-//     }
-// });
+    if (dateSave != dateCurrent) {
+        updateFoodSettingDaily();
+        localStorage.setItem("date_current", dateCurrent);
+    }
+});

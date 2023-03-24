@@ -24,6 +24,7 @@ def upload_labels():
         image_name = request.form.get('image_name')
         username = request.form.get('username')
 
+        print(label, username)
         LIMIT_LABEL = 5
         result = LabelFish.objects(username=username)
         lengthLabel = len(json.loads(result.to_json()))

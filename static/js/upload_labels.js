@@ -197,6 +197,7 @@ btnShowLabel.onclick = (e) => {
             const { data: labelFish, success } = data;
             if (success === 1) {
                 const labelSave = JSON.parse(labelFish);
+                console.log({ labelSave });
                 if (labelSave.length) {
                     const tableContent = labelSave.map(
                         (v, index) =>
@@ -237,7 +238,7 @@ btnShowLabel.onclick = (e) => {
                     handleDeleteFishName(btnDeleteData);
                 } else {
                     // khong co
-                    wrapLabelShow.innerHTML = "Not train status";
+                    wrapLabelShow.innerHTML = "No name";
                 }
             } else {
                 // that bai
@@ -267,7 +268,7 @@ btnSaveLabel.onclick = (e) => {
     }
 
     if (valueInputLabel == nameFishTrain) {
-        toastFail("Tên dã tồn tại");
+        toastFail("Name exist");
         $("#modalSaveName").modal("hide");
         return;
     }
@@ -385,7 +386,7 @@ btnSubmitLabel.addEventListener("click", (e) => {
                 timeUpload.innerHTML = timePresent + " - " + datePresent;
                 const toast = new bootstrap.Toast(toastUploadSuccess);
                 toast.show();
-                toastSuccess("Download data successfully");
+                toastSuccess("Upload data successfully");
             }
         },
     });
@@ -397,7 +398,7 @@ const viewDataPresentForTrain = document.querySelector(
 );
 
 btnComplete.onclick = (e) => {
-    const MIN_TRAIN = 2;
+    const MIN_TRAIN = 30;
     const minTrainLabel = document.querySelector("#min_train_label");
     minTrainLabel.innerHTML = MIN_TRAIN;
     const nameFish = localStorage.getItem("label");

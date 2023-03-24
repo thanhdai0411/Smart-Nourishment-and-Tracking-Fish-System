@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aquarium Smart</title>
 
-    <link rel="icon" type="image/x-icon" href="/static/image/icon_fish.png" />
+    <link rel="icon" type="image/x-icon" href="/static/image/logo.png" />
 
     <link rel="stylesheet" href="/static/css/landing_page.css" />
     <!-- swiper csss -->
@@ -78,7 +78,10 @@
             <nav class="landing_nav-bar">
                 <div class="nav_content">
                     <div class="d-flex align-items-center">
-                        <a href="/home" class="home_title">Aquarium Smart</a>
+                        <div>
+                            <a href="/home" class="home_title">Aquarium Smart</a>
+                        </div>
+                        
                         <div class="home_nav_group">
                             <a href="#info_fish" id="item_nav">Information
                             Fish</a>
@@ -88,7 +91,7 @@
                     </div>
                     <div></div>
                     <!-- <div class="d-flex align-items-center user_login">
-                        <img src="/static/image/icon_fish.png" class="hom_img_avatar" alt="" />
+                        <img src="/static/image/logo.png" class="hom_img_avatar" alt="" />
                         <span id="username_login"></span>
                         <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
                     </div> -->
@@ -99,7 +102,7 @@
                         </div>
 
                         <div class="d-flex align-items-center user_login">
-                            <img class="hom_img_avatar" src="/static/image/icon_fish.png" />
+                            <img class="hom_img_avatar" src="/static/image/logo.png" />
                             <span id="username_login"></span>
                             <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
                         </div>
@@ -427,7 +430,7 @@
                                 type="button" class="btn save w-100 shadow-lg" value="CLICK TO SAVE DATA" />
                         </form>
                         <a class="btn btn-success mt-4 w-100" data-bs-toggle="modal" style=" font-weight: 500;" id="btn_complete"
-                            data-bs-target="#modalAuthTrain">COMPLETE DOCUMENTATION IMPLEMENTATION OF TRAINING</a>
+                            data-bs-target="#modalAuthTrain">COMPLETE TRAINING</a>
                     </div>
                 </div>
 
@@ -820,7 +823,7 @@
         );
         return match ? match[1] : null;
     }
-    const usernameLogin = getCookie("username").split('"')[1];
+    const usernameLogin = getCookie("username");
     document.querySelector("#username_login").innerHTML = usernameLogin;
     
     

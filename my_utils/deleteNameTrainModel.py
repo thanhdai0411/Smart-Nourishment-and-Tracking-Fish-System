@@ -105,7 +105,9 @@ def deleteNameTrainModel(name_fish) :
                         open(base_path + labels , 'w').write(my_string.strip())
         else : 
             # shutil.rmtree('/folder_name')
-            shutil.rmtree(FOLDER_TRAIN_COMPLETE + '/train')
+            exist_folder = os.path.isdir(FOLDER_TRAIN_COMPLETE + "/train")
+            if(exist_folder) :
+                shutil.rmtree(FOLDER_TRAIN_COMPLETE + '/train')
             open(PATCH_TO_COCO12YAML, 'w').write("")
 
                     

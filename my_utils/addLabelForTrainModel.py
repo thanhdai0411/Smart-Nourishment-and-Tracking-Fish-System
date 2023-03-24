@@ -96,6 +96,7 @@ def addLabelForTrainModel(newLabel, coordinate, imgFromUser, imageFromUserName, 
 
             addLabelFileCoCo128(nameFile, coordinate, str(label_index) + " ")
             addImageForCoCo128(imgFromUser, newLabel)
+
         else:
             add = WHITE_SPACE + str(int(f) + 1) + ": " + newLabel
             saveLabelToDB(username, newLabel)
