@@ -32,7 +32,7 @@ app = Flask(__name__, static_url_path='/static')
 
 # config session
 app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_TYPE"] = "null"
 Session(app)
 
 # config emaial 
@@ -112,7 +112,6 @@ def train_model():
     # python train.py --img 640 --batch 16 --epochs 3 --data coco128.yaml --weights yolov5s.pt
 
     call(["python3",PATH_TRAIN_MODEL])
-    print("call train")
 
     dt_obj_2 = datetime.now()
     timeComplete = dt_obj_2.strftime("%d/%m/%Y - %H:%M")

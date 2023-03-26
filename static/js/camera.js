@@ -55,6 +55,7 @@ const showCameraNoteFrame = (src) => {
 };
 
 btnStartCamera.onclick = (e) => {
+    $("#opacity_loading_page").show();
     hideCamera();
     // callOpenCamera("/camera/play");
     setTimeout(() => {
@@ -66,14 +67,15 @@ btnStopCamera.onclick = (e) => {
     hideCamera();
     // callOpenCamera("/camera/stop");
     setTimeout(() => {
-        showCameraNoteFrame("/camera/fish_die");
-        // showCamera("/camera/fish_die");
+        // showCameraNoteFrame("/camera/fish_die");
+        showCamera("/camera/fish_die");
 
         // camera.setAttribute("src", "/camera/fish_die");
     }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {
+    $("#opacity_loading_page").show();
     hideCamera();
     setTimeout(() => {
         showCamera("/camera/detect");

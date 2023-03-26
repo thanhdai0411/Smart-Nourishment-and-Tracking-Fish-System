@@ -398,7 +398,7 @@ const viewDataPresentForTrain = document.querySelector(
 );
 
 btnComplete.onclick = (e) => {
-    const MIN_TRAIN = 30;
+    const MIN_TRAIN = 50;
     const minTrainLabel = document.querySelector("#min_train_label");
     minTrainLabel.innerHTML = MIN_TRAIN;
     const nameFish = localStorage.getItem("label");

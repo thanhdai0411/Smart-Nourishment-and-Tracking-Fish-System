@@ -453,6 +453,7 @@ function onConnect() {
     client.subscribe("count_fish");
     client.subscribe("fish_die");
     client.subscribe("start_eat");
+    client.subscribe("load_model_stream");
 }
 
 function onConnectionLost(responseObject) {
@@ -673,6 +674,12 @@ function onMessageArrived(message) {
             const rgbCode = localStorage.getItem("rgb_code");
             public_message("rgb_control", rgbCode);
         }
+    } else if (topic == "load_model_stream") {
+        const status = message.payloadString;
+
+        if (status == "0") {
+            $("#opacity_loading_page").hide();
+        } 
     } else {
         let stateTrain = message.payloadString;
         let state = stateTrain.split("=")[0];
@@ -736,7 +743,7 @@ btnPressFeeder.onmousedown = (e) => {
 
     if (startPress >= pressPrevius) {
         const endPress = moment()
-            .add(30, "minutes")
+            .add(10, "minutes")
             .format("DD/MM/YYYY HH:mm:ss");
         localStorage.setItem("time_click", endPress);
 
@@ -745,24 +752,24 @@ btnPressFeeder.onmousedown = (e) => {
         stateForPreesEat.classList.add("control_switch-off");
         textForPreesEat.innerHTML = "ON";
 
-        public_message("motor_control", "M100E");
+        public_message("motor_control", "M200E");
 
-        setTimeout(() => {
-            public_message("rgb_control", "R255G255B255E");
-        }, 1000);
+        // setTimeout(() => {
+        //     public_message("rgb_control", "R255G255B255E");
+        // }, 1000);
 
-        $.ajax({
-            type: "GET",
-            url: "/camera/cnt_fish_press",
-            dataType: "json",
-            success: function ({ data }) {
-                // localStorage.getItem("rgb");
-                const rgbCode = localStorage.getItem("rgb_code");
-                public_message("rgb_control", rgbCode);
-            },
-        });
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/camera/cnt_fish_press",
+        //     dataType: "json",
+        //     success: function ({ data }) {
+        //         // localStorage.getItem("rgb");
+        //         const rgbCode = localStorage.getItem("rgb_code");
+        //         public_message("rgb_control", rgbCode);
+        //     },
+        // });
     } else {
-        toastFailFood(`Between 2 click is 30 minutes`);
+        toastFailFood(`Between 2 click is 10 minutes`);
         return;
         // alert("Please betweent 2 click is 5 minutes");
     }

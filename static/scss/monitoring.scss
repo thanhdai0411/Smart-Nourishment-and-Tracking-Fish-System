@@ -62,21 +62,21 @@ a {
                 }
         }
 
-        button.btn_press_food::before {
-            position: absolute;
-            content: "";
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: orange;
-            border-radius: inherit;
-            // box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
-            transform: translate3d(0, 0.68em, -1em);
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
+        // button.btn_press_food::before {
+        //     position: absolute;
+        //     content: "";
+        //     width: 100%;
+        //     height: 100%;
+        //     top: 0;
+        //     left: 0;
+        //     right: 0;
+        //     bottom: 0;
+        //     background: orange;
+        //     border-radius: inherit;
+        //     // box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
+        //     transform: translate3d(0, 0.68em, -1em);
+        //     transition: transform 0.15s, box-shadow 0.15s;
+        // }
 
         button.btn_press_food:hover {
             background: #ffe9e9;

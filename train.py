@@ -15,30 +15,11 @@ Datasets:   https://github.com/ultralytics/yolov5/tree/master/data
 Tutorial:   https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data
 """
 
-from utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, select_device, smart_DDP, smart_optimizer,
-                               smart_resume, torch_distributed_zero_first)
-from utils.plots import plot_evolve
-from utils.metrics import fitness
-from utils.loss import ComputeLoss
-from utils.loggers.wandb.wandb_utils import check_wandb_resume
-from utils.loggers.comet.comet_utils import check_comet_resume
-from utils.loggers import Loggers
-from utils.general import (LOGGER, check_amp, check_dataset, check_file, check_git_status, check_img_size,
-                           check_requirements, check_suffix, check_yaml, colorstr, get_latest_run, increment_path,
-                           init_seeds, intersect_dicts, labels_to_class_weights, labels_to_image_weights, methods,
-                           one_cycle, print_args, print_mutation, strip_optimizer, yaml_save)
-from utils.downloads import attempt_download, is_url
-from utils.dataloaders import create_dataloader
-from utils.callbacks import Callbacks
-from utils.autobatch import check_train_batch_size
-from utils.autoanchor import check_anchors
-from models.yolo import Model
-from models.experimental import attempt_load
-import val as validate  # for end-of-epoch mAP
 import argparse
 import math
 import os
 import random
+import subprocess
 import sys
 import time
 from copy import deepcopy
@@ -53,17 +34,37 @@ import yaml
 from torch.optim import lr_scheduler
 from tqdm import tqdm
 
-
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))  # add ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
+import val as validate  # for end-of-epoch mAP
+from models.experimental import attempt_load
+from models.yolo import Model
+from utils.autoanchor import check_anchors
+from utils.autobatch import check_train_batch_size
+from utils.callbacks import Callbacks
+from utils.dataloaders import create_dataloader
+from utils.downloads import attempt_download, is_url
+from utils.general import (LOGGER, TQDM_BAR_FORMAT, check_amp, check_dataset, check_file, check_git_info,
+                           check_git_status, check_img_size, check_requirements, check_suffix, check_yaml, colorstr,
+                           get_latest_run, increment_path, init_seeds, intersect_dicts, labels_to_class_weights,
+                           labels_to_image_weights, methods, one_cycle, print_args, print_mutation, strip_optimizer,
+                           yaml_save)
+from utils.loggers import Loggers
+from utils.loggers.comet.comet_utils import check_comet_resume
+from utils.loss import ComputeLoss
+from utils.metrics import fitness
+from utils.plots import plot_evolve
+from utils.torch_utils import (EarlyStopping, ModelEMA, de_parallel, select_device, smart_DDP, smart_optimizer,
+                               smart_resume, torch_distributed_zero_first)
 
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable/elastic/run.html
 RANK = int(os.getenv('RANK', -1))
 WORLD_SIZE = int(os.getenv('WORLD_SIZE', 1))
+GIT_INFO = check_git_info()
 
 
 def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictionary
@@ -147,7 +148,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     # Batch size
     if RANK == -1 and batch_size == -1:  # single-GPU only, estimate best batch size
         batch_size = check_train_batch_size(model, imgsz, amp)
-        loggers.on_params_update({"batch_size": batch_size})
+        loggers.on_params_update({'batch_size': batch_size})
 
     # Optimizer
     nbs = 64  # nominal batch size
@@ -159,7 +160,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     if opt.cos_lr:
         lf = one_cycle(1, hyp['lrf'], epochs)  # cosine 1->hyp['lrf']
     else:
-        def lf(x): return (1 - x / epochs) * (1.0 - hyp['lrf']) + hyp['lrf']  # linear
+        lf = lambda x: (1 - x / epochs) * (1.0 - hyp['lrf']) + hyp['lrf']  # linear
     scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=lf)  # plot_lr_scheduler(optimizer, scheduler, epochs)
 
     # EMA
@@ -198,7 +199,8 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                                               image_weights=opt.image_weights,
                                               quad=opt.quad,
                                               prefix=colorstr('train: '),
-                                              shuffle=True)
+                                              shuffle=True,
+                                              seed=opt.seed)
     labels = np.concatenate(dataset.labels, 0)
     mlc = int(labels[:, 0].max())  # max label class
     assert mlc < nc, f'Label class {mlc} exceeds nc={nc} in {data}. Possible class labels are 0-{nc - 1}'
@@ -277,7 +279,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
         pbar = enumerate(train_loader)
         LOGGER.info(('\n' + '%11s' * 7) % ('Epoch', 'GPU_mem', 'box_loss', 'obj_loss', 'cls_loss', 'Instances', 'Size'))
         if RANK in {-1, 0}:
-            pbar = tqdm(pbar, total=nb, bar_format='{l_bar}{bar:10}{r_bar}{bar:-10b}')  # progress bar
+            pbar = tqdm(pbar, total=nb, bar_format=TQDM_BAR_FORMAT)  # progress bar
         optimizer.zero_grad()
         for i, (imgs, targets, paths, _) in pbar:  # batch -------------------------------------------------------------
             callbacks.run('on_train_batch_start')
@@ -297,7 +299,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
 
             # Multi-scale
             if opt.multi_scale:
-                sz = random.randrange(imgsz * 0.5, imgsz * 1.5 + gs) // gs * gs  # size
+                sz = random.randrange(int(imgsz * 0.5), int(imgsz * 1.5) + gs) // gs * gs  # size
                 sf = sz / max(imgs.shape[2:])  # scale factor
                 if sf != 1:
                     ns = [math.ceil(x * sf / gs) * gs for x in imgs.shape[2:]]  # new shape (stretched to gs-multiple)
@@ -376,8 +378,8 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
                     'ema': deepcopy(ema.ema).half(),
                     'updates': ema.updates,
                     'optimizer': optimizer.state_dict(),
-                    'wandb_id': loggers.wandb.wandb_run.id if loggers.wandb else None,
                     'opt': vars(opt),
+                    'git': GIT_INFO,  # {remote, branch, commit} if a git repo
                     'date': datetime.now().isoformat()}
 
                 # Save last, best and delete
@@ -429,6 +431,7 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     torch.cuda.empty_cache()
     return results
 
+
 from constant import FOLDER_TRAIN_COMPLETE, PATH_TO_WEIGHT_INIT_5N, EPOCH_TRAIN
 
 
@@ -453,15 +456,16 @@ print("path_model_init: " + path_model_init )
 
 
 
+
+
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default=ROOT /
-                        path_model_init, help='initial weights path')
+    parser.add_argument('--weights', type=str, default=ROOT / path_model_init, help='initial weights path')
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
     parser.add_argument('--data', type=str, default=ROOT / 'data/coco128.yaml', help='dataset.yaml path')
     parser.add_argument('--hyp', type=str, default=ROOT / 'data/hyps/hyp.scratch-low.yaml', help='hyperparameters path')
     parser.add_argument('--epochs', type=int, default=EPOCH_TRAIN, help='total training epochs')
-    parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs, -1 for autobatch')
+    parser.add_argument('--batch-size', type=int, default=8, help='total batch size for all GPUs, -1 for autobatch')
     parser.add_argument('--imgsz', '--img', '--img-size', type=int, default=640, help='train, val image size (pixels)')
     parser.add_argument('--rect', action='store_true', help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
@@ -471,7 +475,7 @@ def parse_opt(known=False):
     parser.add_argument('--noplots', action='store_true', help='save no plot files')
     parser.add_argument('--evolve', type=int, nargs='?', const=300, help='evolve hyperparameters for x generations')
     parser.add_argument('--bucket', type=str, default='', help='gsutil bucket')
-    parser.add_argument('--cache', type=str, nargs='?', const='ram', help='--cache images in "ram" (default) or "disk"')
+    parser.add_argument('--cache', type=str, nargs='?', const='ram', help='image --cache ram/disk')
     parser.add_argument('--image-weights', action='store_true', help='use weighted image selection for training')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--multi-scale', action='store_true', help='vary img-size +/- 50%%')
@@ -508,7 +512,7 @@ def main(opt, callbacks=Callbacks()):
         check_requirements()
 
     # Resume (from specified or most recent last.pt)
-    if opt.resume and not check_wandb_resume(opt) and not check_comet_resume(opt) and not opt.evolve:
+    if opt.resume and not check_comet_resume(opt) and not opt.evolve:
         last = Path(check_file(opt.resume) if isinstance(opt.resume, str) else get_latest_run())
         opt_yaml = last.parent.parent / 'opt.yaml'  # train options yaml
         opt_data = opt.data  # original dataset
@@ -533,7 +537,7 @@ def main(opt, callbacks=Callbacks()):
             opt.name = Path(opt.cfg).stem  # use model.yaml as name
         opt.save_dir = str(increment_path(Path(opt.project) / opt.name, exist_ok=True))
 
-    # DDP mode
+    # DDP modeincrement_path
     device = select_device(opt.device, batch_size=opt.batch_size)
     if LOCAL_RANK != -1:
         msg = 'is not compatible with YOLOv5 Multi-GPU DDP training'
@@ -544,7 +548,7 @@ def main(opt, callbacks=Callbacks()):
         assert torch.cuda.device_count() > LOCAL_RANK, 'insufficient CUDA devices for DDP command'
         torch.cuda.set_device(LOCAL_RANK)
         device = torch.device('cuda', LOCAL_RANK)
-        dist.init_process_group(backend="nccl" if dist.is_nccl_available() else "gloo")
+        dist.init_process_group(backend='nccl' if dist.is_nccl_available() else 'gloo')
 
     # Train
     if not opt.evolve:
@@ -594,7 +598,12 @@ def main(opt, callbacks=Callbacks()):
         # ei = [isinstance(x, (int, float)) for x in hyp.values()]  # evolvable indices
         evolve_yaml, evolve_csv = save_dir / 'hyp_evolve.yaml', save_dir / 'evolve.csv'
         if opt.bucket:
-            os.system(f'gsutil cp gs://{opt.bucket}/evolve.csv {evolve_csv}')  # download evolve.csv if exists
+            # download evolve.csv if exists
+            subprocess.run([
+                'gsutil',
+                'cp',
+                f'gs://{opt.bucket}/evolve.csv',
+                str(evolve_csv),])
 
         for _ in range(opt.evolve):  # generations to evolve
             if evolve_csv.exists():  # if evolve.csv exists: select best hyps and mutate
@@ -632,7 +641,9 @@ def main(opt, callbacks=Callbacks()):
             results = train(hyp.copy(), opt, device, callbacks)
             callbacks = Callbacks()
             # Write mutation results
-            print_mutation(results, hyp.copy(), save_dir, opt.bucket)
+            keys = ('metrics/precision', 'metrics/recall', 'metrics/mAP_0.5', 'metrics/mAP_0.5:0.95', 'val/box_loss',
+                    'val/obj_loss', 'val/cls_loss')
+            print_mutation(keys, results, hyp.copy(), save_dir, opt.bucket)
 
         # Plot results
         plot_evolve(evolve_csv)
@@ -650,6 +661,6 @@ def run(**kwargs):
     return opt
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     opt = parse_opt()
     main(opt)

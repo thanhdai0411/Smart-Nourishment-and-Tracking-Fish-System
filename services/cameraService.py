@@ -1,4 +1,5 @@
 import datetime
+
 import io
 import os
 import time
@@ -22,7 +23,7 @@ from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,P
 import paho.mqtt.client as paho
 from paho import mqtt
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH
 
 from subprocess import call
 
@@ -30,6 +31,19 @@ db_client=MongoClient()
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
 collection_name = mydatabase["amount_fish"]
+
+
+
+#   Frame size: 640x480
+#     Frame rates: 30, 20, 10
+#   Frame size: 352x288
+#     Frame rates: 30, 20, 10
+#   Frame size: 320x240
+#     Frame rates: 30, 20, 10
+#   Frame size: 176x144
+#     Frame rates: 30, 20, 10
+#   Frame size: 160x120
+#     Frame rates: 30, 20, 10
 
 
 #!MQTT SETUP ==========================================================
@@ -69,16 +83,25 @@ client.loop_start()
 
 # TIME_DURATION = datetime.datetime.now() + datetime.timedelta(minutes=DURATION)
 
+def rescale_frame(frame, percent=75):
+    width = int(frame.shape[1] * percent/ 100)
+    height = int(frame.shape[0] * percent/ 100)
+    dim = (width, height)
+    return cv2.resize(frame, dim, interpolation =cv2.INTER_AREA)
+
 
 def generate_frames_detect():
     # open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
    
+    # client.publish("load_model_stream", payload="1", qos=1)
+    # model = torch.hub.load('.', 'custom', path="", source='local')
+    model = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_USER_CUSTOM_NAME, source='local')
 
-    model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
 
     camera = cv2.VideoCapture(0)
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    client.publish("load_model_stream", payload="0", qos=1)
 
     while True:
         success, frame = camera.read()
@@ -89,16 +112,10 @@ def generate_frames_detect():
             # =====================================
 
             img = Image.open(io.BytesIO(frame))
+            model.conf = 0.5
+            iou = 0.45
             results = model(img)
-            # results = model(img)
-            # results.print()
-
-            count_detect = results.pandas().xyxy[0]['name']
-            list_count_detect = list(count_detect) 
             
-            if(len(list_count_detect) > 0) :
-                print('Die count: ' + str(len(list_count_detect)))
-
             img = np.squeeze(results.render())  # RGB
             # read image as BGR
             img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
@@ -125,18 +142,13 @@ def generate_frames_detect_fish_die():
 
 
 
-    # already_load = open(PATH_SAVE_STATE_LOAD_FISH_DIE , 'r').read()
-    # model = ""
-    # if not already_load :
-    # open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY")
-
     print("load model fish die ...")
+    model = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
 
-    model = torch.hub.load('.', 'custom', path=PATH_MODEL_FISH_DIE, source='local')
 
     camera = cv2.VideoCapture(0)
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 160)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
     time_send = None
     DURATION = 60
 
@@ -146,44 +158,76 @@ def generate_frames_detect_fish_die():
     while True:
         success, frame = camera.read()
         if success:
+            
             ret, buffer = cv2.imencode('.jpg', cv2.flip(frame, 1))
             frame = buffer.tobytes()
-
             # =====================================
-
             img = Image.open(io.BytesIO(frame))
+
+            model.conf = 0.6
+            iou = 0.45
+
             results = model(img)
-            # results = model(img)
-            # results.print()
-
-            count_detect = results.pandas().xyxy[0]['name']
-            list_count_detect = list(count_detect) 
-            # if datetime.datetime.now() > TIME_DURATION:
-            time_send_mail = open(PATH_SAVE_TIME_SEND_MAIL , 'r').read()
-            print(time_send_mail)
-
-            if time_send_mail : 
-                datetime_object = datetime.datetime.fromisoformat(time_send_mail.strip())
-
-                if(len(list_count_detect) > 0 and  datetime.datetime.now() >= datetime_object) :
-                    time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
-                    open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
-
-                    print('Die count: ' + str(len(list_count_detect)))
-                    client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
-                    
-            elif(len(list_count_detect) > 0) :
-                time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
-                open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
-
-                print('Die count: ' + str(len(list_count_detect)))
-                client.publish("fish_die", payload=str(len(list_count_detect)), qos=1)
 
 
             img = np.squeeze(results.render())  # RGB
         
             img_BGR = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+            width, height, _ = img_BGR.shape
+            range_border = 20
+
+            # ox1,ox2,oy1,oy2 = draw_rect_subtract(img_BGR, width, height, 0)
+            cv2.rectangle(img_BGR, (range_border + 2,range_border ), (width + 20,height - 60), (255, 0, 0), 1)
+
+            ox1 = range_border + 2
+            ox2 = width + range_border
+            oy1 = range_border
+            oy2 = height - 60
+
+            print(results.xyxy[0])
+            
+            check = []
+            for box in results.xyxy[0]:
+                x1, y1, x2, y2, conf, cls = box
+
+        
+                if(x1 >= ox1 and y1 >= oy1 and x2 <= ox2 and y2 <= oy2) :
+                    # print("inside")
+                    pass
+                else :
+
+                    check.append("die")
+
+
+
+            time_send_mail = open(PATH_SAVE_TIME_SEND_MAIL , 'r').read()
+
+            if(len(check) > 0) :
+                print("die")
+
+
+            
+
+            if time_send_mail : 
+                # datetime_object = date.fromisoformat(time_send_mail.strip())
+
+                datetime_object = datetime.datetime.strptime(time_send_mail.strip(), "%Y-%m-%d %H:%M:%S.%f")
+                # print(datetime.datetime.now(), datetime_object)
+
+                if(len(check) > 0 and  datetime.datetime.now() >= datetime_object) :
+                    time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
+                    open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
+                    client.publish("fish_die", payload=str(len(check)), qos=1)
+                    
+            elif(len(check) > 0) :
+                time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
+                open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
+                client.publish("fish_die", payload=str(len(check)), qos=1)
+
+
             frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()
+            
 
             # release
             already_load = open(PATH_SAVE_STATE_LOAD_FISH_DIE , 'r').read()
@@ -205,6 +249,7 @@ def generate_frames_detect_fish_die():
 
 def generate_frames():
     # open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
+    # client.publish("load_model_stream", payload="1", qos=1)
 
     camera = cv2.VideoCapture(0)
     
@@ -215,16 +260,21 @@ def generate_frames():
     # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
+    client.publish("load_model_stream", payload="0", qos=1)
     
 
     while True:
         success, frame = camera.read()
         if success:
 
+            
 
             ret, buffer = cv2.imencode('.png', cv2.flip(frame, 1))
             frame = buffer.tobytes()
 
+          
+
+            
             already_load = open(PATH_SAVE_STATE_LOAD_FISH_DIE , 'r').read()
             if already_load :
                 camera.release()
