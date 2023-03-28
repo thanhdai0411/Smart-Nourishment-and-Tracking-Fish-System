@@ -14,6 +14,8 @@ from subprocess import call
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE
 
 from bson.objectid import ObjectId
+import random
+
 
 # connect db
 
@@ -39,7 +41,7 @@ def read_file_json() :
 def cron_food(loop_on):
     try:
         def on_connect(client, userdata, flags, rc, properties=None):
-            print("Connect MQTT Crond ")
+            print(">>>>> Connect MQTT Crond <<<< ")
 
         def on_publish(client, userdata, mid, properties=None):
             print("mid: " + str(mid))
@@ -93,11 +95,12 @@ def cron_food(loop_on):
             # !===============================================================
 
             
-
-        client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+        num = random.random()
+        client = paho.Client("cron"+ str(num))
+        # client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
         client.on_connect = on_connect
 
-        client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+        # client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
         # set username and password
         client.username_pw_set(BROKER_USERNAME, BROKER_PASSWORD)
         client.connect(BROKER_URL, BROKER_PORT)

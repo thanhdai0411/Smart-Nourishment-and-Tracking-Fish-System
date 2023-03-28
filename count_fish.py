@@ -71,10 +71,11 @@ def on_message(client, userdata, msg):
 
 
 
-client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+# client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+client = paho.Client("count_fish")
 client.on_connect = on_connect
 
-client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+# client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 # set username and password
 client.username_pw_set(BROKER_USERNAME, BROKER_PASSWORD)
 client.connect(BROKER_URL, BROKER_PORT)
@@ -131,8 +132,8 @@ while True:
                         count = count + 1
 
         #! show frame
-        # cv2.imshow("Edge", img_cvtc)
-        # cv2.imshow("Thresh", fish_contour)
+        cv2.imshow("Edge", img_cvtc)
+        cv2.imshow("Thresh", fish_contour)
 
         year, month, day = time.strftime(
             '%Y'), time.strftime('%m'), time.strftime('%d')

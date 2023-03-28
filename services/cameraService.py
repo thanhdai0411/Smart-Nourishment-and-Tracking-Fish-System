@@ -19,13 +19,14 @@ from my_utils.jsonFile import write_file_json,read_file_json
 
 
 # from constant import PATH_MODEL_FISH_DIE
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,PATH_SAVE_STATE_LOAD_FISH_DIE,PATH_SAVE_TIME_SEND_MAIL
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,PATH_SAVE_STATE_LOAD_FISH_DIE,PATH_SAVE_TIME_SEND_MAIL, PATH_MODEL_FISH_NAME
 import paho.mqtt.client as paho
 from paho import mqtt
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH
 
 from subprocess import call
+import random
 
 db_client=MongoClient()
 db_client = MongoClient(MONGODB_URL)
@@ -49,7 +50,7 @@ collection_name = mydatabase["amount_fish"]
 #!MQTT SETUP ==========================================================
 
 def on_connect(client, userdata, flags, rc, properties=None):
-    print("Camera service connect mqtt %s." % rc)
+    print(">>>>>>Camera MQTT service connect mqtt %s. <<" % rc)
 
 def on_publish(client, userdata, mid, properties=None):
     print("mid: " + str(mid))
@@ -63,10 +64,12 @@ def on_message(client, userdata, msg):
 
 
     
-client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+# client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+num = random.random()
+client = paho.Client("camera_service" + str(num))
 client.on_connect = on_connect
 
-client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+# client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 # set username and password
 client.username_pw_set(BROKER_USERNAME, BROKER_PASSWORD)
 client.connect(BROKER_URL, BROKER_PORT)
@@ -75,8 +78,9 @@ client.on_subscribe = on_subscribe
 client.on_message = on_message
 client.on_publish = on_publish
 
-
 client.loop_start()
+
+# client.loop_start()
 
 #! END SETUP MQTT =======================================================================================
 
@@ -95,7 +99,7 @@ def generate_frames_detect():
    
     # client.publish("load_model_stream", payload="1", qos=1)
     # model = torch.hub.load('.', 'custom', path="", source='local')
-    model = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_USER_CUSTOM_NAME, source='local')
+    model = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_FISH_NAME, source='local')
 
 
     camera = cv2.VideoCapture(0)
@@ -112,8 +116,10 @@ def generate_frames_detect():
             # =====================================
 
             img = Image.open(io.BytesIO(frame))
-            model.conf = 0.5
-            iou = 0.45
+
+            # model.conf = 0.5
+            # iou = 0.45
+            
             results = model(img)
             
             img = np.squeeze(results.render())  # RGB
@@ -151,8 +157,6 @@ def generate_frames_detect_fish_die():
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 120)
     time_send = None
     DURATION = 60
-
-
     
 
     while True:
@@ -207,6 +211,7 @@ def generate_frames_detect_fish_die():
                 print("die")
 
 
+            
             
 
             if time_send_mail : 

@@ -420,20 +420,24 @@ function makeid() {
 
     return text;
 }
+// /etc/mosquitto/mosquitto.conf
 
-const BROKER_URL = "e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud";
-const PORT = 8884;
-const USER_NAME = "thanhdai0411";
-const PASSWORD = "thanhdai0411";
+const BROKER_URL = "192.168.1.141";
+const PORT = 9001;
+const USER_NAME = "aquarium123";
+const PASSWORD = "aquarium123@";
 var client = new Paho.MQTT.Client(BROKER_URL, PORT, makeid());
+
+// const BROKER_URL = "e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud";
+// const PORT = 8884;
+// const USER_NAME = "thanhdai0411";
+// const PASSWORD = "thanhdai0411";
+// var client = new Paho.MQTT.Client(BROKER_URL, PORT, makeid());
 
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 
 var options_ = {
-    useSSL: true,
-    userName: USER_NAME,
-    password: PASSWORD,
     onSuccess: onConnect,
     onFailure: doFail,
 };
@@ -446,7 +450,7 @@ function doFail(e) {
 }
 
 function onConnect() {
-    console.log("Connect page Monitor successful");
+    console.log("Connect MQTT server");
     client.subscribe("food_complete");
     client.subscribe("Train_model");
     client.subscribe("feed_fish");
@@ -679,7 +683,7 @@ function onMessageArrived(message) {
 
         if (status == "0") {
             $("#opacity_loading_page").hide();
-        } 
+        }
     } else {
         let stateTrain = message.payloadString;
         let state = stateTrain.split("=")[0];
@@ -752,7 +756,7 @@ btnPressFeeder.onmousedown = (e) => {
         stateForPreesEat.classList.add("control_switch-off");
         textForPreesEat.innerHTML = "ON";
 
-        public_message("motor_control", "M200E");
+        public_message("motor_control", "M100E");
 
         // setTimeout(() => {
         //     public_message("rgb_control", "R255G255B255E");
@@ -1068,4 +1072,27 @@ $(document).ready(function () {
         updateFoodSettingDaily();
         localStorage.setItem("date_current", dateCurrent);
     }
+});
+
+// test camera brower
+
+var but = document.getElementById("btn_camera_brower");
+var video = document.getElementById("vid");
+var mediaDevices = navigator.mediaDevices;
+console.log({ mediaDevices });
+vid.muted = true;
+but.addEventListener("click", () => {
+    mediaDevices
+        .getUserMedia({
+            video: true,
+            audio: true,
+        })
+        .then((stream) => {
+            console.log({ stream });
+            video.srcObject = stream;
+            video.addEventListener("loadedmetadata", () => {
+                video.play();
+            });
+        })
+        .catch(alert);
 });

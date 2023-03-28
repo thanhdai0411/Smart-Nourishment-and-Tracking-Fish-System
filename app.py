@@ -26,6 +26,9 @@ from my_utils.deleteNameTrainModel import deleteNameTrainModel
 
 # from flask_crontab import Crontab
 
+import random
+
+
 
 app = Flask(__name__, static_url_path='/static')
 # crontab = Crontab(app)
@@ -160,7 +163,7 @@ if __name__ == "__main__":
     #!MQTT SETUP ==========================================================
 
     def on_connect(client, userdata, flags, rc, properties=None):
-        print("Connect received with code %s." % rc)
+        print(" >>>>> Connect Main <<<<< %s." % rc)
 
     def on_publish(client, userdata, mid, properties=None):
         print("mid: " + str(mid))
@@ -174,10 +177,12 @@ if __name__ == "__main__":
 
 
         
-    client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+    # client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+    num = random.random()
+    client = paho.Client("main" + str(num))
     client.on_connect = on_connect
 
-    client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+    # client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
     # set username and password
     client.username_pw_set(BROKER_USERNAME, BROKER_PASSWORD)
     client.connect(BROKER_URL, BROKER_PORT)
@@ -201,5 +206,6 @@ if __name__ == "__main__":
     connectDB(app)
     p.start()   
     # app.run(debug=True, threaded=True)
+
     app.run(host="0.0.0.0", port=8978,debug=True, threaded=True)
     p.join()

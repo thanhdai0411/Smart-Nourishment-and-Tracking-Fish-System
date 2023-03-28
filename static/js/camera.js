@@ -47,7 +47,7 @@ const showCamera = (src) => {
     camera.setAttribute("src", src);
 };
 const showCameraNoteFrame = (src) => {
-    $("#shape_camera_none").show();
+    // $("#shape_camera_none").show();
     $("#shape_camera").hide();
     $("#loading_open_camera").hide();
     $(".camera-btn_group").show();
@@ -67,8 +67,8 @@ btnStopCamera.onclick = (e) => {
     hideCamera();
     // callOpenCamera("/camera/stop");
     setTimeout(() => {
-        // showCameraNoteFrame("/camera/fish_die");
-        showCamera("/camera/fish_die");
+        showCameraNoteFrame("/camera/fish_die");
+        // showCamera("/camera/fish_die");
 
         // camera.setAttribute("src", "/camera/fish_die");
     }, 1000);

@@ -11,6 +11,9 @@ let text = localStorage.getItem("complete_train");
 // document.querySelector(".text_complete_train").innerHTML = text;
 const usernameMqtt1 = document.querySelector("#username_login").innerHTML;
 
+const dotNewNotify = document.querySelector(".dot_new_noti");
+const contentNotify = document.querySelector(".content_notify");
+
 function makeid() {
     var text = "";
     var possible =
@@ -22,19 +25,19 @@ function makeid() {
     return text;
 }
 
-const BROKER_URL = "e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud";
-const PORT = 8884;
-const USER_NAME = "thanhdai0411";
-const PASSWORD = "thanhdai0411";
+const BROKER_URL = "192.168.1.141";
+const PORT = 9001;
+const USER_NAME = "aquarium123";
+const PASSWORD = "aquarium123@";
 var client = new Paho.MQTT.Client(BROKER_URL, PORT, makeid());
 
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 
 var options_ = {
-    useSSL: true,
-    userName: USER_NAME,
-    password: PASSWORD,
+    // useSSL: true,
+    // userName: USER_NAME,
+    // password: PASSWORD,
     onSuccess: onConnect,
     onFailure: doFail,
 };

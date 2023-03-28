@@ -13,7 +13,7 @@ FOLDER_SAVE_LABELS = BASE_PATH + '/coco128/labels/train2017'
 FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
 
 PATCH_TO_COCO12YAML = BASE_PATH + "/data/coco128.yaml"
-PATH_TO_WEIGHT_INIT_5N = BASE_PATH + "/yolov5s.pt"
+PATH_TO_WEIGHT_INIT_5N = BASE_PATH + "/yolov5n.pt"
 PATCH_COUNT_FISH = BASE_PATH + '/count_fish.py'
 
 PATH_TRAIN_MODEL = BASE_PATH + "/train.py"
@@ -23,6 +23,9 @@ PATH_MODEL_USER_CUSTOM_NAME = BASE_PATH + "/train_complete/train/weights/best.pt
 PATH_SAVE_STATE_LOAD_FISH_DIE = BASE_PATH + "/my_data/load_fish_die.txt"
 PATH_SAVE_TIME_SEND_MAIL = BASE_PATH + "/my_data/time_send_mail.txt"
 
+
+PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s.pt"
+
 FOLDER_TRAIN_COMPLETE = BASE_PATH+ '/train_complete'
 
 CLOUDINARY_NAME = 'img-aquarium'
@@ -31,10 +34,22 @@ CLOUDINARY_API_SECRET = 'gtbtgeyPmx219CYa67cEqnHZ9xU'
 
 PATCH_FOOD_SETTING = BASE_PATH + '/my_data/food_setting.json'
 
-BROKER_URL = 'e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud'
-BROKER_PORT = 8883
-BROKER_USERNAME = 'thanhdai0411'
-BROKER_PASSWORD = 'thanhdai0411'
+
+# BROKER_URL = '192.168.1.28'
+# BROKER_PORT = 1883
+# BROKER_USERNAME = 'aquarium'
+# BROKER_PASSWORD = 'aquarium123@'
+
+
+BROKER_URL = "192.168.1.141"
+BROKER_PORT = 1883
+BROKER_USERNAME = "aquarium"
+BROKER_PASSWORD = "aquarium123@"
+
+# BROKER_URL = 'e9b685676e514fb18a77577bc6449f0c.s1.eu.hivemq.cloud'
+# BROKER_PORT = 8883
+# BROKER_USERNAME = 'thanhdai0411'
+# BROKER_PASSWORD = 'thanhdai0411'
 
 EMAIL_USERNAME = 'aquarium.smart.service@gmail.com'
 EMAIL_PASSWORD = 'fmklaxodfduvreca'
