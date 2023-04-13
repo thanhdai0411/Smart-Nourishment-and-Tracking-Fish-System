@@ -25,7 +25,7 @@ function makeid() {
     return text;
 }
 
-const BROKER_URL = "192.168.1.141";
+const BROKER_URL = "192.168.1.101";
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";
@@ -173,7 +173,7 @@ function onMessageArrived(message) {
             localStorage.setItem("id_food_run", id);
         } else if (Number(payload) == 0) {
             let id = localStorage.getItem("id_food_run");
-            document.getElementById("camera_open").src = "/camera/fish_die";
+            // document.getElementById("camera_open").src = "/camera/fish_die";
 
             var bodyFormData = new FormData();
 

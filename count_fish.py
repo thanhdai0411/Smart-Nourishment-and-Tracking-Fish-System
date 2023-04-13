@@ -46,7 +46,7 @@ if not cap.isOpened():
     exit()
 
 
-DURATION = 60
+DURATION = 30
 
 EDGE_TOP = 150
 EDGE_RIGHT = 700
@@ -132,8 +132,8 @@ while True:
                         count = count + 1
 
         #! show frame
-        cv2.imshow("Edge", img_cvtc)
-        cv2.imshow("Thresh", fish_contour)
+        # cv2.imshow("Edge", img_cvtc)
+        # cv2.imshow("Thresh", fish_contour)
 
         year, month, day = time.strftime(
             '%Y'), time.strftime('%m'), time.strftime('%d')

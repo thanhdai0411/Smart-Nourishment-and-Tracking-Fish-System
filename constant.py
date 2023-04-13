@@ -24,7 +24,7 @@ PATH_SAVE_STATE_LOAD_FISH_DIE = BASE_PATH + "/my_data/load_fish_die.txt"
 PATH_SAVE_TIME_SEND_MAIL = BASE_PATH + "/my_data/time_send_mail.txt"
 
 
-PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s.pt"
+PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_29.pt"
 
 FOLDER_TRAIN_COMPLETE = BASE_PATH+ '/train_complete'
 
@@ -41,7 +41,7 @@ PATCH_FOOD_SETTING = BASE_PATH + '/my_data/food_setting.json'
 # BROKER_PASSWORD = 'aquarium123@'
 
 
-BROKER_URL = "192.168.1.141"
+BROKER_URL = "192.168.1.101"
 BROKER_PORT = 1883
 BROKER_USERNAME = "aquarium"
 BROKER_PASSWORD = "aquarium123@"

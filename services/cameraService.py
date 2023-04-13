@@ -258,12 +258,12 @@ def generate_frames():
 
     camera = cv2.VideoCapture(0)
     
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
+    # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
 
 
-    # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
     client.publish("load_model_stream", payload="0", qos=1)
     
@@ -300,7 +300,7 @@ def generate_frames_count_fish():
 
     
     PATH = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
-    camera = cv2.VideoCapture(PATH)
+    camera = cv2.VideoCapture(0)
     # camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     # camera.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
     
@@ -319,21 +319,24 @@ def generate_frames_count_fish():
         "fish_count" : []
     }
 
-    collection_name.insert_one(init_data)
+    # collection_name.insert_one(init_data)
 
-    item_details = collection_name.find_one({"time_start" : now_start})
-    data_start_trans = str(1)+"="+str(item_details["_id"])
-    client.publish("feed_fish", payload=data_start_trans, qos=1)
-
-
+    # item_details = collection_name.find_one({"time_start" : now_start})
+    # data_start_trans = str(1)+"="+str(item_details["_id"])
+    # client.publish("feed_fish", payload=data_start_trans, qos=1)
 
 
+
+
+
+        
     DURATION = 30
 
-    EDGE_TOP = 50
-    EDGE_RIGHT = 500
-    EDGE_BOTTOM = 350
-    EDGE_LEFT = 100
+    EDGE_TOP = 150
+    EDGE_RIGHT = 700
+    EDGE_BOTTOM = 600
+    EDGE_LEFT = 200
+
 
     TIME_DURATION = datetime.datetime.now() + datetime.timedelta(seconds=DURATION)
     # time_duration = datetime.datetime.now()+datetime.timedelta(minutes=DURATION)
@@ -367,7 +370,6 @@ def generate_frames_count_fish():
                 area = round(cv2.contourArea(cnt))
 
                 if area > 50 and 0 not in cnt:
-
                     if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
                         if 0 or threshold.shape[0] - 1 not in (cnt[i][0][1] for i in range(len(cnt))):
@@ -379,29 +381,29 @@ def generate_frames_count_fish():
 
             print("Count fish : " + str(count))
             
-            year, month, day = time.strftime(
-                '%Y'), time.strftime('%m'), time.strftime('%d')
+            # year, month, day = time.strftime(
+            #     '%Y'), time.strftime('%m'), time.strftime('%d')
 
-            # now = datetime.datetime.now().strftime("%H:%M:%S.%f")
-            now = datetime.datetime.now()
+            # # now = datetime.datetime.now().strftime("%H:%M:%S.%f")
+            # now = datetime.datetime.now()
 
-            date_push =  str(day) + "-" + str(month) + "-" + str(year) 
-            fish_count =  {"time" : now,"amount" : count}
+            # date_push =  str(day) + "-" + str(month) + "-" + str(year) 
+            # fish_count =  {"time" : now,"amount" : count}
 
-            data_trans =  str(now) + "=" + str(count)
+            # data_trans =  str(now) + "=" + str(count)
 
-            client.publish("count_fish", payload=data_trans, qos=1)
+            # client.publish("count_fish", payload=data_trans, qos=1)
 
-            collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
+            # collection_name.update_one({"date" : date_push,"time_start" : now_start},{"$push" : {"fish_count" :fish_count}})
             
 
-            time.sleep(0.3)
+            # time.sleep(0.3)
 
-            if datetime.datetime.now() > TIME_DURATION:
-                data_start_trans = str(0)+"="+str(item_details["_id"])
-                # client.publish("feed_fish", payload=data_start_trans, qos=1)
-                client.publish("start_eat", payload='0', qos=1)
-                break
+            # if datetime.datetime.now() > TIME_DURATION:
+            #     data_start_trans = str(0)+"="+str(item_details["_id"])
+            #     # client.publish("feed_fish", payload=data_start_trans, qos=1)
+            #     client.publish("start_eat", payload='0', qos=1)
+            #     break
 
 
 

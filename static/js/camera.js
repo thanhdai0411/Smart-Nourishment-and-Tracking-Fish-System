@@ -42,20 +42,20 @@ const hideCamera = () => {
 const showCamera = (src) => {
     $("#shape_camera_none").hide();
     $("#shape_camera").show();
-    $("#loading_open_camera").hide();
-    $(".camera-btn_group").show();
+    // $("#loading_open_camera").hide();
+    // $(".camera-btn_group").show();
     camera.setAttribute("src", src);
 };
 const showCameraNoteFrame = (src) => {
     // $("#shape_camera_none").show();
     $("#shape_camera").hide();
-    $("#loading_open_camera").hide();
-    $(".camera-btn_group").show();
+    // $("#loading_open_camera").hide();
+    // $(".camera-btn_group").show();
     camera.setAttribute("src", src);
 };
 
 btnStartCamera.onclick = (e) => {
-    $("#opacity_loading_page").show();
+    // $("#opacity_loading_page").show();
     hideCamera();
     // callOpenCamera("/camera/play");
     setTimeout(() => {
@@ -65,17 +65,18 @@ btnStartCamera.onclick = (e) => {
 
 btnStopCamera.onclick = (e) => {
     hideCamera();
+    $("#loading_open_camera").hide();
+    $(".camera-btn_group").show();
     // callOpenCamera("/camera/stop");
     setTimeout(() => {
-        showCameraNoteFrame("/camera/fish_die");
+        // showCameraNoteFrame("/camera/fish_die");
         // showCamera("/camera/fish_die");
-
         // camera.setAttribute("src", "/camera/fish_die");
     }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {
-    $("#opacity_loading_page").show();
+    // $("#opacity_loading_page").show();
     hideCamera();
     setTimeout(() => {
         showCamera("/camera/detect");

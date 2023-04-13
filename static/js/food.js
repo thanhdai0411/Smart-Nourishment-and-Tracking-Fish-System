@@ -57,15 +57,6 @@ modalEditFood.addEventListener("show.bs.modal", (event) => {
         const completeTimeEdit = timeFoodEdit.value;
         const completeAmountEdit = amountFoodEdit.value;
 
-        if (completeTimeEdit === time) {
-            toastFailFood("Modification failed. You have no change");
-            $("#modalEditFood").modal("hide");
-            $("#loading_edit_food").hide();
-            btnCompleteEdit.classList.remove("d-none");
-
-            return;
-        }
-
         // check time set
 
         let checkData = [];

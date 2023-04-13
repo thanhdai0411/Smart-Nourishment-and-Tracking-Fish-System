@@ -422,7 +422,7 @@ function makeid() {
 }
 // /etc/mosquitto/mosquitto.conf
 
-const BROKER_URL = "192.168.1.141";
+const BROKER_URL = "192.168.1.101";
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";
@@ -653,7 +653,8 @@ function onMessageArrived(message) {
             localStorage.setItem("id_food_run", id);
         } else if (Number(payload) == 0) {
             let id = localStorage.getItem("id_food_run");
-            document.getElementById("camera_open").src = "/camera/fish_die";
+            // document.getElementById("camera_open").src = "/camera/fish_die";
+            document.getElementById("camera_open").src = "";
 
             var bodyFormData = new FormData();
 
@@ -682,7 +683,9 @@ function onMessageArrived(message) {
         const status = message.payloadString;
 
         if (status == "0") {
-            $("#opacity_loading_page").hide();
+            // $("#opacity_loading_page").hide();
+            $("#loading_open_camera").hide();
+            $(".camera-btn_group").show();
         }
     } else {
         let stateTrain = message.payloadString;
@@ -747,7 +750,7 @@ btnPressFeeder.onmousedown = (e) => {
 
     if (startPress >= pressPrevius) {
         const endPress = moment()
-            .add(10, "minutes")
+            .add(5, "seconds")
             .format("DD/MM/YYYY HH:mm:ss");
         localStorage.setItem("time_click", endPress);
 
@@ -773,7 +776,7 @@ btnPressFeeder.onmousedown = (e) => {
         //     },
         // });
     } else {
-        toastFailFood(`Between 2 click is 10 minutes`);
+        toastFailFood(`Between change is 5 second`);
         return;
         // alert("Please betweent 2 click is 5 minutes");
     }
@@ -897,9 +900,31 @@ colorLamp.onchange = (ev) => {
         const b = parseInt(color.substr(5, 2), 16);
         console.log(`red: ${r}, green: ${g}, blue: ${b}`);
 
-        const rgbCode = `R${r}G${g}B${b}E`;
-        localStorage.setItem("rgb_code", rgbCode);
-        public_message("rgb_control", rgbCode);
+        const timePress = new Date();
+        const startPress = moment(timePress).format("DD/MM/YYYY HH:mm:ss");
+
+        const pressPrevius =
+            localStorage.getItem("rgb_click") ||
+            moment(timePress).format("DD/MM/YYYY HH:mm:ss");
+
+        if (startPress >= pressPrevius) {
+            const endPress = moment()
+                .add(5, "seconds")
+                .format("DD/MM/YYYY HH:mm:ss");
+            localStorage.setItem("rgb_click", endPress);
+
+            const rgbCode = `R${r}G${g}B${b}E`;
+            localStorage.setItem("rgb_code", rgbCode);
+            public_message("rgb_control", rgbCode);
+        } else {
+            toastFailFood(`Between change is 5 second`);
+            return;
+            // alert("Please betweent 2 click is 5 minutes");
+        }
+
+        // const rgbCode = `R${r}G${g}B${b}E`;
+        // localStorage.setItem("rgb_code", rgbCode);
+        // public_message("rgb_control", rgbCode);
     }
 };
 
@@ -1075,24 +1100,3 @@ $(document).ready(function () {
 });
 
 // test camera brower
-
-var but = document.getElementById("btn_camera_brower");
-var video = document.getElementById("vid");
-var mediaDevices = navigator.mediaDevices;
-console.log({ mediaDevices });
-vid.muted = true;
-but.addEventListener("click", () => {
-    mediaDevices
-        .getUserMedia({
-            video: true,
-            audio: true,
-        })
-        .then((stream) => {
-            console.log({ stream });
-            video.srcObject = stream;
-            video.addEventListener("loadedmetadata", () => {
-                video.play();
-            });
-        })
-        .catch(alert);
-});

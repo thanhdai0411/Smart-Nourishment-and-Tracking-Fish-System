@@ -1,3 +1,25 @@
+
+
+import requests
+
+def is_cnx_active():
+    try:
+        # urlopen('http://www.google.com', 1)
+        request = requests.get('http://www.google.com', timeout=5)
+        return True
+    except (requests.ConnectionError, requests.Timeout) as exception:
+	    print("No internet connection.")
+
+
+while True:
+    if is_cnx_active() is True:
+        # Do somthing
+        print("The internet connection is active")
+        break
+    else:
+        print("Waiting connect")
+        pass
+
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL, EMAIL_USERNAME, EMAIL_PASSWORD
 from subprocess import call,Popen,check_call
 from werkzeug.utils import secure_filename
@@ -204,8 +226,10 @@ if __name__ == "__main__":
     p = Process(target=cron_food, args=(recording_on,))
     
     connectDB(app)
-    p.start()   
+    p.start()  
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000, threads= 8) 
     # app.run(debug=True, threaded=True)
 
-    app.run(host="0.0.0.0", port=8978,debug=True, threaded=True)
+    # app.run(host="0.0.0.0", port=5000,debug=True, threaded=True)
     p.join()
