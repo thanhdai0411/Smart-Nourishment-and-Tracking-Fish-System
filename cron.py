@@ -16,6 +16,22 @@ from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, 
 from bson.objectid import ObjectId
 import random
 
+import serial
+
+
+serial_port = serial.Serial(
+        port = "/dev/ttyTHS1",
+        baudrate = 115200,
+       bytesize = serial.EIGHTBITS,
+       parity = serial.PARITY_NONE,
+       stopbits = serial.STOPBITS_ONE, 
+       timeout = 1 ,
+       xonxoff = False, 
+       rtscts = False,
+       dsrdtr = False, 
+       writeTimeout = 1
+)
+
 
 # connect db
 
@@ -36,7 +52,10 @@ def read_file_json() :
             json_object = json.load(open_file)
     return json_object   
 
-
+def serial_send(payload) :
+    data_send = payload.decode("utf-8")  + '\n'
+    # print(data_send)
+    serial_port.write(data_send.encode())
 
 def cron_food(loop_on):
     try:
@@ -52,6 +71,9 @@ def cron_food(loop_on):
         def on_message(client, userdata, msg):
             print(msg.topic + ": " + str(msg.payload))
             controlAIFood = msg.topic == "control_ai_food"
+            controlRGB = msg.topic == "rgb_control"
+            controlRelay = msg.topic == "relay_control"
+            controlMotor = msg.topic == "motor_control"
             # controlFood = msg.topic == "control_food"
 
            
@@ -70,9 +92,7 @@ def cron_food(loop_on):
                     
                 except Exception:
                     handle_exception()
-                
-    
-            if(controlAIFood and msg.payload == b'0'):
+            elif(controlAIFood and msg.payload == b'0'):
                 print('OFF AI FOOD')
                 
                 try :
@@ -90,8 +110,18 @@ def cron_food(loop_on):
 
                 except Exception :
                     handle_exception()
-                
+            elif (controlRGB):
 
+                serial_send(msg.payload)
+
+            elif (controlRelay):
+              
+                serial_send(msg.payload)
+
+            elif (controlMotor):
+                serial_send(msg.payload)
+
+    
             # !===============================================================
 
             
@@ -111,7 +141,9 @@ def cron_food(loop_on):
 
         # subscribe to all topics of encyclopedia by using the wildcard "#"
         client.subscribe("control_ai_food", qos=1)
-        # client.subscribe("control_food", qos=1)
+        client.subscribe("rgb_control", qos=1)
+        client.subscribe("relay_control", qos=1)
+        client.subscribe("motor_control", qos=1)
 
 
         # client.loop()
@@ -158,14 +190,18 @@ def cron_food(loop_on):
                                 
                                 id = food["_id"]["$oid"]
                                 complete = str(id) + "=COMPLETE"
+
                                 client.publish("start_eat", payload=complete, qos=1)
-                                client.publish("rgb_control", payload="R255G255B255E", qos=1)
+                                # client.publish("rgb_control", payload="R255G255B255E", qos=1)
+                                serial_send("R255G255B255E".encode())
                                 sleep(1)
 
                                 # RUN MOTOR
                                 controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
                                 print( "motor control : "+ str(controlMotor))
-                                client.publish("motor_control", payload=str(controlMotor), qos=1)
+
+                                serial_send(controlMotor.encode())
+                                # client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 # CALL COUNT FISH
                                 call(['python3', PATCH_COUNT_FISH])

@@ -1,1 +1,1 @@
-[{"_id": {"$oid": "642638013ae6698fdae01ea5"}, "username": "Smart", "time": "15:00", "amount_food": "0.1", "status": "WAITING"}, {"_id": {"$oid": "642cc1b77b9845f20b87e05b"}, "username": "Smart", "time": "07:33", "amount_food": "0.1", "status": "WAITING"}]
+[{"_id": {"$oid": "642638013ae6698fdae01ea5"}, "username": "Smart", "time": "15:00", "amount_food": "0.1", "status": "WAITING"}, {"_id": {"$oid": "642cc1b77b9845f20b87e05b"}, "username": "Smart", "time": "15:42", "amount_food": "0.1", "status": "COMPLETE"}]

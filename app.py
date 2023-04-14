@@ -213,8 +213,8 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.on_publish = on_publish
 
-    client.subscribe("start_feed_fish", qos=1)
-    client.subscribe("fish_die", qos=1)
+    client.subscribe("start_feed_fish")
+    client.subscribe("fish_die")
 
 
 
@@ -228,8 +228,11 @@ if __name__ == "__main__":
     connectDB(app)
     p.start()  
     from waitress import serve
-    serve(app, host="0.0.0.0", port=5000, threads= 8) 
+    # !
+    # serve(app, host="0.0.0.0", port=5000, threads= 8) 
+    # !
+
     # app.run(debug=True, threaded=True)
 
-    # app.run(host="0.0.0.0", port=5000,debug=True, threaded=True)
+    app.run(host="0.0.0.0", port=5000,debug=True, threaded=True)
     p.join()

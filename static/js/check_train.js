@@ -25,7 +25,7 @@ function makeid() {
     return text;
 }
 
-const BROKER_URL = "192.168.1.101";
+const BROKER_URL = "192.168.1.28";
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";

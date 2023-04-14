@@ -422,7 +422,7 @@ function makeid() {
 }
 // /etc/mosquitto/mosquitto.conf
 
-const BROKER_URL = "192.168.1.101";
+const BROKER_URL = "192.168.1.28";
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";
@@ -750,7 +750,7 @@ btnPressFeeder.onmousedown = (e) => {
 
     if (startPress >= pressPrevius) {
         const endPress = moment()
-            .add(5, "seconds")
+            .add(2, "seconds")
             .format("DD/MM/YYYY HH:mm:ss");
         localStorage.setItem("time_click", endPress);
 
@@ -776,10 +776,16 @@ btnPressFeeder.onmousedown = (e) => {
         //     },
         // });
     } else {
-        toastFailFood(`Between change is 5 second`);
+        toastFailFood(`Between change is 2 second`);
         return;
         // alert("Please betweent 2 click is 5 minutes");
     }
+
+    // btnPressFeeder.textContent = "Release";
+    // stateForPreesEat.classList.remove("control_switch");
+    // stateForPreesEat.classList.add("control_switch-off");
+    // textForPreesEat.innerHTML = "ON";
+    // public_message("motor_control", "M100E");
 };
 btnPressFeeder.onmouseup = (e) => {
     btnPressFeeder.textContent = "Press";
@@ -880,7 +886,6 @@ onOffDevice.onchange = (e) => {
     } else if (state == 0) {
         const rgbCode = `R${0}G${0}B${0}E`;
 
-        console.log("OFF rgb");
         public_message("rgb_control", rgbCode);
     }
 };
@@ -909,7 +914,7 @@ colorLamp.onchange = (ev) => {
 
         if (startPress >= pressPrevius) {
             const endPress = moment()
-                .add(5, "seconds")
+                .add(2, "seconds")
                 .format("DD/MM/YYYY HH:mm:ss");
             localStorage.setItem("rgb_click", endPress);
 
@@ -917,7 +922,7 @@ colorLamp.onchange = (ev) => {
             localStorage.setItem("rgb_code", rgbCode);
             public_message("rgb_control", rgbCode);
         } else {
-            toastFailFood(`Between change is 5 second`);
+            toastFailFood(`Between change is 2 second`);
             return;
             // alert("Please betweent 2 click is 5 minutes");
         }

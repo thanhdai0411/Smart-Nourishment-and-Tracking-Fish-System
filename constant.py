@@ -41,7 +41,7 @@ PATCH_FOOD_SETTING = BASE_PATH + '/my_data/food_setting.json'
 # BROKER_PASSWORD = 'aquarium123@'
 
 
-BROKER_URL = "192.168.1.101"
+BROKER_URL = "192.168.1.28"
 BROKER_PORT = 1883
 BROKER_USERNAME = "aquarium"
 BROKER_PASSWORD = "aquarium123@"

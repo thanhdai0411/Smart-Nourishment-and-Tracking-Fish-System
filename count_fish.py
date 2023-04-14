@@ -11,13 +11,18 @@ from paho import mqtt
 from pymongo import MongoClient
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
+import random
 
-# patch = "D:\\Studyspace\\DoAn\\Aquarium\\my_data\\12.mp4"
+
+patch = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
 
 
 db_client=MongoClient()
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(patch)
+# cap = cv2.VideoCapture(0)
+
+
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
 collection_name = mydatabase["amount_fish"]
@@ -72,6 +77,8 @@ def on_message(client, userdata, msg):
 
 
 # client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
+num = random.random()
+# client = paho.Client("count_fish" + str(num))
 client = paho.Client("count_fish")
 client.on_connect = on_connect
 
