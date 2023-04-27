@@ -1,15 +1,26 @@
-# import datetime
-# from datetime import date
-from datetime import datetime
-PATH = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/time_send_mail.txt"
-
-time_send_mail = open(PATH , 'r').read()
+# import the opencv library
+import cv2
 
 
+# define a video capture object
+vid = cv2.VideoCapture(0)
 
-datetime_object = datetime.strptime(time_send_mail.strip(),"%Y-%m-%d %H:%M:%S.%f")
-if time_send_mail : 
-    # print(datetime_object)
-    if(datetime.now() > datetime_object) :
-        print(datetime.now())
-        
+while(True):
+	
+	# Capture the video frame
+	# by frame
+	ret, frame = vid.read()
+
+	# Display the resulting frame
+	cv2.imshow('frame', frame)
+	
+	# the 'q' button is set as the
+	# quitting button you may use any
+	# desired button of your choice
+	if cv2.waitKey(1) & 0xFF == ord('q'):
+		break
+
+# After the loop release the cap object
+vid.release()
+# Destroy all the windows
+cv2.destroyAllWindows()

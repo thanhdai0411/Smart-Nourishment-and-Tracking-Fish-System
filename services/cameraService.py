@@ -369,7 +369,7 @@ def generate_frames_count_fish():
 
                 area = round(cv2.contourArea(cnt))
 
-                if area > 50 and 0 not in cnt:
+                if area > 200 and 0 not in cnt:
                     if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
                         if 0 or threshold.shape[0] - 1 not in (cnt[i][0][1] for i in range(len(cnt))):
@@ -407,6 +407,8 @@ def generate_frames_count_fish():
 
 
 
+# 
+            # ret, buffer = cv2.imencode('.jpg')
             ret, buffer = cv2.imencode('.jpg', cv2.flip(img_cvtc, 1))
             frame = buffer.tobytes()
 

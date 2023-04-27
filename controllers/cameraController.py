@@ -20,7 +20,7 @@ def cnt_fish_press():
     # stop_generate_frames()
 
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
-    time.sleep(10)
+    time.sleep(1)
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
     
     call(["python3",PATCH_COUNT_FISH])
@@ -29,7 +29,7 @@ def cnt_fish_press():
 
 def video():
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
-    time.sleep(10)
+    time.sleep(1)
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
 
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -37,14 +37,14 @@ def video():
 
 def video_detect():
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
-    time.sleep(10)
+    time.sleep(1)
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
 
     return Response(generate_frames_detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def video_detect_fish_die():
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("ALREADY_FEED")
-    time.sleep(10)
+    time.sleep(1)
     open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
 
 

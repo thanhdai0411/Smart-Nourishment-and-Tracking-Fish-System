@@ -421,8 +421,21 @@ function makeid() {
     return text;
 }
 // /etc/mosquitto/mosquitto.conf
+function getCurrentURL() {
+    return window.location.href;
+}
 
-const BROKER_URL = "192.168.1.28";
+// Example
+
+var ip = location.host;
+ip = ip.split(":")[0];
+console.log({ ip });
+
+if (!ip) {
+    location.reload();
+}
+
+const BROKER_URL = ip;
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";
@@ -449,6 +462,46 @@ function doFail(e) {
     console.log(e);
 }
 
+const getStateLedOnDB = () => {
+    $.ajax({
+        type: "GET",
+        url: `/state_device/get/led`,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function ({ success, data }) {
+            if (success == 1) {
+                let stateDevice = JSON.parse(data)[0];
+
+                if (stateDevice.device == "led") {
+                    const rgbCode = stateDevice.state;
+                    public_message("rgb_control", rgbCode);
+                }
+            }
+        },
+    });
+};
+
+const getStatePumpOnDB = () => {
+    $.ajax({
+        type: "GET",
+        url: `/state_device/get/pump`,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function ({ success, data }) {
+            if (success == 1) {
+                let statePump = JSON.parse(data)[0];
+
+                if (statePump.device == "pump" && statePump.state == "1") {
+                    console.log(statePump.device);
+                    public_message("relay_control", "L1E");
+                }
+            }
+        },
+    });
+};
+
 function onConnect() {
     console.log("Connect MQTT server");
     client.subscribe("food_complete");
@@ -458,6 +511,10 @@ function onConnect() {
     client.subscribe("fish_die");
     client.subscribe("start_eat");
     client.subscribe("load_model_stream");
+
+    getStatePumpOnDB();
+
+    getStateLedOnDB();
 }
 
 function onConnectionLost(responseObject) {
@@ -676,8 +733,7 @@ function onMessageArrived(message) {
                 },
             });
 
-            const rgbCode = localStorage.getItem("rgb_code");
-            public_message("rgb_control", rgbCode);
+            getStateLedOnDB();
         }
     } else if (topic == "load_model_stream") {
         const status = message.payloadString;
@@ -738,8 +794,7 @@ const stateDevice = document.querySelector(".state-on_off_device");
 
 const btnPressFeeder = document.querySelector(".btn_press_food");
 
-//!press feeder
-
+//!control press feeder
 btnPressFeeder.onmousedown = (e) => {
     const timePress = new Date();
     const startPress = moment(timePress).format("DD/MM/YYYY HH:mm:ss");
@@ -859,14 +914,21 @@ switchForFishEat.onchange = (e) => {
         stateForFishEat,
         "switchForFishEat"
     );
-    console.log({ state_food: state });
-    if (state == 1) {
-        console.log("ON may bomm");
-    } else if (state == 0) {
-        console.log("OFF may bomm");
-    }
+
     const relayControl = `L${state}E`;
     public_message("relay_control", relayControl);
+
+    var bodyFormData = new FormData();
+    bodyFormData.append("state", String(state));
+    $.ajax({
+        type: "PUT",
+        url: `/state_device/update/pump`,
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {},
+    });
 };
 
 // control device led rgb
@@ -877,12 +939,25 @@ onOffDevice.onchange = (e) => {
         stateDevice,
         "onOffDevice"
     );
-    console.log({ state });
 
     if (state == 1) {
-        console.log("ON rgb");
-        const rgbCode = localStorage.getItem("rgb_code");
-        public_message("rgb_control", rgbCode);
+        $.ajax({
+            type: "GET",
+            url: `/state_device/get/led`,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function ({ success, data }) {
+                if (success == 1) {
+                    let stateDevice = JSON.parse(data)[0];
+
+                    if (stateDevice.device == "led") {
+                        const rgbCode = stateDevice.state;
+                        public_message("rgb_control", rgbCode);
+                    }
+                }
+            },
+        });
     } else if (state == 0) {
         const rgbCode = `R${0}G${0}B${0}E`;
 
@@ -919,8 +994,23 @@ colorLamp.onchange = (ev) => {
             localStorage.setItem("rgb_click", endPress);
 
             const rgbCode = `R${r}G${g}B${b}E`;
-            localStorage.setItem("rgb_code", rgbCode);
+            // localStorage.setItem("rgb_code", rgbCode);
             public_message("rgb_control", rgbCode);
+
+            //! save rgb code
+            var bodyFormData = new FormData();
+            bodyFormData.append("state", rgbCode);
+            $.ajax({
+                type: "PUT",
+                url: `/state_device/update/led`,
+                data: bodyFormData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {},
+            });
+
+            //! end save rgb code
         } else {
             toastFailFood(`Between change is 2 second`);
             return;

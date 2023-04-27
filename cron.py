@@ -11,7 +11,7 @@ import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_SAVE_INFO_FEEDER
 
 from bson.objectid import ObjectId
 import random
@@ -195,6 +195,9 @@ def cron_food(loop_on):
                                 # client.publish("rgb_control", payload="R255G255B255E", qos=1)
                                 serial_send("R255G255B255E".encode())
                                 sleep(1)
+
+                                open(PATH_SAVE_INFO_FEEDER, 'w').write(amount_food)
+
 
                                 # RUN MOTOR
                                 controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"

@@ -25,7 +25,13 @@ function makeid() {
     return text;
 }
 
-const BROKER_URL = "192.168.1.28";
+
+var ip = location.host;
+ip = ip.split(":")[0];
+console.log({ ip });
+
+
+const BROKER_URL = ip;
 const PORT = 9001;
 const USER_NAME = "aquarium123";
 const PASSWORD = "aquarium123@";

@@ -10,7 +10,7 @@ from paho import mqtt
 
 from pymongo import MongoClient
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL, PATH_SAVE_INFO_FEEDER
 import random
 
 
@@ -19,9 +19,12 @@ patch = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
 
 db_client=MongoClient()
 
-cap = cv2.VideoCapture(patch)
-# cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(patch)
+cap = cv2.VideoCapture(0)
 
+
+amount_eat_for_fish = open(PATH_SAVE_INFO_FEEDER , 'r').read()
+print("amount_eat: " , amount_eat_for_fish)
 
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
@@ -40,10 +43,15 @@ now_start = datetime.datetime.now()
 init_data = {
     "date" : date_start,
     "time_start" : now_start,
+    "amount_eat" : amount_eat_for_fish.strip(),
+    "eating_state" : "0",
     "fish_count" : []
 }
 
 collection_name.insert_one(init_data)
+
+open(PATH_SAVE_INFO_FEEDER, 'w').write("")
+
 
 
 if not cap.isOpened():
