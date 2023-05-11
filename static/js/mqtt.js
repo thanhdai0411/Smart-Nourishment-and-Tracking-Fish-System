@@ -460,6 +460,7 @@ client.connect(options_);
 
 function doFail(e) {
     console.log(e);
+    location.reload();
 }
 
 const getStateLedOnDB = () => {
@@ -471,10 +472,20 @@ const getStateLedOnDB = () => {
         processData: false,
         success: function ({ success, data }) {
             if (success == 1) {
-                let stateDevice = JSON.parse(data)[0];
+                let stateDeviceGet = JSON.parse(data)[0];
 
-                if (stateDevice.device == "led") {
-                    const rgbCode = stateDevice.state;
+                if (stateDeviceGet.device == "led") {
+                    const rgbCode = stateDeviceGet.state;
+                    const checkOff = rgbCode.match(/\d+/g);
+                    console.log(checkOff);
+                    if (
+                        checkOff[0] != "0" &&
+                        checkOff[1] != "0" &&
+                        checkOff[2] != "0"
+                    ) {
+                        stateOn(onOffDevice, textDevice, stateDevice);
+                        localStorage.setItem("onOffDevice", 1);
+                    }
                     public_message("rgb_control", rgbCode);
                 }
             }
@@ -494,7 +505,7 @@ const getStatePumpOnDB = () => {
                 let statePump = JSON.parse(data)[0];
 
                 if (statePump.device == "pump" && statePump.state == "1") {
-                    console.log(statePump.device);
+                    stateOn(switchForFishEat, textForFishEat, stateForFishEat);
                     public_message("relay_control", "L1E");
                 }
             }
@@ -702,15 +713,14 @@ function onMessageArrived(message) {
         apiSendMail(text);
     } else if (topic === "start_eat") {
         let payload = message.payloadString;
-        if (Number(payload) != 0) {
-            let stateTrain = message.payloadString;
-            let id = stateTrain.split("=")[0];
-
+        if (Number(payload) == 0) {
             document.getElementById("camera_open").src = "";
             localStorage.setItem("id_food_run", id);
-        } else if (Number(payload) == 0) {
-            let id = localStorage.getItem("id_food_run");
+        } else if (Number(payload) != 0) {
+            let id = payload.split("=")[0];
+
             // document.getElementById("camera_open").src = "/camera/fish_die";
+
             document.getElementById("camera_open").src = "";
 
             var bodyFormData = new FormData();
@@ -915,6 +925,8 @@ switchForFishEat.onchange = (e) => {
         "switchForFishEat"
     );
 
+    state = state == 1 ? 0 : 1;
+
     const relayControl = `L${state}E`;
     public_message("relay_control", relayControl);
 
@@ -950,7 +962,6 @@ onOffDevice.onchange = (e) => {
             success: function ({ success, data }) {
                 if (success == 1) {
                     let stateDevice = JSON.parse(data)[0];
-
                     if (stateDevice.device == "led") {
                         const rgbCode = stateDevice.state;
                         public_message("rgb_control", rgbCode);
@@ -960,6 +971,18 @@ onOffDevice.onchange = (e) => {
         });
     } else if (state == 0) {
         const rgbCode = `R${0}G${0}B${0}E`;
+
+        // var bodyFormData = new FormData();
+        // bodyFormData.append("state", rgbCode);
+        // $.ajax({
+        //     type: "PUT",
+        //     url: `/state_device/update/led`,
+        //     data: bodyFormData,
+        //     contentType: false,
+        //     cache: false,
+        //     processData: false,
+        //     success: function (data) {},
+        // });
 
         public_message("rgb_control", rgbCode);
     }
@@ -972,7 +995,6 @@ const colorLamp = document.querySelector("#control_color");
 
 colorLamp.onchange = (ev) => {
     let localState = localStorage.getItem("onOffDevice");
-
     if (localState == 1) {
         const color = ev.target.value;
         const r = parseInt(color.substr(1, 2), 16);
@@ -994,7 +1016,6 @@ colorLamp.onchange = (ev) => {
             localStorage.setItem("rgb_click", endPress);
 
             const rgbCode = `R${r}G${g}B${b}E`;
-            // localStorage.setItem("rgb_code", rgbCode);
             public_message("rgb_control", rgbCode);
 
             //! save rgb code
@@ -1020,6 +1041,8 @@ colorLamp.onchange = (ev) => {
         // const rgbCode = `R${r}G${g}B${b}E`;
         // localStorage.setItem("rgb_code", rgbCode);
         // public_message("rgb_control", rgbCode);
+    } else {
+        toastFailFood(`Please open to control`);
     }
 };
 
@@ -1161,37 +1184,37 @@ btnSearchChart.onclick = (e) => {
 
 // default call
 
-const updateFoodSettingDaily = () => {
-    console.log("call update daily");
-    $.ajax({
-        type: "POST",
-        url: `/food/update_daily`,
-        data: "",
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-            if (data === "OK") {
-                getValue();
-                // toastSuccessFood('Update daily food');
-            } else {
-                toastFail("Update fail");
-            }
-        },
-    });
-};
+// const updateFoodSettingDaily = () => {
+//     console.log("call update daily");
+//     $.ajax({
+//         type: "GET",
+//         url: `/food/update_daily`,
+//         contentType: false,
+//         cache: false,
+//         processData: false,
+//         success: function (data) {
+//             if (data === "OK") {
+//                 getValue();
+//                 // toastSuccessFood('Update daily food');
+//             } else {
+//                 toastFail("Update fail");
+//             }
+//         },
+//     });
+// };
 $("#opacity_loading_page").hide();
-$(document).ready(function () {
-    console.log("reload page");
-    const date = new Date();
 
-    const dateCurrent = moment(date).format("DD/MM/YYYY");
-    const dateSave = localStorage.getItem("date_current");
+// $(document).ready(function () {
+//     console.log("reload page");
+//     const date = new Date();
 
-    if (dateSave != dateCurrent) {
-        updateFoodSettingDaily();
-        localStorage.setItem("date_current", dateCurrent);
-    }
-});
+//     const dateCurrent = moment(date).format("DD/MM/YYYY");
+//     const dateSave = localStorage.getItem("date_current");
+
+//     if (dateSave != dateCurrent) {
+//         updateFoodSettingDaily();
+//         localStorage.setItem("date_current", dateCurrent);
+//     }
+// });
 
 // test camera brower

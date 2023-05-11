@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Aquarium Smart</title>
 
-        <link rel="icon" type="image/x-icon" href="/static/image/logo.png" />
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aquarium Smart</title>
 
-        <!-- font  -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,200&display=swap"
-            rel="stylesheet"
-        />
-        <!-- b5 -->
+    <link rel="icon" type="image/x-icon" href="/static/image/logo.png" />
 
-        <link href="/static/my_library/bootstrap.min.css" rel="stylesheet" />
-        <script src="/static/my_library/bootstrap.bundle.min.js"></script>
+    <!-- font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,200&display=swap"
+        rel="stylesheet" />
+    <!-- b5 -->
 
-        <!-- <link
+    <link href="/static/my_library/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/my_library/bootstrap.bundle.min.js"></script>
+
+    <!-- <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
         /> -->
 
-        <!-- swiper -->
-        <script src="/static/my_library/jquery.min.js"></script>
+    <!-- swiper -->
+    <script src="/static/my_library/jquery.min.js"></script>
 
-        <!-- cropper -->
-        <link rel="stylesheet" href="/static/my_library/cropper.min.css" />
+    <!-- cropper -->
+    <link rel="stylesheet" href="/static/my_library/cropper.min.css" />
 
-        <!-- hight charts -->
-        <script src="/static/my_library/highcharts.js"></script>
-        <script src="/static/my_library/exporting.js"></script>
-        <script src="/static/my_library/export-data.js"></script>
-        <script src="/static/my_library/accessibility.js"></script>
-        <!-- end hight charts -->
+    <!-- hight charts -->
+    <script src="/static/my_library/highcharts.js"></script>
+    <script src="/static/my_library/exporting.js"></script>
+    <script src="/static/my_library/export-data.js"></script>
+    <script src="/static/my_library/accessibility.js"></script>
+    <!-- end hight charts -->
 
-        <!-- scss -->
-        {% assets "scss_all" %}
-        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
-        {% endassets %}
-    </head>
-    <style></style>
+    <!-- socket -->
 
-    <body style="margin: 0; padding: 0; color: white">
-        <!-- <div>
+    <!-- end socket -->
+
+
+    <!-- scss -->
+    {% assets "scss_all" %}
+    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+    {% endassets %}
+</head>
+<style></style>
+
+<body style="margin: 0; padding: 0; color: white">
+    <!-- <div>
             <video id="vid"></video>
         </div>
     <button id="btn_camera_brower">Open Camera Brower</button> -->
 
-        <!-- opacity loading page -->
+    <!-- opacity loading page -->
 
-        <!-- <div id="opacity_loading_page">
+    <!-- <div id="opacity_loading_page">
             <div class="text-center mt-5">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -62,102 +66,76 @@
             </div>
         </div> -->
 
-        <!-- end opacity loading page -->
-        <!-- background -->
-        <div class="wrap">
-            <div class="nav_monitoring_page">
-                <nav class="landing_nav-bar">
-                    <div class="nav_content">
-                        <div class="d-flex align-items-center">
-                            <a href="/home" class="item_nav_title" style=""
-                                >Aquarium Smart</a
-                            >
-                            <div class="nav_item_group">
-                                <a href="/home" id="item_nav"
-                                    >Infomation Fish</a
-                                >
-                                <!-- <a href="/home" id="item_nav">Đặt
+    <!-- end opacity loading page -->
+    <!-- background -->
+    <div class="wrap">
+        <div class="nav_monitoring_page">
+            <nav class="landing_nav-bar">
+                <div class="nav_content">
+                    <div class="d-flex align-items-center">
+                        <a href="/home" class="item_nav_title" style="">Aquarium Smart</a>
+                        <div class="nav_item_group">
+                            <a href="/home" id="item_nav">Infomation Fish</a>
+                            <!-- <a href="/home" id="item_nav">Đặt
                                 tên</a> -->
-                                <a href="/monitoring" id="item_nav">Monitor</a>
-                            </div>
-                        </div>
-                        <div></div>
-                        <div class="wrap_user_name">
-                            <div
-                                class="notification_wrap"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalNoti"
-                            >
-                                <i class="bi bi-bell-fill"></i>
-                                <div class="dot_new_noti"></div>
-                            </div>
+                            <a href="/monitoring" id="item_nav">Monitor</a>
 
-                            <div class="d-flex align-items-center user_login">
-                                <img
-                                    class="nav_img_avatar"
-                                    src="/static/image/logo.png"
-                                />
-                                <span id="username_login"></span>
-                                <a
-                                    class="landing_register btn_logout_user"
-                                    href="/auth/logout"
-                                    >LOGOUT</a
-                                >
-                            </div>
                         </div>
                     </div>
-                </nav>
-            </div>
+                    <div></div>
+                    <div class="wrap_user_name">
+                        <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
+                            <i class="bi bi-bell-fill"></i>
+                            <div class="dot_new_noti"></div>
+                        </div>
 
-            <!-- modal loading -->
-            <!-- Button trigger modal -->
-
-            <!-- main content -->
-            <div class="monitor_wrap">
-                <!-- Monitoring -->
-                <div class="row" id="monitoring_page">
-                    <div class="col-sm-12 col-lg-12 monitoring-header">
-                        <div>
-                            <p class="title_monitor">
-                                SYSTEM MONITORING AND CONTROL
-                            </p>
+                        <div class="d-flex align-items-center user_login">
+                            <img class="nav_img_avatar" src="/static/image/logo.png" />
+                            <span id="username_login"></span>
+                            <a class="landing_register btn_logout_user" href="/auth/logout">LOGOUT</a>
                         </div>
                     </div>
-                    <!-- control -->
-                    <div class="col-sm-12 col-lg-6 col-xl-6" id="control">
-                        <div class="group_btn_control">
-                            <div
-                                class="form-check form-switch button_control state-for_fish_eat control_switch-off"
-                            >
-                                <div
-                                    class="d-flex justify-content-between align-items-center"
-                                >
-                                    <p
-                                        class="control_text_state"
-                                        style=""
-                                        id="text-for_fish_eat"
-                                    >
-                                        OFF
-                                    </p>
-                                    <input
-                                        class="form-check-input control_switch-checkbox"
-                                        type="checkbox"
-                                        role="switch"
-                                        id="for_fish_eat"
-                                    />
-                                </div>
+                </div>
+            </nav>
+        </div>
 
-                                <div class="text-start">
-                                    <!-- <i id="control_lamp_icon" class="bi bi-lightbulb control_lamp_icon"></i> -->
-                                </div>
+        <!-- modal loading -->
+        <!-- Button trigger modal -->
 
-                                <div class="text-left">
-                                    <p class="control_text_who" style="">
-                                        Water Purifier
-                                    </p>
-                                </div>
+        <!-- main content -->
+        <div class="monitor_wrap">
+            <!-- Monitoring -->
+            <div class="row" id="monitoring_page">
+                <div class="col-sm-12 col-lg-12 monitoring-header">
+                    <div>
+                        <p class="title_monitor">
+                            SYSTEM MONITORING AND CONTROL
+                        </p>
+                    </div>
+                </div>
+                <!-- control -->
+                <div class="col-sm-12 col-lg-6 col-xl-6" id="control">
+                    <div class="group_btn_control">
+                        <div class="form-check form-switch button_control state-for_fish_eat control_switch-off">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="control_text_state" style="" id="text-for_fish_eat">
+                                    OFF
+                                </p>
+                                <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch"
+                                    id="for_fish_eat" />
                             </div>
-                            <!-- <div class="form-check form-switch button_control  state-ai_fish_eat control_switch-off">
+
+                            <div class="text-start">
+                                <!-- <i id="control_lamp_icon" class="bi bi-lightbulb control_lamp_icon"></i> -->
+                            </div>
+
+                            <div class="text-left">
+                                <p class="control_text_who" style="">
+                                    Water Purifier
+                                </p>
+                            </div>
+                        </div>
+                        <!-- <div class="form-check form-switch button_control  state-ai_fish_eat control_switch-off">
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="control_text_state" id="text-ai_fish_eat">OFF</p>
@@ -175,170 +153,120 @@
                                 </p>
                             </div>
                         </div> -->
-                            <div
-                                class="form-check form-switch button_control state-for_press_eat control_switch"
-                            >
-                                <div
-                                    class="d-flex justify-content-between align-items-center"
-                                >
-                                    <p
-                                        class="control_text_state"
-                                        style=""
-                                        id="text-for_press_eat"
-                                    >
-                                        OFF
-                                    </p>
-                                    <button class="btn_press_food">
-                                        Press
-                                    </button>
-                                    <!-- <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch" id="for_fish_eat" /> -->
-                                </div>
-
-                                <div class="text-start"></div>
-
-                                <div class="text-left">
-                                    <p class="control_text_who" style="">
-                                        Press Feed
-                                    </p>
-                                </div>
+                        <div class="form-check form-switch button_control state-for_press_eat control_switch">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="control_text_state" style="" id="text-for_press_eat">
+                                    OFF
+                                </p>
+                                <button class="btn_press_food">
+                                    Press
+                                </button>
+                                <!-- <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch" id="for_fish_eat" /> -->
                             </div>
 
-                            <div
-                                class="form-check form-switch button_control state-on_off_device control_switch-off"
-                            >
-                                <div
-                                    class="d-flex justify-content-between align-items-center"
-                                >
-                                    <input
-                                        type="color"
-                                        id="control_color"
-                                        value="#ffffff"
-                                    />
-                                    <!-- <div class="wrap_color_table"> -->
-                                    <!-- <input type="text" class="color-field" id="color_table" value="#ffff"  data-coloris> -->
-                                    <!-- </div> -->
-                                    <p id="value_range" style="opacity: 0"></p>
-                                    <input
-                                        class="form-check-input control_switch-checkbox"
-                                        type="checkbox"
-                                        role="switch"
-                                        id="on_off_device"
-                                    />
-                                    <p
-                                        class="d-none"
-                                        style="font-size: 25px; margin: 0"
-                                        id="text-on_off_device"
-                                    >
-                                        OFF
-                                    </p>
-                                </div>
-                                <!-- <input type="range" value="0" id="range_brightness">
+                            <div class="text-start"></div>
+
+                            <div class="text-left">
+                                <p class="control_text_who" style="">
+                                    Press Feed
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-check form-switch button_control state-on_off_device control_switch-off">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <input type="color" id="control_color" value="#ffffff" />
+                                <!-- <div class="wrap_color_table"> -->
+                                <!-- <input type="text" class="color-field" id="color_table" value="#ffff"  data-coloris> -->
+                                <!-- </div> -->
+                                <p id="value_range" style="opacity: 0"></p>
+                                <input class="form-check-input control_switch-checkbox" type="checkbox" role="switch"
+                                    id="on_off_device" />
+                                <p class="d-none" style="font-size: 25px; margin: 0" id="text-on_off_device">
+                                    OFF
+                                </p>
+                            </div>
+                            <!-- <input type="range" value="0" id="range_brightness">
                             <div id="h4-container">
                                 <div id="h4-subcontainer">
                                     <h4>0<span></span></h4>
                                 </div>
                             </div> -->
 
-                                <div class="text-start">
-                                    <p class="control_text_who">RGB Lights</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="control_time shadow-lg">
-                            <p class="control_time-title" style="">
-                                Set the time to automatically feed the fish
-                            </p>
-                            <div class="control_time-item">
-                                <table
-                                    class="table table-bordered text-light"
-                                    style=""
-                                >
-                                    <tr>
-                                        <td>Feeding time</td>
-                                        <td>
-                                            <input
-                                                class="w-100"
-                                                type="time"
-                                                name=""
-                                                id="set_time"
-                                                value="00:00"
-                                                placeholder="Set time"
-                                                style="
-                                                    border: none;
-                                                    outline: none;
-                                                    padding: 5px 10px;
-                                                    border-radius: 5px;
-                                                "
-                                            />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Food Amount</td>
-                                        <td>
-                                            <input
-                                                class="w-100"
-                                                type="number"
-                                                name=""
-                                                id="amount_food"
-                                                placeholder="Enter food amount"
-                                                style="
-                                                    border: none;
-                                                    outline: none;
-                                                    padding: 5px 10px;
-                                                    border-radius: 5px;
-                                                "
-                                            />
-                                        </td>
-                                    </tr>
-                                </table>
-                                <p
-                                    style="text-align: justify"
-                                    class="text_food_setting"
-                                >
-                                    Note: The amount of food is set based on the
-                                    shooting time of the feeding machine. When
-                                    setting <b>1</b>, the camera will rotate
-                                    <b>1s</b> ,<b>0.5</b> then the camera will
-                                    spin <b>0.5s</b>,... The longer the time to
-                                    feed, the more .
-                                    <b
-                                        >Please set the amount of food just
-                                        enough</b
-                                    >
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <!-- <input class="form-check-input control_switch-checkbox"
-                                                        style="font-size: 20px;" type="checkbox" role="switch"
-                                                        id="flexSwitchCheckDefault" checked /> -->
-                                    <span class="" id="label_btn_setting_food"
-                                        ><b>CLICK TO SAVE SETTINGS</b> on push
-                                        fill enough information believe
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div>
-                                <button
-                                    class="btn btn-success w-100"
-                                    id="btn_complete_setting"
-                                    style="
-                                        border: 1.5px solid #25f192;
-                                        font-weight: 500;
-                                    "
-                                >
-                                    <span> CLICK TO SAVE SETTINGS </span>
-                                </button>
+                            <div class="text-start">
+                                <p class="control_text_who">RGB Lights</p>
                             </div>
                         </div>
                     </div>
-                    <!-- end control -->
 
-                    <!-- camera -->
-                    <div class="col-sm-12 col-lg-6 col-xl-6" id="camera">
-                        <div id="shape_camera_none">
-                            <div>
-                                <!-- <svg
+                    <div class="control_time shadow-lg">
+                        <p class="control_time-title" style="">
+                            Set the time to automatically feed the fish
+                        </p>
+                        <div class="control_time-item">
+                            <table class="table table-bordered text-light" style="">
+                                <tr>
+                                    <td>Feeding time</td>
+                                    <td>
+                                        <input class="w-100" type="time" name="" id="set_time" value="00:00"
+                                            placeholder="Set time" style="
+                                                    border: none;
+                                                    outline: none;
+                                                    padding: 5px 10px;
+                                                    border-radius: 5px;
+                                                " />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Food Amount</td>
+                                    <td>
+                                        <input class="w-100" type="number" name="" id="amount_food"
+                                            placeholder="Enter food amount" style="
+                                                    border: none;
+                                                    outline: none;
+                                                    padding: 5px 10px;
+                                                    border-radius: 5px;
+                                                " />
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="text-align: justify" class="text_food_setting">
+                                Note: The amount of food is set based on the
+                                shooting time of the feeding machine. When
+                                setting <b>1</b>, the camera will rotate
+                                <b>1s</b> ,<b>0.5</b> then the camera will
+                                spin <b>0.5s</b>,... The longer the time to
+                                feed, the more .
+                                <b>Please set the amount of food just
+                                    enough</b>
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <!-- <input class="form-check-input control_switch-checkbox"
+                                                        style="font-size: 20px;" type="checkbox" role="switch"
+                                                        id="flexSwitchCheckDefault" checked /> -->
+                                <span class="" id="label_btn_setting_food"><b>CLICK TO SAVE SETTINGS</b> on push
+                                    fill enough information believe
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-success w-100" id="btn_complete_setting" style="
+                                        border: 1.5px solid #25f192;
+                                        font-weight: 500;
+                                    ">
+                                <span> CLICK TO SAVE SETTINGS </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- end control -->
+
+                <!-- camera -->
+                <div class="col-sm-12 col-lg-6 col-xl-6" id="camera">
+                    <div id="shape_camera_none">
+                        <div>
+                            <!-- <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="56"
                                     height="56"
@@ -351,135 +279,89 @@
                                         d="M10.961 12.365a1.99 1.99 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l.714 1H9.5a1 1 0 0 1 1 1v6a1 1 0 0 1-.144.518l.605.847zM1.428 4.18A.999.999 0 0 0 1 5v6a1 1 0 0 0 1 1h5.014l.714 1H2a2 2 0 0 1-2-2V5c0-.675.334-1.272.847-1.634l.58.814zM15 11.73l-3.5-1.555v-4.35L15 4.269v7.462zm-4.407 3.56-10-14 .814-.58 10 14-.814.58z"
                                     />
                                 </svg> -->
-                                <p class="mt-2">
-                                    You have not turned on the Camera
-                                </p>
-                            </div>
+                            <p class="mt-2">
+                                You have not turned on the Camera
+                            </p>
                         </div>
+                    </div>
 
-                        <div id="shape_camera">
-                            <!-- <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" /> -->
-                            <img
-                                height="100%"
-                                width="100%"
-                                src=""
-                                id="camera_open"
-                            />
-                        </div>
-                        <!-- <div id="shape_camera_fish_die">
+                    <div id="shape_camera">
+                        <!-- <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" /> -->
+                        <img height="100%" width="100%" src="" id="camera_open" />
+                    </div>
+                    <!-- <div id="shape_camera_fish_die">
                         <img height="100%" width="100%" src="" id="camera_fish_die" />
                     </div> -->
 
-                        <div id="loading_open_camera">
-                            <div
-                                class="spinner-border text-light"
-                                role="status"
-                            >
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
+                    <div id="loading_open_camera">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-
-                        <div class="btn-group camera-btn_group w-100">
-                            <a class="btn btn_stop_camera" id="camera_btn"
-                                ><svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="26"
-                                    height="26"
-                                    fill="currentColor"
-                                    class="bi bi-stop"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z"
-                                    /></svg
-                                ><span style="font-weight: 500">STOP</span></a
-                            >
-
-                            <a
-                                class="btn btn-success btn_start_camera"
-                                id="camera_btn"
-                                ><svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="26"
-                                    height="26"
-                                    fill="currentColor"
-                                    class="bi bi-play"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"
-                                    /></svg
-                                ><span style="font-weight: 500"> PLAY </span></a
-                            >
-
-                            <a class="btn btn_detect_camera" id="camera_btn"
-                                ><svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    fill="currentColor"
-                                    class="bi bi-tv"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z"
-                                    /></svg
-                                ><span class="ms-2" style="font-weight: 500"
-                                    >DETECT</span
-                                ></a
-                            >
-                        </div>
-
-                        <!--  -->
                     </div>
-                    <!-- end camera -->
+
+                    <div class="btn-group camera-btn_group w-100">
+                        <a class="btn btn_stop_camera" id="camera_btn"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="26" height="26" fill="currentColor" class="bi bi-stop" viewBox="0 0 16 16">
+                                <path
+                                    d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z" />
+                            </svg><span style="font-weight: 500">STOP</span></a>
+
+                        <a class="btn btn-success btn_start_camera" id="camera_btn"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                                class="bi bi-play" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+                            </svg><span style="font-weight: 500"> PLAY </span></a>
+
+                        <a class="btn btn_detect_camera" id="camera_btn"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="20" height="20" fill="currentColor" class="bi bi-tv" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z" />
+                            </svg><span class="ms-2" style="font-weight: 500">DETECT</span></a>
+                    </div>
+
+                    <!--  -->
                 </div>
-                <!-- end Monitoring -->
+                <!-- end camera -->
+            </div>
+            <!-- end Monitoring -->
 
-                <!-- food -->
-                <div class="row" id="monitoring_page">
-                    <div class="col-12 monitoring-header">
-                        <div>
-                            <p>TIME MANAGEMENT FEED FISH</p>
-                        </div>
+            <!-- food -->
+            <div class="row" id="monitoring_page">
+                <div class="col-12 monitoring-header">
+                    <div>
+                        <p>TIME MANAGEMENT FEED FISH</p>
                     </div>
+                </div>
 
-                    <!-- table render food setting  -->
-                    <div class="col-12" id="food_render">
-                        <div
-                            class="table-responsive value_setting w-100 text-center"
-                        >
-                            <table
-                                class="table table-bordered text-light"
-                                style=""
-                            >
-                                <thead>
-                                    <tr class="text-center">
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Food</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody
-                                    class="text-center"
-                                    id="table_body_food"
-                                ></tbody>
-                            </table>
-                        </div>
+                <!-- table render food setting  -->
+                <div class="col-12" id="food_render">
+                    <div class="table-responsive value_setting w-100 text-center">
+                        <table class="table table-bordered text-light" style="">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Food</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center" id="table_body_food"></tbody>
+                        </table>
                     </div>
-                    <!-- end table render food setting  -->
-                    <!-- bot -->
-                    <!-- <div>
+                </div>
+                <!-- end table render food setting  -->
+                <!-- bot -->
+                <!-- <div>
                     <img src="/static/image/chatbot-icon.png" alt="" class="img_chat_bot" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-custom-class="custom-tooltip" data-bs-title="Hãy nhấp vào tôi. Tôi sẽ phân tích tình trạng sưc khỏe cá trong hồ của bạn từ thói quen ăn của cá">
                     
                 </div> -->
-                    <!-- end bot -->
-                    <!-- control -->
-                    <div class="col-12" id="food_chart">
-                        <!-- <button id="btn_reload_chart">Reload Chart</button> -->
-                        <!-- <div class="text-center" id="loading_feeder_fish">
+                <!-- end bot -->
+                <!-- control -->
+                <div class="col-12" id="food_chart">
+                    <!-- <button id="btn_reload_chart">Reload Chart</button> -->
+                    <!-- <div class="text-center" id="loading_feeder_fish">
 
                         <div class="spinner-grow text-warning spinner-grow-sm" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -492,507 +374,299 @@
                         </div>
                         <p class="text-center">Đang trong thời gian cho cá ăn</p>
                     </div> -->
-                        <figure class="highcharts-figure">
-                            <div
-                                id="chart_food"
-                                style="border: 1px solid #ffff"
-                            ></div>
+                    <figure class="highcharts-figure">
+                        <div id="chart_food" style="border: 1px solid #ffff"></div>
 
-                            <div class="text-center mt-2">
-                                <button
-                                    class="btn btn-success fw-bold"
-                                    style="
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success fw-bold" style="
                                         cursor: pointer;
                                         font-size: 16px;
                                         border: 1px solid #25f192;
-                                    "
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalChart"
-                                >
-                                    CHANGING THE DISPLAY TIME THING
-                                </button>
+                                    " data-bs-toggle="modal" data-bs-target="#modalChart">
+                                CHANGING THE DISPLAY TIME THING
+                            </button>
+                        </div>
+                    </figure>
+                </div>
+                <!-- end control -->
+
+                <!-- modal change chart data -->
+
+                <div class="modal fade" id="modalChart" tabindex="-1" aria-labelledby="modalChartLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 text-dark" id="modalChartLabel">
+                                    Change lookup time
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-                        </figure>
-                    </div>
-                    <!-- end control -->
-
-                    <!-- modal change chart data -->
-
-                    <div
-                        class="modal fade"
-                        id="modalChart"
-                        tabindex="-1"
-                        aria-labelledby="modalChartLabel"
-                        aria-hidden="true"
-                    >
-                        <div
-                            class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                        >
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1
-                                        class="modal-title fs-5 text-dark"
-                                        id="modalChartLabel"
-                                    >
-                                        Change lookup time
-                                    </h1>
-                                    <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                    ></button>
-                                </div>
-                                <div class="modal-body text-dark">
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleInputEmail1"
-                                            class="form-label"
-                                            style="font-size: 15px"
-                                            >Select date want to query</label
-                                        >
-                                        <input
-                                            type="date"
-                                            id="input_date_chart"
-                                            class="form-control"
-                                            id="exampleInputEmail1"
-                                            aria-describedby="emailHelp"
-                                        />
-                                        <button
-                                            id="btn_search_chart"
-                                            class="btn btn-outline-success fw-semibold w-100 mt-2 shadow-sm"
-                                        >
-                                            QUERY INFOMATION
-                                        </button>
-                                    </div>
-                                    <div id="loading_chart" class="text-center">
-                                        <div
-                                            class="spinner-border text-success"
-                                            role="status"
-                                        >
-                                            <span class="visually-hidden"
-                                                >Loading...</span
-                                            >
-                                        </div>
-                                    </div>
-                                    <div id="table_chart">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th scope="col">STT</th>
-                                                    <th scope="col">Time</th>
-                                                    <th scope="col">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody
-                                                class="text-center"
-                                                id="table_body_chart"
-                                            ></tbody>
-                                            <p id="date_eat"></p>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                    >
-                                        Close
+                            <div class="modal-body text-dark">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label" style="font-size: 15px">Select
+                                        date want to query</label>
+                                    <input type="date" id="input_date_chart" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" />
+                                    <button id="btn_search_chart"
+                                        class="btn btn-outline-success fw-semibold w-100 mt-2 shadow-sm">
+                                        QUERY INFOMATION
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- modal change chart data -->
-                </div>
-                <!-- end fodd -->
-            </div>
-        </div>
-
-        <!-- Modal edit setting food -->
-        <div
-            class="modal fade"
-            id="modalEditFood"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered text-dark">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1
-                            class="modal-title fs-5 text-dark"
-                            id="exampleModalLabel"
-                        >
-                            Chỉnh sửa cài đặt thức ăn
-                        </h1>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="time_food" class="form-label"
-                                >Thời gian cho cá ăn</label
-                            >
-                            <input
-                                type="time"
-                                class="form-control"
-                                id="time_food_edit"
-                                aria-describedby="emailHelp"
-                                required
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <label for="amount_food" class="form-label"
-                                >Lượng thức ăn</label
-                            >
-                            <input
-                                type="number"
-                                class="form-control"
-                                id="amount_food_edit"
-                                required
-                            />
-                        </div>
-                        <div id="loading_edit_food">
-                            <div class="d-flex justify-content-center">
-                                <div
-                                    class="spinner-border text-success"
-                                    role="status"
-                                >
-                                    <span class="visually-hidden"
-                                        >Loading...</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-success w-100 shadow-lg"
-                            id="btn_complete_edit"
-                        >
-                            COMPLETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End  Modal edit setting food -->
-
-        <!-- Modal delete setting food -->
-        <div
-            class="modal fade"
-            id="modalDeleteFood"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered text-dark">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1
-                            class="modal-title fs-5 text-dark"
-                            id="exampleModalLabel"
-                        >
-                            Xóa cài đặt thời gian cho ăn
-                        </h1>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            Bạn chắc chắn xóa cài đặt này ? Khi nhấn DELETE sẽ
-                            xóa vĩnh viễn cài dặt này
-                        </p>
-
-                        <div id="loading_delete_food">
-                            <div class="d-flex justify-content-center">
-                                <div
-                                    class="spinner-border text-danger"
-                                    role="status"
-                                >
-                                    <span class="visually-hidden"
-                                        >Loading...</span
-                                    >
-                                </div>
-                            </div>
-                        </div>
-
-                        <button
-                            type="button"
-                            class="btn btn-danger w-100 shadow-lg"
-                            id="btn_complete_delete"
-                        >
-                            DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End  Modal delete setting food -->
-
-        <!-- Toast message -->
-
-        <!-- Toast start train -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div
-                id="toastStart"
-                class="toast text-bg-success border-0"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-bs-animation="true"
-                data-bs-delay="10000"
-            >
-                <div class="toast-header">
-                    <strong class="me-auto">Notification</strong>
-                    <small class="time_start_toast"></small>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="toast-body-start p-2">
-                    Start conducting training you will soon get results. Please
-                    wait patiently Please !
-                </div>
-            </div>
-        </div>
-        <!-- Toast train complete -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div
-                id="toastEnd"
-                class="toast text-bg-success border-0"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-bs-animation="true"
-                data-bs-delay="10000"
-            >
-                <div class="toast-header">
-                    <strong class="me-auto">Notification</strong>
-                    <small class="time_end_toast"></small>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="toast-body-end p-2">
-                    Training completed ! If the correct identification is not
-                    successful, retrain with more data. Thank you
-                </div>
-            </div>
-        </div>
-
-        <!-- Toast upload label success -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div
-                id="toastUploadLabel"
-                class="toast text-bg-success border-0"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-bs-animation="true"
-                data-bs-delay="5000"
-            >
-                <div class="toast-header">
-                    <strong class="me-auto">Notification</strong>
-                    <small class="time_upload"></small>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="toast-body-end p-2" id="toast_success_body"></div>
-            </div>
-        </div>
-
-        <!-- Toast upload label fail -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div
-                id="toastUploadLabelFail"
-                class="toast text-bg-danger border-0"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-bs-animation="true"
-                data-bs-delay="5000"
-            >
-                <div class="toast-header">
-                    <strong class="me-auto">Failure</strong>
-                    <small class="time_upload_fail"></small>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="toast-body-end p-2" id="toast_fail_body"></div>
-            </div>
-        </div>
-
-        <!-- End Toast message -->
-
-        <!-- end modal -->
-
-        <div
-            class="modal fade"
-            id="modalNoti"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-        >
-            <div
-                class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-            >
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1
-                            class="modal-title fs-5 text-dark"
-                            id="exampleModalLabel"
-                        >
-                            Notification
-                        </h1>
-
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="px-3" style="border-bottom: 1px solid #ccc">
-                        <div class="mb-3">
-                            <h6 class="my-2 text-dark" id="title_email">
-                                Sign up for notifications to your email
-                            </h6>
-                            <div
-                                class="hide_element"
-                                id="loading_email_register"
-                            >
-                                <div class="d-flex justify-content-center mb-2">
-                                    <div
-                                        class="spinner-border text-success"
-                                        role="status"
-                                    >
-                                        <span class="visually-hidden"
-                                            >Loading...</span
-                                        >
+                                <div id="loading_chart" class="text-center">
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
+                                <div id="table_chart">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col">STT</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center" id="table_body_chart"></tbody>
+                                        <p id="date_eat"></p>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="input-group" id="email_register">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Nhập email của bạn ..."
-                                    aria-label="Recipient's username"
-                                    aria-describedby="button-addon2"
-                                    name="email"
-                                    id="email_notify"
-                                />
-                                <button
-                                    class="btn btn-success"
-                                    type="button"
-                                    id="btn_confirm_email"
-                                >
-                                    Register
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
                                 </button>
-                            </div>
-                            <div class="input-group" id="email_already">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Nhập email của bạn ..."
-                                    aria-label="Recipient's username"
-                                    aria-describedby="button-addon2"
-                                    name="email"
-                                    id="email_notify_already"
-                                />
-                                <button
-                                    class="btn btn-success"
-                                    type="button"
-                                    id="btn_edit_email"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    class="btn btn-danger"
-                                    type="button"
-                                    id="btn_delete_email"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                            <div class="form-text" id="subtile_email">
-                                Please enter the correct email to receive
-                                notifications
                             </div>
                         </div>
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                     </div>
-                    <div class="modal-body text-dark">
-                        <button
-                            class="btn btn-outline-danger mb-2 w-100"
-                            id="btn_clear_notify"
-                        >
-                            CLEAR NOTIFICATION
-                        </button>
+                </div>
+                <!-- modal change chart data -->
+            </div>
+            <!-- end fodd -->
+        </div>
+    </div>
 
-                        <div class="content_notify"></div>
+    <!-- Modal edit setting food -->
+    <div class="modal fade" id="modalEditFood" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                        Chỉnh sửa cài đặt thức ăn
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="time_food" class="form-label">Thời gian cho cá ăn</label>
+                        <input type="time" class="form-control" id="time_food_edit" aria-describedby="emailHelp"
+                            required />
                     </div>
+                    <div class="mb-3">
+                        <label for="amount_food" class="form-label">Lượng thức ăn</label>
+                        <input type="number" class="form-control" id="amount_food_edit" required />
+                    </div>
+                    <div id="loading_edit_food">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-success w-100 shadow-lg" id="btn_complete_edit">
+                        COMPLETE
+                    </button>
                 </div>
             </div>
         </div>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
-        type="text/javascript"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    </div>
+    <!--End  Modal edit setting food -->
 
-    <script>
-        const tooltipTriggerList = document.querySelectorAll(
-            '[data-bs-toggle="tooltip"]'
-        );
-        const tooltipList = [...tooltipTriggerList].map(
-            (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-        );
-        function getCookie(name) {
-            function escape(s) {
-                return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, "\\$1");
-            }
-            var match = document.cookie.match(
-                RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
-            );
-            return match ? match[1] : null;
+    <!-- Modal delete setting food -->
+    <div class="modal fade" id="modalDeleteFood" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered text-dark">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                        Xóa cài đặt thời gian cho ăn
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Bạn chắc chắn xóa cài đặt này ? Khi nhấn DELETE sẽ
+                        xóa vĩnh viễn cài dặt này
+                    </p>
+
+                    <div id="loading_delete_food">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-danger w-100 shadow-lg" id="btn_complete_delete">
+                        DELETE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End  Modal delete setting food -->
+
+    <!-- Toast message -->
+
+    <!-- Toast start train -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastStart" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="10000">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <small class="time_start_toast"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body-start p-2">
+                Start conducting training you will soon get results. Please
+                wait patiently Please !
+            </div>
+        </div>
+    </div>
+    <!-- Toast train complete -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastEnd" class="toast text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-animation="true" data-bs-delay="10000">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <small class="time_end_toast"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body-end p-2">
+                Training completed ! If the correct identification is not
+                successful, retrain with more data. Thank you
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast upload label success -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastUploadLabel" class="toast text-bg-success border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <small class="time_upload"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body-end p-2" id="toast_success_body"></div>
+        </div>
+    </div>
+
+    <!-- Toast upload label fail -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastUploadLabelFail" class="toast text-bg-danger border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" data-bs-animation="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <strong class="me-auto">Failure</strong>
+                <small class="time_upload_fail"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body-end p-2" id="toast_fail_body"></div>
+        </div>
+    </div>
+
+    <!-- End Toast message -->
+
+    <!-- end modal -->
+
+    <div class="modal fade" id="modalNoti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-dark" id="exampleModalLabel">
+                        Notification
+                    </h1>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="px-3" style="border-bottom: 1px solid #ccc">
+                    <div class="mb-3">
+                        <h6 class="my-2 text-dark" id="title_email">
+                            Sign up for notifications to your email
+                        </h6>
+                        <div class="hide_element" id="loading_email_register">
+                            <div class="d-flex justify-content-center mb-2">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group" id="email_register">
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
+                                id="email_notify" />
+                            <button class="btn btn-success" type="button" id="btn_confirm_email">
+                                Register
+                            </button>
+                        </div>
+                        <div class="input-group" id="email_already">
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn ..."
+                                aria-label="Recipient's username" aria-describedby="button-addon2" name="email"
+                                id="email_notify_already" />
+                            <button class="btn btn-success" type="button" id="btn_edit_email">
+                                Edit
+                            </button>
+                            <button class="btn btn-danger" type="button" id="btn_delete_email">
+                                Delete
+                            </button>
+                        </div>
+                        <div class="form-text" id="subtile_email">
+                            Please enter the correct email to receive
+                            notifications
+                        </div>
+                    </div>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+                <div class="modal-body text-dark">
+                    <button class="btn btn-outline-danger mb-2 w-100" id="btn_clear_notify">
+                        CLEAR NOTIFICATION
+                    </button>
+
+                    <div class="content_notify"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/static/my_library/cropper.min.js"></script>
+<script src="/static/my_library/mqttws31.js" type="text/javascript"></script>
+<script src="/static/my_library/moment.min.js"></script>
+
+<script>
+    const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+    );
+    const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    );
+    function getCookie(name) {
+        function escape(s) {
+            return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, "\\$1");
         }
-        const usernameLogin = getCookie("username");
-        document.querySelector("#username_login").innerHTML = usernameLogin;
-    </script>
+        var match = document.cookie.match(
+            RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
+        );
+        return match ? match[1] : null;
+    }
+    const usernameLogin = getCookie("username");
+    document.querySelector("#username_login").innerHTML = usernameLogin;
+</script>
 
-    <script src="/static/js/color_table.js"></script>
-    <script src="/static/js/mqtt.js"></script>
-    <script src="/static/js/camera.js"></script>
-    <script src="/static/js/food.js" type="text/javascript"></script>
-    <script src="/static/js/email_notify.js"></script>
+<script src="/static/js/color_table.js"></script>
+<script src="/static/js/mqtt.js"></script>
+<script src="/static/js/camera.js"></script>
+<script src="/static/js/food.js" type="text/javascript"></script>
+<script src="/static/js/email_notify.js"></script>
+
 </html>

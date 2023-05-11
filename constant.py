@@ -23,6 +23,7 @@ PATH_MODEL_USER_CUSTOM_NAME = BASE_PATH + "/train_complete/train/weights/best.pt
 PATH_SAVE_STATE_LOAD_FISH_DIE = BASE_PATH + "/my_data/load_fish_die.txt"
 PATH_SAVE_TIME_SEND_MAIL = BASE_PATH + "/my_data/time_send_mail.txt"
 PATH_SAVE_INFO_FEEDER = BASE_PATH + "/my_data/info_feeder.txt"
+PATH_SAVE_DATE_UPDATE_DAILY_FOOD = BASE_PATH + "/my_data/update_daily_state_food.txt"
 
 
 PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_29.pt"

@@ -25,11 +25,13 @@ function makeid() {
     return text;
 }
 
-
 var ip = location.host;
 ip = ip.split(":")[0];
 console.log({ ip });
 
+if (!ip) {
+    location.reload();
+}
 
 const BROKER_URL = ip;
 const PORT = 9001;
@@ -53,6 +55,7 @@ client.connect(options_);
 
 function doFail(e) {
     console.log(e);
+    location.reload();
 }
 
 function onConnect() {

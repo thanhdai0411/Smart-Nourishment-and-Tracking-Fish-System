@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 
 import datetime
+import time
 from time import sleep
 from constant import PATCH_FOOD_SETTING
 from my_models.foodModel import Food
@@ -11,10 +12,11 @@ import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_SAVE_INFO_FEEDER
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_SAVE_INFO_FEEDER, PATH_SAVE_DATE_UPDATE_DAILY_FOOD
 
 from bson.objectid import ObjectId
 import random
+import requests
 
 import serial
 
@@ -54,10 +56,49 @@ def read_file_json() :
 
 def serial_send(payload) :
     data_send = payload.decode("utf-8")  + '\n'
-    # print(data_send)
+    print(data_send)
     serial_port.write(data_send.encode())
 
+def check_state_device () :
+        
+    api_url = "http://0.0.0.0/state_device/get/led"
+    response = requests.get(api_url)
+    data = json.loads(response.json()['data'])[0]['state']
+    serial_send(data.encode())
+
+    api_url = "http://0.0.0.0/state_device/get/pump"
+    response = requests.get(api_url)
+    data = json.loads(response.json()['data'])[0]['state']
+    serial_send(('L' + data + 'E').encode())
+
+def update_food_daily() :
+    year, month, day = time.strftime(
+                    '%Y'), time.strftime('%m'), time.strftime('%d')
+
+    date_start =  str(day) + "-" + str(month) + "-" + str(year) 
+
+    read_date = open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD , 'r').read()
+
+    if(not read_date) :
+        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_start)
+
+    # print(read_date.strip(),date_start)
+
+    if(read_date.strip() != date_start ) :
+        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_start)
+        api_url = "http://0.0.0.0/food/update_daily"
+        response = requests.get(api_url)
+
+
+
+
+
+
+
 def cron_food(loop_on):
+        
+    check_state_device()
+    
     try:
         def on_connect(client, userdata, flags, rc, properties=None):
             print(">>>>> Connect MQTT Crond <<<< ")
@@ -150,6 +191,9 @@ def cron_food(loop_on):
         client.loop_start()
 
         while True:
+            # !update status food daily 
+            update_food_daily()
+            
             if loop_on.value == True :
 
                 # foods = open(PATCH_FOOD_SETTING, "r").read()
@@ -189,9 +233,9 @@ def cron_food(loop_on):
                                 write_file_json(json_object)
                                 
                                 id = food["_id"]["$oid"]
-                                complete = str(id) + "=COMPLETE"
+                                
+                                client.publish("start_eat", payload='0', qos=1)
 
-                                client.publish("start_eat", payload=complete, qos=1)
                                 # client.publish("rgb_control", payload="R255G255B255E", qos=1)
                                 serial_send("R255G255B255E".encode())
                                 sleep(1)
@@ -211,7 +255,10 @@ def cron_food(loop_on):
 
                                 # COMPLETE COUNT FISH
                                 open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
-                                client.publish("start_eat", payload='0', qos=1)
+
+                                complete = str(id) + "=COMPLETE"
+
+                                client.publish("start_eat", payload=complete, qos=1)
                                 
                     else:
                         print('Not setting food')

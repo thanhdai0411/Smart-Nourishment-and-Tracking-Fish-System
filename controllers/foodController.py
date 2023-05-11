@@ -92,7 +92,7 @@ def update_food(id):
 
 
 def update_food_daily():
-    if request.method == 'POST':
+    if request.method == 'GET':
         try:
             food = Food.objects()
 

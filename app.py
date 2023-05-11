@@ -53,12 +53,18 @@ import random
 
 
 app = Flask(__name__, static_url_path='/static')
-# crontab = Crontab(app)
+
 
 # config session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "null"
 Session(app)
+
+#socket init 
+
+
+
+
 
 # config emaial 
 
@@ -90,6 +96,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.from_object('config')
 route(app)
 # ==========
+
+
+
 
 #! train =======================================================================================
 
@@ -234,5 +243,11 @@ if __name__ == "__main__":
 
     # app.run(debug=True, threaded=True)
 
+
     app.run(host="0.0.0.0", port=5000,debug=True, threaded=True)
+
+
     p.join()
+
+
+
