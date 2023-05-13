@@ -36,6 +36,18 @@ serial_port = serial.Serial(
 
 from bson.objectid import ObjectId
 
+# connect db
+
+db_client=MongoClient()
+db_client = MongoClient(MONGODB_URL)
+mydatabase = db_client["test"]
+collection_name = mydatabase["food"]
+
+item_details = collection_name.find_one({"_id" : ObjectId("6440c184405d93a255bea871")})
+
+print("item detail: ", item_details)
+
+
 
 
 def write_file_json(data_write) : 
@@ -64,12 +76,6 @@ def check_state_device () :
     data = json.loads(response.json()['data'])[0]['state']
     serial_send(('L' + data + 'E').encode())
 
-def call_state_led_rgb () : 
-    api_url = "http://0.0.0.0/state_device/get/led"
-    response = requests.get(api_url)
-    data = json.loads(response.json()['data'])[0]['state']
-    serial_send(data.encode())
-
 def update_food_daily() :
     year, month, day = time.strftime(
                     '%Y'), time.strftime('%m'), time.strftime('%d')
@@ -87,12 +93,6 @@ def update_food_daily() :
         open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_start)
         api_url = "http://0.0.0.0/food/update_daily"
         response = requests.get(api_url)
-
-def write_info_feeder(data) :
-    with open(PATH_SAVE_INFO_FEEDER, "w") as outfile:
-        outfile.write(data)
-
-
 
 
 def cron_food(loop_on):
@@ -251,13 +251,15 @@ def cron_food(loop_on):
                                 serial_send("R255G255B255E".encode())
                                 sleep(1)
 
+                                open(PATH_SAVE_INFO_FEEDER, 'w').write(amount_food)
 
 
-                                # # RUN MOTOR
-
+                                # RUN MOTOR
                                 controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
                                 print( "motor control : "+ str(controlMotor))
+
                                 serial_send(controlMotor.encode())
+                                # client.publish("motor_control", payload=str(controlMotor), qos=1)
 
                                 # CALL COUNT FISH
                                 call(['python3', PATCH_COUNT_FISH])
@@ -266,18 +268,6 @@ def cron_food(loop_on):
                                 open(PATH_SAVE_STATE_LOAD_FISH_DIE, 'w').write("")
 
                                 complete = str(id) + "=COMPLETE"
-                                                                
-
-                                                                
-                                data_feeder = {
-                                    "amount_food" : amount_food, 
-                                    "id" : str(id)
-                                }
-
-                                write_info_feeder(json.dumps(data_feeder))
-
-
-                                call_state_led_rgb()
 
                                 client.publish("start_eat", payload=complete, qos=1)
                                 

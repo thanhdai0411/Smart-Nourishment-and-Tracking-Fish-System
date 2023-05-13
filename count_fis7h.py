@@ -12,9 +12,28 @@ from pymongo import MongoClient
 
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,MONGODB_URL, PATH_SAVE_INFO_FEEDER
 import random
+import json
+from bson.objectid import ObjectId
 
 
-patch = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
+# patch = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
+
+# db_client=MongoClient()
+
+# db_client = MongoClient(MONGODB_URL)
+# mydatabase = db_client["test"]
+# collection_name = mydatabase["amount_fish"]
+# collection_food = mydatabase["food"]
+
+
+# read json
+
+# with open(PATH_SAVE_INFO_FEEDER, 'r') as open_file:
+#   data_feeder = json.load(open_file)
+#   print("data_feeder: ", data_feeder)
+#   collection_food.update_one({"_id" : ObjectId(str(data_feeder["id"])) }, {"$set": {"status": "COMPLETE"}})
+
+
 
 
 # cap = cv2.VideoCapture(patch)
@@ -64,8 +83,8 @@ while True:
         for cnt in contours:
 
             area = round(cv2.contourArea(cnt))
-
-            if area > 200 and 0 not in cnt:
+            # print("area : ", area)
+            if area > 300 and 0 not in cnt:
 
                 if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
@@ -79,13 +98,11 @@ while True:
         print("count : " + str(count))
         cv2.imshow("Edge", img_cvtc)
         cv2.imshow("Thresh", fish_contour)
+        # time.sleep(0.5)
+        if cv2.waitKey(1) == ord('q'):
+            break    
 
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-      
-    else : 
-        print('Without open camera')
+    
 
 cap.release()
 cv2.destroyAllWindows()

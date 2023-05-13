@@ -14,16 +14,21 @@ FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
 
 PATCH_TO_COCO12YAML = BASE_PATH + "/data/coco128.yaml"
 PATH_TO_WEIGHT_INIT_5N = BASE_PATH + "/yolov5n.pt"
+
 PATCH_COUNT_FISH = BASE_PATH + '/count_fish.py'
 
 PATH_TRAIN_MODEL = BASE_PATH + "/train.py"
 PATH_MODEL_FISH_DIE = BASE_PATH + "/model_fish_die_new.pt"
 PATH_MODEL_USER_CUSTOM_NAME = BASE_PATH + "/train_complete/train/weights/best.pt"
 
+
 PATH_SAVE_STATE_LOAD_FISH_DIE = BASE_PATH + "/my_data/load_fish_die.txt"
 PATH_SAVE_TIME_SEND_MAIL = BASE_PATH + "/my_data/time_send_mail.txt"
-PATH_SAVE_INFO_FEEDER = BASE_PATH + "/my_data/info_feeder.txt"
+PATH_SAVE_INFO_FEEDER = BASE_PATH + "/my_data/info_feeder.json"
 PATH_SAVE_DATE_UPDATE_DAILY_FOOD = BASE_PATH + "/my_data/update_daily_state_food.txt"
+
+PATH_SAVE_STATE_LOAD_MODEL_DETECT = BASE_PATH + "/my_data/load_model_detect.txt"
+
 
 
 PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_29.pt"

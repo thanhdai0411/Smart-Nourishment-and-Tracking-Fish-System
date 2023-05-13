@@ -16,14 +16,12 @@ from pymongo import MongoClient
 from flask_session import Session
 from my_utils.jsonFile import write_file_json,read_file_json
 
-
-
 # from constant import PATH_MODEL_FISH_DIE
 from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,PATH_SAVE_STATE_LOAD_FISH_DIE,PATH_SAVE_TIME_SEND_MAIL, PATH_MODEL_FISH_NAME
 import paho.mqtt.client as paho
 from paho import mqtt
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH, PATH_SAVE_STATE_LOAD_MODEL_DETECT
 
 from subprocess import call
 import random
@@ -32,6 +30,19 @@ db_client=MongoClient()
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
 collection_name = mydatabase["amount_fish"]
+
+# model_check =  open(PATH_SAVE_STATE_LOAD_MODEL_DETECT, 'r').read()
+# model = None
+
+# model_load = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_FISH_NAME, source='local')
+# print("model_start: ", model_load)
+# model = model_load
+
+# if(not model_check) :1
+#     model_load = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_FISH_NAME, source='local')
+#     print("model_start: ", model_load)
+#     model = model_load
+#     open(PATH_SAVE_STATE_LOAD_MODEL_DETECT, 'w').write("ALREADY_FEED")
 
 
 
@@ -100,8 +111,8 @@ def generate_frames_detect():
     # client.publish("load_model_stream", payload="1", qos=1)
     # model = torch.hub.load('.', 'custom', path="", source='local')
     model = torch.hub.load('/home/doan/Desktop/DA/WebServer/Aquarium-Smart', 'custom', path=PATH_MODEL_FISH_NAME, source='local')
-
-
+    # print("model_load: ", model)
+    
     camera = cv2.VideoCapture(0)
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
@@ -326,10 +337,6 @@ def generate_frames_count_fish():
     # client.publish("feed_fish", payload=data_start_trans, qos=1)
 
 
-
-
-
-        
     DURATION = 30
 
     EDGE_TOP = 150
@@ -407,7 +414,7 @@ def generate_frames_count_fish():
 
 
 
-# 
+
             # ret, buffer = cv2.imencode('.jpg')
             ret, buffer = cv2.imencode('.jpg', cv2.flip(img_cvtc, 1))
             frame = buffer.tobytes()

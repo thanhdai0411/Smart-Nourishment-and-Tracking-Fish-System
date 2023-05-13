@@ -24,10 +24,21 @@ if (check_cam[3] == "camera" && check_cam[4] == "fish_die") {
 
 const callOpenCamera = (url) => {
     $.ajax({
+        timeout: 100000,
         type: "GET",
         url: url,
         dataType: "json",
         success: function ({ data }) {},
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (textStatus === "timeout") {
+                console.log({
+                    jqXHR,
+                    textStatus,
+                    errorThrown,
+                });
+                //do something on timeout / show appropriate message.
+            }
+        },
     });
 };
 
@@ -68,10 +79,9 @@ btnStopCamera.onclick = (e) => {
     // $("#loading_open_camera").hide();
     // $(".camera-btn_group").show();
 
-     setTimeout(() => {
-         showCamera("/camera/count_fish");
-     }, 1000);
-   
+    setTimeout(() => {
+        showCamera("/camera/count_fish");
+    }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {

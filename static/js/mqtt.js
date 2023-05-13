@@ -504,7 +504,7 @@ const getStatePumpOnDB = () => {
             if (success == 1) {
                 let statePump = JSON.parse(data)[0];
 
-                if (statePump.device == "pump" && statePump.state == "1") {
+                if (statePump.device == "pump" && statePump.state == "0") {
                     stateOn(switchForFishEat, textForFishEat, stateForFishEat);
                     public_message("relay_control", "L1E");
                 }
@@ -717,33 +717,33 @@ function onMessageArrived(message) {
             document.getElementById("camera_open").src = "";
             localStorage.setItem("id_food_run", id);
         } else if (Number(payload) != 0) {
-            let id = payload.split("=")[0];
+            // let id = payload.split("=")[0];
 
             // document.getElementById("camera_open").src = "/camera/fish_die";
 
             document.getElementById("camera_open").src = "";
 
-            var bodyFormData = new FormData();
+            // var bodyFormData = new FormData();
+            getValue();
+            // bodyFormData.append("status", "COMPLETE");
 
-            bodyFormData.append("status", "COMPLETE");
+            // $.ajax({
+            //     type: "POST",
+            //     url: `/food/update_status/${id}`,
+            //     data: bodyFormData,
+            //     contentType: false,
+            //     cache: false,
+            //     processData: false,
+            //     success: function (data) {
+            //         if (data === "OK") {
+            //             getValue();
+            //             toastSuccessFood(`Feed the fish successfully`);
+            //             $("#modalEditFood").modal("hide");
+            //         }
+            //     },
+            // });
 
-            $.ajax({
-                type: "POST",
-                url: `/food/update_status/${id}`,
-                data: bodyFormData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function (data) {
-                    if (data === "OK") {
-                        getValue();
-                        toastSuccessFood(`Feed the fish successfully`);
-                        $("#modalEditFood").modal("hide");
-                    }
-                },
-            });
-
-            getStateLedOnDB();
+            // getStateLedOnDB();
         }
     } else if (topic == "load_model_stream") {
         const status = message.payloadString;
@@ -972,17 +972,17 @@ onOffDevice.onchange = (e) => {
     } else if (state == 0) {
         const rgbCode = `R${0}G${0}B${0}E`;
 
-        // var bodyFormData = new FormData();
-        // bodyFormData.append("state", rgbCode);
-        // $.ajax({
-        //     type: "PUT",
-        //     url: `/state_device/update/led`,
-        //     data: bodyFormData,
-        //     contentType: false,
-        //     cache: false,
-        //     processData: false,
-        //     success: function (data) {},
-        // });
+        var bodyFormData = new FormData();
+        bodyFormData.append("state", rgbCode);
+        $.ajax({
+            type: "PUT",
+            url: `/state_device/update/led`,
+            data: bodyFormData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {},
+        });
 
         public_message("rgb_control", rgbCode);
     }

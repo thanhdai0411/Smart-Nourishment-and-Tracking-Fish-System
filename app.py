@@ -1,5 +1,3 @@
-
-
 import requests
 
 def is_cnx_active():
@@ -31,7 +29,7 @@ from paho import mqtt
 import paho.mqtt.client as paho
 from config.db import connectDB
 from routes.main import route
-from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT, FOLDER_SAVE_LABELS,FOLDER_SAVE_IMAGES, PATH_SAVE_STATE_LOAD_FISH_DIE
+from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT, FOLDER_SAVE_LABELS,FOLDER_SAVE_IMAGES, PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_MODEL_FISH_NAME
 from flask import Flask, render_template, Response, flash, request, redirect, url_for, session
 from flask_cors import CORS, cross_origin
 from datetime import datetime
@@ -50,6 +48,7 @@ from my_utils.deleteNameTrainModel import deleteNameTrainModel
 
 import random
 
+import torch
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -96,8 +95,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.from_object('config')
 route(app)
 # ==========
-
-
 
 
 #! train =======================================================================================

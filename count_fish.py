@@ -6,7 +6,7 @@ import datetime
 
 import paho.mqtt.client as paho
 from paho import mqtt
-
+import json
 
 from pymongo import MongoClient
 
@@ -15,6 +15,7 @@ import random
 
 
 patch = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/12.mp4"
+from bson.objectid import ObjectId
 
 
 db_client=MongoClient()
@@ -23,12 +24,24 @@ db_client=MongoClient()
 cap = cv2.VideoCapture(0)
 
 
-amount_eat_for_fish = open(PATH_SAVE_INFO_FEEDER , 'r').read()
+amount_eat_for_fish = ""
+id_feeder = ""
+
+
+with open(PATH_SAVE_INFO_FEEDER, 'r') as open_file:
+    data_feeder = json.load(open_file)
+    amount_eat_for_fish = data_feeder["amount_food"]
+    id_feeder = data_feeder["id"]
+# collection_food.update_one({"_id" : ObjectId(str(data_feeder["id"])) }, {"$set": {"status": "COMPLETE"}})
+
 print("amount_eat: " , amount_eat_for_fish)
+print("id_feeder ", id_feeder )
 
 db_client = MongoClient(MONGODB_URL)
 mydatabase = db_client["test"]
 collection_name = mydatabase["amount_fish"]
+collection_food = mydatabase["food"]
+
 
 
 year, month, day = time.strftime(
@@ -177,6 +190,10 @@ while True:
         if datetime.datetime.now() > TIME_DURATION:
             data_start_trans = str(0)+"="+str(item_details["_id"])
             client.publish("feed_fish", payload=data_start_trans, qos=1)
+
+            collection_food.update_one({"_id" : ObjectId(str(id_feeder)) }, {"$set": {"status": "COMPLETE"}})
+
+
             break
         if cv2.waitKey(1) == ord('q'):
             break
