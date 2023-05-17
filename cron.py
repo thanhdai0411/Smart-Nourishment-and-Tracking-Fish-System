@@ -255,9 +255,17 @@ def cron_food(loop_on):
 
                                 # # RUN MOTOR
 
-                                controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
-                                print( "motor control : "+ str(controlMotor))
-                                serial_send(controlMotor.encode())
+                                # controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
+                                # print( "motor control : "+ str(controlMotor))
+                                # serial_send(controlMotor.encode())
+
+                                data_feeder = {
+                                    "amount_food" : amount_food, 
+                                    "id" : str(id)
+                                }
+
+                                write_info_feeder(json.dumps(data_feeder))
+
 
                                 # CALL COUNT FISH
                                 call(['python3', PATCH_COUNT_FISH])
@@ -269,12 +277,8 @@ def cron_food(loop_on):
                                                                 
 
                                                                 
-                                data_feeder = {
-                                    "amount_food" : amount_food, 
-                                    "id" : str(id)
-                                }
+                               
 
-                                write_info_feeder(json.dumps(data_feeder))
 
 
                                 call_state_led_rgb()
