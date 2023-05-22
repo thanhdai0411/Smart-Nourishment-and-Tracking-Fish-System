@@ -31,7 +31,7 @@ PATH_SAVE_STATE_LOAD_MODEL_DETECT = BASE_PATH + "/my_data/load_model_detect.txt"
 
 
 
-PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_29.pt"
+PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_19_5.pt"
 
 FOLDER_TRAIN_COMPLETE = BASE_PATH+ '/train_complete'
 
