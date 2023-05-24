@@ -20,7 +20,6 @@ const getTimeSettingFood = () => {
     return { timePresent, datePresent, datePresentReverse };
 };
 const userNameLogin = document.querySelector("#username_login").innerHTML;
-console.log({ userNameLogin });
 // edit setting food
 const modalEditFood = document.getElementById("modalEditFood");
 const modalDeleteFood = document.getElementById("modalDeleteFood");
@@ -49,7 +48,7 @@ modalEditFood.addEventListener("show.bs.modal", (event) => {
     timeFoodEdit.value = time;
     amountFoodEdit.value = amount;
 
-    const { datePresentReverse } = getTimePresentFood();
+    const { datePresentReverse } = getTimeSettingFood();
 
     btnCompleteEdit.onclick = (e) => {
         $("#loading_edit_food").show();
@@ -59,63 +58,32 @@ modalEditFood.addEventListener("show.bs.modal", (event) => {
 
         // check time set
 
-        let checkData = [];
-        settingFoods.forEach((value) => {
-            if (value.time != time) {
-                var date2 = new Date(`${datePresentReverse} ${value.time}`);
-                var date1 = new Date(
-                    `${datePresentReverse} ${completeTimeEdit}`
-                );
-                const { hh, mm } = checkTimeSet(date1, date2);
-                if (hh == 0 && mm < 30) {
-                    // let data = `${hh}:${mm}`
-                    checkData.push(1);
+        var bodyFormData = new FormData();
+
+        bodyFormData.append("time", completeTimeEdit);
+        bodyFormData.append("amount_food", completeAmountEdit);
+        bodyFormData.append("username", userNameLogin);
+        $.ajax({
+            type: "POST",
+            url: `/food/update/${id}`,
+            data: bodyFormData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if (data === "OK") {
+                    getValue();
+                    toastSuccessFood("Successful modification");
+
+                    btnCompleteEdit.classList.remove("d-none");
+                    $("#loading_edit_food").hide();
+                    $("#modalEditFood").modal("hide");
                 } else {
-                    checkData.push(2);
+                    toastFailFood("Modification failed");
+                    $("#modalEditFood").modal("hide");
                 }
-            } else if (value.time == time && settingFoods.length == 1) {
-                checkData.push(2);
-            }
+            },
         });
-        console.log(checkData);
-
-        // end check time set
-
-        if (checkData.length && !checkData.includes(1)) {
-            var bodyFormData = new FormData();
-
-            bodyFormData.append("time", completeTimeEdit);
-            bodyFormData.append("amount_food", completeAmountEdit);
-            bodyFormData.append("username", userNameLogin);
-            $.ajax({
-                type: "POST",
-                url: `/food/update/${id}`,
-                data: bodyFormData,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function (data) {
-                    if (data === "OK") {
-                        getValue();
-                        toastSuccessFood("Successful modification");
-
-                        btnCompleteEdit.classList.remove("d-none");
-                        $("#loading_edit_food").hide();
-                        $("#modalEditFood").modal("hide");
-                    } else {
-                        toastFailFood("Modification failed");
-                        $("#modalEditFood").modal("hide");
-                    }
-                },
-            });
-        } else {
-            toastFailFood(
-                "Fix failure. Timelines must be spaced 30 minutes apart"
-            );
-            $("#modalEditFood").modal("hide");
-            $("#loading_edit_food").hide();
-            btnCompleteEdit.classList.remove("d-none");
-        }
     };
 });
 // end edit setting food
@@ -195,19 +163,26 @@ const getValue = () => {
                     return `
                                     <tr class="text-center">
                                         <th scope="row">${index + 1} </th>
-                                        <td id="name_label_show"  >${
-                                            v.time
-                                        }</td>
-                                        <td>${v.amount_food}</td>
-                                        <td > <span style="border-radius : 5px ; background-color : ${style}; ">${
+                                        <td  >
+                                            <span style="background-color: #0bae62; border: 1px solid #ccc; border-radius: 10px; padding : 2px 5px; color : white ; font-weight: bold; " id="name_label_show" >${
+                                                v.time
+                                            }</span>
+                                        </td>
+                                        <td>
+                                        <span style="  background-color: #ff0000; border: 1px solid #ccc; border-radius: 10px; padding : 2px 8px; color : white ; font-weight: bold ; ">${
+                                            v.amount_food
+                                        }</span>
+                                        
+                                        </td>
+                                        <td > <span class="fw-bold"     style="border-radius : 5px ; background-color : ${style}; ">${
                         v.status
                     }</span></td>
-                                    <td> <button class="btn_action_food" data-id-food="${id}" data-time-food="${
+                                    <td> <button class="btn_action_food fw-bold" data-id-food="${id}" data-time-food="${
                         v.time
                     }" data-amount-food="${
                         v.amount_food
                     }" data-bs-toggle="modal" data-bs-target="#modalEditFood">EDIT</button> 
-                                    <button class="btn_action_food_delete" data-id-food="${id}" data-bs-toggle="modal" data-bs-target="#modalDeleteFood">DELETE</button></td>
+                                    <button class="btn_action_food_delete fw-bold" data-id-food="${id}" data-bs-toggle="modal" data-bs-target="#modalDeleteFood">DELETE</button></td>
     
                                        
                                     </tr>`;
@@ -363,4 +338,117 @@ btnCompleteSetting.onclick = (e) => {
             },
         });
     }
+};
+
+// ! AI food
+
+const btnAmountFoodAI = document.getElementById("amount_food_ai");
+const btnChangeAmountFoodAI = document.getElementById("btn_change_amount_food");
+
+const tableBodyAI = document.getElementById("body_ai");
+const tableWrap = document.getElementById("table_ai_wrap");
+const foodAmountFromAI = null;
+
+const showBtnChangFood = () => {
+    tableWrap.classList.remove("d-none");
+    btnChangeAmountFoodAI.classList.remove("d-none");
+    btnAmountFoodAI.classList.add("d-none");
+};
+const hideBtnChangFood = () => {
+    tableWrap.classList.add("d-none");
+    btnAmountFoodAI.classList.remove("d-none");
+    btnChangeAmountFoodAI.classList.add("d-none");
+};
+
+let dataFoodAI = "";
+
+btnAmountFoodAI.onclick = (e) => {
+    $("#opacity_loading_page").show();
+    stopCamera();
+
+    $.ajax({
+        timeout: 10000000000,
+        type: "GET",
+        url: `/ai_feeder/load`,
+        dataType: "json",
+        success: function ({ data, success, old_setting }) {
+            if (success == 1) {
+                result = [];
+                data.forEach((v) => {
+                    old_setting.forEach((v2) => {
+                        if (v.time == v2.time) {
+                            result.push({
+                                amount_ai: v.amount_ai,
+                                food_old: v2.food_old,
+                                time: v.time,
+                            });
+                        }
+                    });
+                });
+                showBtnChangFood();
+                $("#opacity_loading_page").hide();
+
+                if (result && result.length) {
+                    dataFoodAI = data;
+                    const tableContent = result.map((v, index) => {
+                        return `<tr>
+                                    <td class="fw-bold">${index}</td>
+                                    <td>
+                                        <span
+                                            style="background-color: #0bae62; border: 1px solid #ccc; border-radius: 10px; padding : 2px 5px; color : white ; font-weight: bold; ">${v.time}</span>
+
+                                    </td>
+
+                                    <td>
+                                        <span
+                                            style="background-color: #ff0000; border: 1px solid #ccc; border-radius: 10px; padding : 2px 8px; color : white ; font-weight: bold ; ">${v.food_old}</span>
+
+                                    </td>
+
+                                    <td>
+                                        <span
+                                            style="background-color: #e07618; border: 1px solid #ccc; border-radius: 10px; padding : 2px 8px; color : white ; font-weight: bold ; ">${v.amount_ai}</span>
+
+                                    </td>
+                                </tr>`;
+                    });
+
+                    tableBodyAI.innerHTML = tableContent.join("");
+                }
+            }
+        },
+    });
+};
+
+btnChangeAmountFoodAI.onclick = (e) => {
+    console.log({ dataFoodAI });
+
+    // dataFoodAI = [
+    //     { amount_ai: 0.11129961162805557, time: "07:00" },
+    //     { amount_ai: 0.10991638898849487, time: "15:00" },
+    //     { amount_ai: 0.09904887527227402, time: "22:00" },
+    // ];
+    let dataPost = "";
+
+    dataFoodAI.forEach((v) => {
+        dataPost += `${v.amount_ai.toFixed(3)}|${v.time}-`;
+    });
+    var bodyFormData = new FormData();
+
+    bodyFormData.append("data", dataPost);
+
+    $.ajax({
+        type: "POST",
+        url: `/food/update_food_ai`,
+        data: bodyFormData,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            if (data == "OK") {
+                $("#modalAI").modal("hide");
+                getValue();
+            }
+        },
+    });
 };

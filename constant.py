@@ -41,6 +41,26 @@ CLOUDINARY_API_SECRET = 'gtbtgeyPmx219CYa67cEqnHZ9xU'
 
 PATCH_FOOD_SETTING = BASE_PATH + '/my_data/food_setting.json'
 
+#! AI
+
+AI_FILE_SAVE_MODEL = BASE_PATH + '/ai_feeder/ai_feeder.h5'
+AI_FILE_SOURCE = BASE_PATH + '/ai_feeder/ai.py'
+
+DATA_FOR_AI = BASE_PATH + '/ai_feeder/data_for_ai.json'
+
+RESULT_PREDIRECT_AI = BASE_PATH + '/ai_feeder/result_redirect.json'
+
+PATH_SATE_LOAD_AI =BASE_PATH + "/my_data/load_ai.txt"
+
+RGB_START_SYSTEM = BASE_PATH + "/rgb_start_system.py"
+
+TIME_DURATION_LEARNING_AI = 7
+DATE_LEARNING_AI = BASE_PATH + '/ai_feeder/date_learning_ai.txt'
+
+# ! send mail notify
+
+SEND_MAIL_NOTIFY = BASE_PATH + "/send_mail_notify.py"
+SEND_MAIL_NOTIFY_TRAIN_COMPLETE = BASE_PATH + "/send_mail_train_complete.py"
 
 # BROKER_URL = '192.168.1.28'
 # BROKER_PORT = 1883

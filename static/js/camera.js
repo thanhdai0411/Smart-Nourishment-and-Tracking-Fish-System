@@ -50,6 +50,12 @@ const hideCamera = () => {
     $("#loading_open_camera").show();
 };
 
+const stopCamera = () => {
+    hideCamera();
+    $("#loading_open_camera").hide();
+    $(".camera-btn_group").show();
+};
+
 const showCamera = (src) => {
     $("#shape_camera_none").hide();
     $("#shape_camera").show();
@@ -75,13 +81,11 @@ btnStartCamera.onclick = (e) => {
 };
 
 btnStopCamera.onclick = (e) => {
-    hideCamera();
-    // $("#loading_open_camera").hide();
-    // $(".camera-btn_group").show();
+    stopCamera();
 
-    setTimeout(() => {
-        showCamera("/camera/count_fish");
-    }, 1000);
+    // setTimeout(() => {
+    //     showCamera("/camera/count_fish");
+    // }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {

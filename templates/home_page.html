@@ -53,6 +53,15 @@
 <body style="margin: 0; padding: 0; color: white">
     <!-- background -->
 
+    <div id="opacity_loading_page">
+        <div class="text-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Vui lòng chờ</p>
+        </div>
+    </div>
+
     <div class="wrap">
 
 
@@ -60,6 +69,7 @@
         <!-- <canvas id="canvas">
         </canvas> -->
         <!-- <img height="100%" width="100%" src="/camera/fish_die" id="camera_open" class="d-none" /> -->
+        <!-- <img src="/camera/detect" id="camera_open" class="d-none" /> -->
 
         <!-- banner -->
         <div class="landing_main" id="landing_main_home">
@@ -85,7 +95,11 @@
                     </div> -->
                     <div class="wrap_user_name">
                         <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
-                            <i class="bi bi-bell-fill"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+                            </svg>
                             <div class="dot_new_noti"></div>
                         </div>
 
@@ -819,6 +833,10 @@
 <script src="/static/my_library/mqttws31.js" type="text/javascript"></script>
 <script src="/static/my_library/moment.min.js"></script>
 <script>
+
+
+
+
 
     function getCookie(name) {
         function escape(s) {

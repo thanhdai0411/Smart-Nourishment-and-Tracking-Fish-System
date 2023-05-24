@@ -17,14 +17,17 @@ from flask_session import Session
 from my_utils.jsonFile import write_file_json,read_file_json
 
 # from constant import PATH_MODEL_FISH_DIE
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,PATH_SAVE_STATE_LOAD_FISH_DIE,PATH_SAVE_TIME_SEND_MAIL, PATH_MODEL_FISH_NAME
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD,PATH_MODEL_FISH_DIE,PATH_SAVE_STATE_LOAD_FISH_DIE,PATH_SAVE_TIME_SEND_MAIL, PATH_MODEL_FISH_NAME, PATH_SATE_LOAD_AI
 import paho.mqtt.client as paho
 from paho import mqtt
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH, PATH_SAVE_STATE_LOAD_MODEL_DETECT
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME,PATH_MODEL_USER_CUSTOM_NAME, BROKER_PASSWORD,MONGODB_URL,PATCH_COUNT_FISH, PATH_SAVE_STATE_LOAD_MODEL_DETECT, SEND_MAIL_NOTIFY, RGB_START_SYSTEM
 
 from subprocess import call
 import random
+
+from my_utils.handleFileTXT import  write_file_txt, read_file_txt
+
 
 db_client=MongoClient()
 db_client = MongoClient(MONGODB_URL)
@@ -116,8 +119,16 @@ def generate_frames_detect():
     camera = cv2.VideoCapture(0)
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    load_state = read_file_txt(PATH_SATE_LOAD_AI)
+
+    if (load_state) :
+        call(["python3",RGB_START_SYSTEM])
+        write_file_txt(PATH_SATE_LOAD_AI, "")
+    
+
     client.publish("load_model_stream", payload="0", qos=1)
 
+    
     while True:
         success, frame = camera.read()
         if success:
@@ -128,8 +139,8 @@ def generate_frames_detect():
 
             img = Image.open(io.BytesIO(frame))
 
-            # model.conf = 0.5
-            # iou = 0.45
+            model.conf = 0.5
+            iou = 0.45
             
             results = model(img)
             
@@ -196,8 +207,9 @@ def generate_frames_detect_fish_die():
             cv2.rectangle(img_BGR, (range_border + 2,range_border ), (width + 20,height - 60), (255, 0, 0), 1)
 
             ox1 = range_border + 2
-            ox2 = width + range_border
             oy1 = range_border
+
+            ox2 = width + 20
             oy2 = height - 60
 
             print(results.xyxy[0])
@@ -224,6 +236,7 @@ def generate_frames_detect_fish_die():
 
             
             
+            text_send = f"[{datetime.datetime.now()}]: Dead fish found"
 
             if time_send_mail : 
                 # datetime_object = date.fromisoformat(time_send_mail.strip())
@@ -235,11 +248,20 @@ def generate_frames_detect_fish_die():
                     time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
                     open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
                     client.publish("fish_die", payload=str(len(check)), qos=1)
+                    call(["python3", SEND_MAIL_NOTIFY])
+                    
+                    
+                    # const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
+                    # const text = `[${dateDie}]: Dead fish found`;
                     
             elif(len(check) > 0) :
                 time_send = datetime.datetime.now()  + datetime.timedelta(minutes=DURATION)
                 open(PATH_SAVE_TIME_SEND_MAIL , 'w').write(str(time_send))
                 client.publish("fish_die", payload=str(len(check)), qos=1)
+                call(["python3", SEND_MAIL_NOTIFY])
+
+
+                
 
 
             frame = cv2.imencode('.jpg', img_BGR)[1].tobytes()

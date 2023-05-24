@@ -18,7 +18,13 @@ while True:
         print("Waiting connect")
         pass
 
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL, EMAIL_USERNAME, EMAIL_PASSWORD
+
+import dns.resolver as dnsr
+dnsr.default_resolver =  dnsr.Resolver(configure=False)
+dnsr.default_resolver.nameservers = ["8.8.8.8"]
+
+
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATH_TRAIN_MODEL, EMAIL_USERNAME, EMAIL_PASSWORD, AI_FILE_SAVE_MODEL
 from subprocess import call,Popen,check_call
 from werkzeug.utils import secure_filename
 from flask_session import Session
@@ -29,7 +35,7 @@ from paho import mqtt
 import paho.mqtt.client as paho
 from config.db import connectDB
 from routes.main import route
-from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT, FOLDER_SAVE_LABELS,FOLDER_SAVE_IMAGES, PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_MODEL_FISH_NAME
+from constant import FOLDER_SAVE_IMAGES, BROKER_URL, BROKER_PORT, FOLDER_SAVE_LABELS,FOLDER_SAVE_IMAGES, PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_MODEL_FISH_NAME, AI_FILE_SOURCE, PATH_SATE_LOAD_AI, SEND_MAIL_NOTIFY
 from flask import Flask, render_template, Response, flash, request, redirect, url_for, session
 from flask_cors import CORS, cross_origin
 from datetime import datetime
@@ -45,11 +51,9 @@ from my_models.statusTrainModel import StatusTrain
 from my_utils.deleteNameTrainModel import deleteNameTrainModel
 
 # from flask_crontab import Crontab
+from my_utils.handleFileTXT import  write_file_txt, read_file_txt
 
 import random
-
-import torch
-
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -96,8 +100,30 @@ app.config.from_object('config')
 route(app)
 # ==========
 
+# call(["python3",AI_FILE_SOURCE])
 
 #! train =======================================================================================
+
+MONGODB_URL = "mongodb+srv://thanhdai0411:thanhdai0411@cluster0.gsbucce.mongodb.net/?retryWrites=true&w=majority"
+
+db_client=MongoClient()
+db_client = MongoClient(MONGODB_URL)
+mydatabase = db_client["test"]
+collection_name = mydatabase["email_notify"]
+
+
+
+def send_mail_notify_train (text) :
+        
+    email = collection_name.find_one({"username": "Smart"})["email"]
+
+    url = "http://0.0.0.0/send_mail"
+    text_send = f"[{datetime.now()}]: {text}"
+
+    myobj = {'email': email, "text": text_send }
+
+    x = requests.post(url, headers = {'User-Agent': 'Mozilla/5.0'}, data = myobj)
+
 
 @app.route('/upload/train', methods=['POST'])
 def train_model():
@@ -116,9 +142,9 @@ def train_model():
     action_text = ""
 
     if action == "TRAIN" :
-        action_text = "Train model name " + name_fish
+        action_text = "Train model name " + name_fish + " success"
     else : 
-        action_text = "Delete model name " + name_fish
+        action_text = "Delete model name " + name_fish + " success"
         deleteNameTrainModel(name_fish)
 
     exist_folder_image_train = os.path.isdir(FOLDER_SAVE_IMAGES)
@@ -152,7 +178,10 @@ def train_model():
 
     updateStatus = StatusTrain.objects(name_fish=name_fish,status="WAITING")
     updateStatus.update(status="COMPLETE",dateEnd=timeComplete)
-    # sleep(10)
+
+    # ! send mail notify for user
+    
+    send_mail_notify_train(action_text)
 
     return 'ok'
 
@@ -175,8 +204,18 @@ def send_email():
     )
     return "Sent"
 
-#! =============================================================================================
 
+
+@app.route('/check_load_start') 
+def check_load() : 
+    load_complete = read_file_txt(PATH_SATE_LOAD_AI)
+    if(load_complete) :
+        return "FAIL"
+    else : 
+        return "OK"
+    
+
+#! =============================================================================================
 
 
 
@@ -186,6 +225,9 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.secret_key = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# 
+from load_model_daily import load_model
+# 
 
 if __name__ == "__main__":
     #!MQTT SETUP ==========================================================
@@ -233,6 +275,8 @@ if __name__ == "__main__":
     
     connectDB(app)
     p.start()  
+
+
     # !
     # from waitress import serve
     # serve(app, host="0.0.0.0", port=5000, threads= 8) 
@@ -242,6 +286,9 @@ if __name__ == "__main__":
 
 
     app.run(host="0.0.0.0", port=5000,debug=True, threaded=True)
+
+    
+
 
 
     p.join()

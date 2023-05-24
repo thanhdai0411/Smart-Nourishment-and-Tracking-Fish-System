@@ -121,3 +121,33 @@ def update_food_status(id):
             return 'FAIL'
     else:
         return None
+
+
+def update_food_ai() :
+    if request.method == 'POST':
+        try:
+            data = request.form.get('data')
+            print("0kkkkkk")
+
+            # 
+
+            result = data.split("-")
+            my_list = result[:-1] 
+            for  x in my_list  : 
+                handle = x.split("|")
+                
+                amount = handle[0].strip()
+                time  = handle[1].strip()
+
+                food = Food.objects(time=time)
+                food.update(amount_food=amount)
+           
+            # newFood = Food(username=username, amount_food=amount_food, time=time)
+            # newFood.save()
+
+            return 'OK'
+
+        except ValueError as ve:
+            return 'FAIL'
+    else:
+        return None

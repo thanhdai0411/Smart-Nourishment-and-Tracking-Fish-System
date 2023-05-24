@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import datetime
 import time
 from time import sleep
-from constant import PATCH_FOOD_SETTING
 from my_models.foodModel import Food
 from flask import request
 from multiprocessing import Process, Value
@@ -12,13 +11,20 @@ import os
 import paho.mqtt.client as paho
 from paho import mqtt
 from subprocess import call
-from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_SAVE_INFO_FEEDER, PATH_SAVE_DATE_UPDATE_DAILY_FOOD, PATH_SAVE_STATE_LOAD_MODEL_DETECT
+from constant import BROKER_URL, BROKER_PORT, BROKER_USERNAME, BROKER_PASSWORD, PATCH_COUNT_FISH, MONGODB_URL,PATH_SAVE_STATE_LOAD_FISH_DIE, PATH_SAVE_INFO_FEEDER, PATH_SAVE_DATE_UPDATE_DAILY_FOOD, PATH_SAVE_STATE_LOAD_MODEL_DETECT, DATA_FOR_AI, RESULT_PREDIRECT_AI, RGB_START_SYSTEM, PATCH_FOOD_SETTING, TIME_DURATION_LEARNING_AI, DATE_LEARNING_AI, AI_FILE_SOURCE
 
 from bson.objectid import ObjectId
 import random
 import requests
 
 import serial
+
+
+PATH_SATE_LOAD_AI = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/my_data/load_ai.txt"
+
+from my_utils.handleFileTXT import  write_file_txt, read_file_txt, read_file_json
+
+
 
 
 serial_port = serial.Serial(
@@ -42,7 +48,7 @@ def write_file_json(data_write) :
     with open(PATCH_FOOD_SETTING, "w") as open_file:
         open_file.write(json.dumps(data_write))
 
-def read_file_json() : 
+def read_file_json_cron() :
     with open(PATCH_FOOD_SETTING, 'r') as open_file:
             json_object = json.load(open_file)
     return json_object   
@@ -53,7 +59,7 @@ def serial_send(payload) :
     serial_port.write(data_send.encode())
 
 def check_state_device () :
-        
+
     api_url = "http://0.0.0.0/state_device/get/led"
     response = requests.get(api_url)
     data = json.loads(response.json()['data'])[0]['state']
@@ -64,6 +70,18 @@ def check_state_device () :
     data = json.loads(response.json()['data'])[0]['state']
     serial_send(('L' + data + 'E').encode())
 
+
+    # ! check 
+    load_complete = read_file_txt(PATH_SATE_LOAD_AI)
+    if(not load_complete): 
+        requests.get("http://0.0.0.0/food/get/Smart")
+        print("?????? LOAD MODEL ??????????")
+        write_file_txt(PATH_SATE_LOAD_AI, "ai feeder")
+        requests.get("http://0.0.0.0/ai_feeder/load")
+    
+
+
+
 def call_state_led_rgb () : 
     api_url = "http://0.0.0.0/state_device/get/led"
     response = requests.get(api_url)
@@ -71,22 +89,44 @@ def call_state_led_rgb () :
     serial_send(data.encode())
 
 def update_food_daily() :
+    
     year, month, day = time.strftime(
                     '%Y'), time.strftime('%m'), time.strftime('%d')
 
-    date_start =  str(day) + "-" + str(month) + "-" + str(year) 
+    date_today =  str(day) + "-" + str(month) + "-" + str(year) 
 
     read_date = open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD , 'r').read()
 
     if(not read_date) :
-        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_start)
+        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_today)
 
-    # print(read_date.strip(),date_start)
+    # print(read_date.strip(),date_today)
 
-    if(read_date.strip() != date_start ) :
-        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_start)
+    if(read_date.strip() != date_today ) :
+        open(PATH_SAVE_DATE_UPDATE_DAILY_FOOD, 'w').write(date_today)
         api_url = "http://0.0.0.0/food/update_daily"
+        # api_url_count_fish = "http://0.0.0.0/count_fish/get"
+
+        
         response = requests.get(api_url)
+        # response = requests.get(api_url_count_fish)
+
+    # auto learnining ai after date
+
+    read_date_ai_learning = open(DATE_LEARNING_AI , 'r').read()
+
+    if(read_date_ai_learning.strip() == date_today ) :
+                
+        time_learning = datetime.datetime.now() + datetime.timedelta(days=TIME_DURATION_LEARNING_AI)
+        year, month, day = time_learning.strftime(
+                            '%Y'), time_learning.strftime('%m'), time_learning.strftime('%d')
+        date_next_learning =  str(day) + "-" + str(month) + "-" + str(year) 
+
+        open(DATE_LEARNING_AI, 'w').write(date_next_learning)
+
+        call(["python3", AI_FILE_SOURCE])
+        
+
 
 def write_info_feeder(data) :
     with open(PATH_SAVE_INFO_FEEDER, "w") as outfile:
@@ -125,7 +165,7 @@ def cron_food(loop_on):
                 try :
                     
 
-                    json_object = read_file_json()
+                    json_object = read_file_json_cron()
                     
                     json_object.append({'username': "MODE_AI"})
 
@@ -138,7 +178,7 @@ def cron_food(loop_on):
                 
                 try :
                     
-                    json_object = read_file_json()
+                    json_object = read_file_json_cron()
 
                     length = len(json_object)
                     modeAI =  json_object[length-1]["username"]
@@ -213,7 +253,7 @@ def cron_food(loop_on):
                 if not fileEmpty and fileSize > 2  : 
 
                     
-                    json_object = read_file_json()
+                    json_object = read_file_json_cron()
 
                     length = len(json_object) 
                     mode =  json_object[length-1]["username"]
@@ -239,7 +279,7 @@ def cron_food(loop_on):
                                 print('Hey Hey , Cron Food'  + str(time_on) + " Lượng thức ăn: " + str(amount_food))
 
 
-                                json_object = read_file_json()
+                                json_object = read_file_json_cron()
                                 json_object.append({'username': "START_CRON"})
                                 write_file_json(json_object)
                                 

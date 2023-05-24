@@ -18,6 +18,14 @@ if (newNotifyTick == 1) {
     dotNewNotify2.classList.add("noti_new");
 }
 
+const ToastNotify = (txt) => {
+    try {
+        toastFail(txt);
+    } catch (err) {
+        toastFailFood(txt);
+    }
+};
+
 const hideRegister = (emailNotify) => {
     $("#email_already").show();
 
@@ -86,6 +94,9 @@ modalNotify.addEventListener("show.bs.modal", (event) => {
             const newEmail = modalNotify.querySelector(
                 "#email_notify_already"
             ).value;
+            if (emailNotify == newEmail) {
+                ToastNotify("Please change new email");
+            }
 
             var bodyFormData = new FormData();
             bodyFormData.append("username", usernameLoginEmailRegister);
@@ -101,7 +112,7 @@ modalNotify.addEventListener("show.bs.modal", (event) => {
                 success: function (data) {
                     console.log({ update: data });
                     if (data == "EXIST_EMAIL") {
-                        toastFail("Email đã tồn tại");
+                        ToastNotify("Email exist");
                         loadingEmailRegister.classList.add("hide_element");
                         btnConfirmRegisterEmail.style.disable = false;
                         return;
@@ -164,7 +175,7 @@ btnConfirmRegisterEmail.onclick = (e) => {
     const email = modalNotify.querySelector("#email_notify").value;
 
     if (!usernameLoginEmailRegister || !email) {
-        toastFail(
+        ToastNotify(
             "Please fill in the required information before saving your application."
         );
         return;
@@ -187,7 +198,7 @@ btnConfirmRegisterEmail.onclick = (e) => {
         processData: false,
         success: function (data) {
             if (data == "EXIST_EMAIL") {
-                toastFail("Email đã tồn tại");
+                ToastNotify("Email đã tồn tại");
                 loadingEmailRegister.classList.add("hide_element");
                 btnConfirmRegisterEmail.style.disable = false;
                 return;
@@ -203,13 +214,39 @@ btnConfirmRegisterEmail.onclick = (e) => {
 
 //
 
-// $(document).ready(function () {
-//     $.ajax({
-//         type: "GET",
-//         url: `/camera/fish_die`,
-//         dataType: "json",
-//         success: function (data) {
-//             console.log({ die: data });
-//         },
-//     });
-// });
+// check load
+
+$.ajax({
+    type: "GET",
+    url: `/check_load_start`,
+    success: function (data) {
+        if (data == "OK") {
+            $("#opacity_loading_page").hide();
+        } else {
+            setTimeout(() => {
+                $.ajax({
+                    type: "GET",
+                    url: `/check_load_start`,
+                    success: function (data) {
+                        if (data == "OK") {
+                            $("#opacity_loading_page").hide();
+                        }
+                    },
+                });
+            }, 1000);
+        }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        setTimeout(() => {
+            $.ajax({
+                type: "GET",
+                url: `/check_load_start`,
+                success: function (data) {
+                    if (data == "OK") {
+                        $("#opacity_loading_page").hide();
+                    }
+                },
+            });
+        }, 1000);
+    },
+});

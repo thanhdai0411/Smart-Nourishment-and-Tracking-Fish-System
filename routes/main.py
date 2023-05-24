@@ -12,6 +12,7 @@ from routes.emailNotifyRoute import emailNotifyRoute
 from routes.notifyRoute import notifyRoute
 from routes.statusTrainRoute import statusTrainRoute
 from routes.stateDeviceRoute import stateDeviceRoute
+from routes.loadAIRoute import loadAIRoute
 
 
 def route(app):
@@ -29,3 +30,4 @@ def route(app):
     app.register_blueprint(notifyRoute, url_prefix='/notify/')
     app.register_blueprint(statusTrainRoute, url_prefix='/status_train/')
     app.register_blueprint(stateDeviceRoute, url_prefix='/state_device/')
+    app.register_blueprint(loadAIRoute, url_prefix='/ai_feeder/')

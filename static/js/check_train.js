@@ -71,6 +71,14 @@ function onConnectionLost(responseObject) {
     }
 }
 
+const ToastNotifySuccess = (txt) => {
+    try {
+        toastSuccess(txt);
+    } catch (err) {
+        toastSuccessFood(txt);
+    }
+};
+
 const renderNotify = () => {
     $.ajax({
         type: "GET",
@@ -171,7 +179,8 @@ function onMessageArrived(message) {
 
         const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
         const text = `[${dateDie}]: Dead fish found`;
-        apiSendMail(text);
+        ToastNotifySuccess(text);
+        // apiSendMail(text);
     } else if (topic === "start_eat") {
         let payload = message.payloadString;
         if (Number(payload) != 0) {
@@ -198,7 +207,7 @@ function onMessageArrived(message) {
                 success: function (data) {
                     if (data === "OK") {
                         getValue();
-                        toastSuccessFood(`Feed the fish successfully`);
+                        ToastNotifySuccess(`Feed the fish successfully`);
                         $("#modalEditFood").modal("hide");
                     }
                 },
@@ -215,7 +224,7 @@ function onMessageArrived(message) {
         let action = stateTrain.split("=")[3];
 
         if (state == "Start") {
-            toastSuccess(`Start ${action}`);
+            ToastNotifySuccess(`Start ${action}`);
         }
         if (state == "End") {
             // let content = `Hoàn thành đặt tên cho cá gần đây nhất vào lúc ${time}`;
@@ -225,8 +234,8 @@ function onMessageArrived(message) {
             let today = new Date();
             const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
             const text = `[${dateDie}]: Complete ${action}`;
-            apiSendMail(text);
-            toastSuccess(text);
+            // apiSendMail(text);
+            ToastNotifySuccess(text);
         }
     }
 }

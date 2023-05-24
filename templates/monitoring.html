@@ -19,10 +19,7 @@
     <link href="/static/my_library/bootstrap.min.css" rel="stylesheet" />
     <script src="/static/my_library/bootstrap.bundle.min.js"></script>
 
-    <!-- <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-        /> -->
+    <!-- <link rel="stylesheet" href="/static/my_library/bootstrap-icons.css" /> -->
 
     <!-- swiper -->
     <script src="/static/my_library/jquery.min.js"></script>
@@ -57,14 +54,14 @@
 
     <!-- opacity loading page -->
 
-    <!-- <div id="opacity_loading_page">
-            <div class="text-center mt-5">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <p>Vui lòng chờ</p>
+    <div id="opacity_loading_page">
+        <div class="text-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-        </div> -->
+            <p>Vui lòng chờ</p>
+        </div>
+    </div>
 
     <!-- end opacity loading page -->
     <!-- background -->
@@ -85,7 +82,11 @@
                     <div></div>
                     <div class="wrap_user_name">
                         <div class="notification_wrap" data-bs-toggle="modal" data-bs-target="#modalNoti">
-                            <i class="bi bi-bell-fill"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+                            </svg>
                             <div class="dot_new_noti"></div>
                         </div>
 
@@ -202,36 +203,132 @@
                     <div class="control_time shadow-lg">
                         <p class="control_time-title" style="">
                             Set the time to automatically feed the fish
+
+                            <!-- <button id="btn_change_amount_food" class="btn btn-danger">OK</button> -->
                         </p>
                         <div class="control_time-item">
                             <table class="table table-bordered text-light" style="">
                                 <tr>
-                                    <td>Feeding time</td>
+                                    <td class="fw-bold">Feeding time</td>
                                     <td>
-                                        <input class="w-100" type="time" name="" id="set_time" value="00:00"
-                                            placeholder="Set time" style="
-                                                    border: none;
-                                                    outline: none;
-                                                    padding: 5px 10px;
-                                                    border-radius: 5px;
-                                                " />
+                                        <input class="form-control" type="time" name="" id="set_time" value="00:00"
+                                            placeholder="Set time" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Food Amount</td>
-                                    <td>
-                                        <input class="w-100" type="number" name="" id="amount_food"
-                                            placeholder="Enter food amount" style="
-                                                    border: none;
-                                                    outline: none;
-                                                    padding: 5px 10px;
-                                                    border-radius: 5px;
-                                                " />
+                                    <td class="fw-bold"> Food Amount</td>
+                                    <td class="">
+                                        <input class="form-control" type="number" name="" id="amount_food"
+                                            placeholder="Enter food amount" />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">AI Food</td>
+                                    <td class="">
+                                        <div class="d-flex align-items-center">
+
+
+
+
+                                            <button type="button" class="btn btn-danger fw-bold w-100"
+                                                style="text-transform: uppercase;" data-bs-toggle="modal"
+                                                data-bs-target="#modalAI">Amount Food Use
+                                                AI</button>
+                                        </div>
+
+
+                                        <!-- modal ai -->
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalAI" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog  modal-dialog-centered">
+                                                <div class="modal-content text-dark">
+                                                    <div class="modal-header ">
+                                                        <h1 class="modal-title fs-5 text-dark"
+                                                            style="text-transform: uppercase;" id="exampleModalLabel">
+                                                            AMOUNT FOOD USE AI
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-dark">
+                                                        <div class="d-flex justify-content-between align-items-center ">
+                                                            <img width="150" src="/static/image/ai_icon2.png" alt=""
+                                                                srcset="">
+                                                            <div>
+                                                                <p
+                                                                    style="text-align: justify; margin  : 0; font-weight: 400;">
+                                                                    Hello ! I am the AI for the right amount of fish
+                                                                    food. Time
+                                                                    The settings must be left in place for a few days to
+                                                                    have enough data for me. I will automatically
+                                                                    re-learn every 7 days </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered text-center d-none"
+                                                                id="table_ai_wrap">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">STT</th>
+                                                                        <th scope="col">Time</th>
+                                                                        <th scope="col">Old</th>
+                                                                        <th scope="col">AI</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="body_ai">
+                                                                    <!-- <tr>
+                                                                        <td class="fw-bold">1</td>
+                                                                        <td>
+                                                                            <span
+                                                                                style="background-color: #0bae62; border: 1px solid #ccc; border-radius: 10px; padding : 2px 5px; color : white ; font-weight: bold; ">07:00</span>
+
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <span
+                                                                                style="background-color: #19b69e; border: 1px solid #ccc; border-radius: 10px; padding : 2px 8px; color : white ; font-weight: bold ; ">0.1</span>
+
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <span
+                                                                                style="background-color: #e07618; border: 1px solid #ccc; border-radius: 10px; padding : 2px 8px; color : white ; font-weight: bold ; ">0.11231231</span>
+
+                                                                        </td>
+                                                                    </tr> -->
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-danger fw-bold w-100"
+                                                            style="text-transform: uppercase;"
+                                                            id="amount_food_ai">Amount Food Use
+                                                            AI</button>
+
+                                                        <button type="button"
+                                                            class="btn btn-success fw-bold w-100 d-none"
+                                                            style="text-transform: uppercase;"
+                                                            id="btn_change_amount_food"><span>
+                                                                Change setting with AI
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end modal ai -->
                                     </td>
                                 </tr>
                             </table>
-                            <p style="text-align: justify" class="text_food_setting">
-                                Note: The amount of food is set based on the
+                            <p style=" text-align: justify" class="text_food_setting">
+                                <b>Note</b>: The amount of food is set based on the
                                 shooting time of the feeding machine. When
                                 setting <b>1</b>, the camera will rotate
                                 <b>1s</b> ,<b>0.5</b> then the camera will
@@ -244,7 +341,8 @@
                                 <!-- <input class="form-check-input control_switch-checkbox"
                                                         style="font-size: 20px;" type="checkbox" role="switch"
                                                         id="flexSwitchCheckDefault" checked /> -->
-                                <span class="" id="label_btn_setting_food"><b>CLICK TO SAVE SETTINGS</b> on push
+                                <span class="" id="label_btn_setting_food"><b>CLICK TO SAVE SETTINGS</b>
+                                    on push
                                     fill enough information believe
                                 </span>
                             </div>
@@ -255,7 +353,7 @@
                                         border: 1.5px solid #25f192;
                                         font-weight: 500;
                                     ">
-                                <span> CLICK TO SAVE SETTINGS </span>
+                                <span class="fw-bold"> CLICK TO SAVE SETTINGS </span>
                             </button>
                         </div>
                     </div>
@@ -304,20 +402,20 @@
                                 width="26" height="26" fill="currentColor" class="bi bi-stop" viewBox="0 0 16 16">
                                 <path
                                     d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z" />
-                            </svg><span style="font-weight: 500">STOP</span></a>
+                            </svg><span style="font-weight: 700">STOP</span></a>
 
                         <a class="btn btn-success btn_start_camera" id="camera_btn"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                                 class="bi bi-play" viewBox="0 0 16 16">
                                 <path
                                     d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
-                            </svg><span style="font-weight: 500"> PLAY </span></a>
+                            </svg><span style="font-weight: 700"> PLAY </span></a>
 
                         <a class="btn btn_detect_camera" id="camera_btn"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="20" height="20" fill="currentColor" class="bi bi-tv" viewBox="0 0 16 16">
                                 <path
                                     d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z" />
-                            </svg><span class="ms-2" style="font-weight: 500">DETECT</span></a>
+                            </svg><span class="ms-2" style="font-weight: 700">DETECT</span></a>
                     </div>
 
                     <!--  -->

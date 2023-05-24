@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.foodController import add_food, get_food, delete_food, update_food, update_food_status,update_food_daily
+from controllers.foodController import add_food, get_food, delete_food, update_food, update_food_status,update_food_daily, update_food_ai
 
 foodRoute = Blueprint('foodRoute', __name__)
 
@@ -10,3 +10,4 @@ foodRoute.route('/delete/<id>', methods=['DELETE'])(delete_food)
 foodRoute.route('/update/<id>', methods=['POST'])(update_food)
 foodRoute.route('/update_daily', methods=['GET'])(update_food_daily)
 foodRoute.route('/update_status/<id>', methods=['POST'])(update_food_status)
+foodRoute.route('/update_food_ai', methods=['POST'])(update_food_ai)

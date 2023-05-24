@@ -710,7 +710,8 @@ function onMessageArrived(message) {
 
         const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
         const text = `[${dateDie}]: Dead fish found`;
-        apiSendMail(text);
+        toastSuccessFood(text);
+        // apiSendMail(text);
     } else if (topic === "start_eat") {
         let payload = message.payloadString;
         if (Number(payload) == 0) {
@@ -772,7 +773,7 @@ function onMessageArrived(message) {
             let today = new Date();
             const dateDie = moment(today).format("DD/MM/YYYY HH:mm:ss");
             const text = `[${dateDie}]: Completed name training ${name_fish}`;
-            apiSendMail(text);
+            // apiSendMail(text);
             toastSuccessFood(`Complete naming ${name_fish} for fish`);
         }
     }
@@ -1081,11 +1082,12 @@ const getFishCount = () => {
         url: `/count_fish/get`,
         dataType: "json",
         success: function (data) {
-            dataChart(data);
+            // dataChart(data);
+            console.log({ data });
         },
     });
 };
-
+// getFishCount();
 const getFishCountDetail = (id) => {
     console.log({ id });
     $.ajax({
@@ -1202,7 +1204,7 @@ btnSearchChart.onclick = (e) => {
 //         },
 //     });
 // };
-$("#opacity_loading_page").hide();
+// $("#opacity_loading_page").hide();
 
 // $(document).ready(function () {
 //     console.log("reload page");
