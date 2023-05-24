@@ -1,27 +1,27 @@
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
-*.jpg
-*.jpeg
-*.png
-*.bmp
-*.tif
-*.tiff
-*.heic
-*.JPG
-*.JPEG
-*.PNG
-*.BMP
-*.TIF
-*.TIFF
-*.HEIC
-*.mp4
-*.mov
-*.MOV
-*.avi
-*.data
+# *.jpg
+# *.jpeg
+# *.bmp
+# *.tif
+# *.tiff
+# *.heic
+# *.JPG
+# *.JPEG
+# *.PNG
+# *.BMP
+# *.TIF
+# *.TIFF
+# *.HEIC
+# *.mp4
+# *.mov
+# *.MOV
+# *.avi
+# *.data
 
 # Datasets -------------------------------------------------------------------------------------------------------------
 coco/
-coco128/
+coco128/images/train2017/*
+coco128/labels/train2017/*
 VOC/
 
 # GitHub Python GitIgnore ----------------------------------------------------------------------------------------------
