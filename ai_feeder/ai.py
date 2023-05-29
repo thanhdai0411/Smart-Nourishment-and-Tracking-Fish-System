@@ -122,7 +122,7 @@ print("Loss:", loss)
 # save model
 model.save(AI_FILE_SAVE_MODEL)
 
-model_save = tf.keras.models.load_model(AI_FILE_SAVE_MODEL)
+# model_save = tf.keras.models.load_model(AI_FILE_SAVE_MODEL)
 
 
 # X_new = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 2, 2, 3, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]

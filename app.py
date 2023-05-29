@@ -103,7 +103,7 @@ route(app)
 # call(["python3",AI_FILE_SOURCE])
 
 #! train =======================================================================================
-
+from pymongo import MongoClient
 MONGODB_URL = "mongodb+srv://thanhdai0411:thanhdai0411@cluster0.gsbucce.mongodb.net/?retryWrites=true&w=majority"
 
 db_client=MongoClient()
@@ -142,10 +142,11 @@ def train_model():
     action_text = ""
 
     if action == "TRAIN" :
-        action_text = "Train model name " + name_fish + " success"
+        action_text = "Train model name " + name_fish 
     else : 
-        action_text = "Delete model name " + name_fish + " success"
+        action_text = "Delete model name " + name_fish 
         deleteNameTrainModel(name_fish)
+        return 'ok'
 
     exist_folder_image_train = os.path.isdir(FOLDER_SAVE_IMAGES)
     if not exist_folder_image_train :
@@ -181,7 +182,7 @@ def train_model():
 
     # ! send mail notify for user
     
-    send_mail_notify_train(action_text)
+    send_mail_notify_train(action_text + " success")
 
     return 'ok'
 

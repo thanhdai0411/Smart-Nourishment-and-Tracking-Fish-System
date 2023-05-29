@@ -83,6 +83,8 @@ btnStartCamera.onclick = (e) => {
 btnStopCamera.onclick = (e) => {
     stopCamera();
 
+    // hideCamera();
+
     // setTimeout(() => {
     //     showCamera("/camera/count_fish");
     // }, 1000);

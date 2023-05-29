@@ -65,17 +65,39 @@ upload.addEventListener("change", (e) => {
                         const widthImage = event.srcElement.naturalWidth;
                         const heightImage = event.srcElement.naturalHeight;
 
+                        console.log({
+                            widthImage,
+                            heightImage,
+                        });
+
                         const widthBox = event.detail.width;
                         const hightBox = event.detail.height;
 
+                        console.log({
+                            widthBox,
+                            hightBox,
+                        });
+
                         const xTopLeft = event.detail.x;
                         const yTopLeft = event.detail.y;
+
+                        console.log({
+                            xTopLeft,
+                            yTopLeft,
+                        });
 
                         x = (+xTopLeft + widthBox / 2) / +widthImage;
                         y = (+yTopLeft + hightBox / 2) / +heightImage;
 
                         w = widthBox / widthImage;
                         h = hightBox / heightImage;
+
+                        console.log({
+                            x,
+                            y,
+                            w,
+                            h,
+                        });
                     },
                 });
             }
@@ -150,7 +172,7 @@ modalDeleteFishName.addEventListener("show.bs.modal", (event) => {
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
     const recipient = button.getAttribute("data-name-fish");
-    const nameFish = localStorage.getItem("label");
+    // const nameFish = localStorage.getItem("label");
 
     const btnDeleteFishNameComplete = modalDeleteFishName.querySelector(
         "#btn_delete_fish_name"
@@ -161,7 +183,7 @@ modalDeleteFishName.addEventListener("show.bs.modal", (event) => {
     textConfirm.innerHTML = `You definitely want to remove the name ${recipient}. When deleting all data about the name ${recipient} will be lost`;
     var bodyFormData = new FormData();
 
-    bodyFormData.append("name_fish", nameFish);
+    bodyFormData.append("name_fish", recipient);
     bodyFormData.append("action", "DELETE");
     btnDeleteFishNameComplete.onclick = () => {
         $.ajax({
@@ -398,7 +420,7 @@ const viewDataPresentForTrain = document.querySelector(
 );
 
 btnComplete.onclick = (e) => {
-    const MIN_TRAIN = 50;
+    const MIN_TRAIN = 100;
     const minTrainLabel = document.querySelector("#min_train_label");
     minTrainLabel.innerHTML = MIN_TRAIN;
     const nameFish = localStorage.getItem("label");

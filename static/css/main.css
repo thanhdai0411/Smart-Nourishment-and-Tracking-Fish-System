@@ -1542,4 +1542,75 @@ input:not(:active) + #h4-container h4 {
   margin-top: -50px;
   pointer-events: none; }
 
+  .btn-a, .btn-a2 {
+    width: 100%;
+    height: 43px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 43px;
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(-45deg, #00a8c5, #ffa63d 33.33333%, #338aff 66.66667%,
+        #3cf0c5);
+    background-size: 600%;
+    animation: anime 16s linear infinite;
+    font-weight: bold;
+    border: 1.5px solid white; }
+    .btn-a .btn-a2, .btn-a2 .btn-a2 {
+      display: none; }
+
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;   }
+    50% {
+      background-position: 100% 50%;   }
+      100% {
+        background-position: 0% 50%;   }
+}
+
+.btn-hover {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  height: 45px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 10px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out; }
+
+  .btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out; }
+
+    .btn-hover:focus {
+      outline: none; }
+
+      .btn-hover.color-6 {
+        background-image: linear-gradient(to right, #009245, #fcee21 33.33333%, #00a8c5 66.66667%,
+                #d9e021);
+        box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+        border: 1.5px solid white; }
+
+        .btn-hover.color-1 {
+          background-image: linear-gradient(to right, #25aae1, #40e495 33.33333%, #30dd8a 66.66667%,
+                    #2bb673);
+          box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+          border: 1.5px solid white; }
+
+          .btn-hover.color-5 {
+            background-image: linear-gradient(to right, #0ba360, #3cba92 33.33333%, #30dd8a 66.66667%,
+                        #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+            border: 1.5px solid white; }
+
 

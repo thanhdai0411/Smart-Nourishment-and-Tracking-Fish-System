@@ -1,5 +1,4 @@
 from constant import AI_FILE_SAVE_MODEL, PATCH_FOOD_SETTING, DATA_FOR_AI, PATH_SATE_LOAD_AI, RGB_START_SYSTEM, RESULT_PREDIRECT_AI
-import tensorflow as tf
 import json
 import datetime
 
@@ -157,6 +156,8 @@ def load_ai_feeder () :
             "old_setting": old_food_setting
         } 
     else:
+        import tensorflow as tf
+
         model_save = tf.keras.models.load_model(AI_FILE_SAVE_MODEL)
 
         #! predirect

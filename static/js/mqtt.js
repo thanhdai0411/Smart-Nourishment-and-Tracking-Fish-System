@@ -504,7 +504,7 @@ const getStatePumpOnDB = () => {
             if (success == 1) {
                 let statePump = JSON.parse(data)[0];
 
-                if (statePump.device == "pump" && statePump.state == "0") {
+                if (statePump.device == "pump" && statePump.state == "1") {
                     stateOn(switchForFishEat, textForFishEat, stateForFishEat);
                     public_message("relay_control", "L1E");
                 }
@@ -716,7 +716,7 @@ function onMessageArrived(message) {
         let payload = message.payloadString;
         if (Number(payload) == 0) {
             document.getElementById("camera_open").src = "";
-            localStorage.setItem("id_food_run", id);
+            // localStorage.setItem("id_food_run", id);
         } else if (Number(payload) != 0) {
             // let id = payload.split("=")[0];
 
@@ -926,7 +926,7 @@ switchForFishEat.onchange = (e) => {
         "switchForFishEat"
     );
 
-    state = state == 1 ? 0 : 1;
+    // state = state == 1 ? 0 : 1;
 
     const relayControl = `L${state}E`;
     public_message("relay_control", relayControl);
@@ -954,6 +954,10 @@ onOffDevice.onchange = (e) => {
     );
 
     if (state == 1) {
+        // let rgbCode = stateDevice.state;
+        // console.log({ rgbCode });
+        // console.log({ rgbCode });
+        let rgbCode = localStorage.getItem("rgbCode");
         $.ajax({
             type: "GET",
             url: `/state_device/get/led`,
@@ -964,8 +968,20 @@ onOffDevice.onchange = (e) => {
                 if (success == 1) {
                     let stateDevice = JSON.parse(data)[0];
                     if (stateDevice.device == "led") {
-                        const rgbCode = stateDevice.state;
                         public_message("rgb_control", rgbCode);
+
+                        var bodyFormData = new FormData();
+                        bodyFormData.append("state", rgbCode);
+
+                        $.ajax({
+                            type: "PUT",
+                            url: `/state_device/update/led`,
+                            data: bodyFormData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (data) {},
+                        });
                     }
                 }
             },
@@ -975,6 +991,7 @@ onOffDevice.onchange = (e) => {
 
         var bodyFormData = new FormData();
         bodyFormData.append("state", rgbCode);
+
         $.ajax({
             type: "PUT",
             url: `/state_device/update/led`,
@@ -1022,6 +1039,8 @@ colorLamp.onchange = (ev) => {
             //! save rgb code
             var bodyFormData = new FormData();
             bodyFormData.append("state", rgbCode);
+
+            localStorage.setItem("rgbCode", rgbCode);
             $.ajax({
                 type: "PUT",
                 url: `/state_device/update/led`,
