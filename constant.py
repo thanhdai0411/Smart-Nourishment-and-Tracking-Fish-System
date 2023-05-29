@@ -7,7 +7,7 @@ ERROR_STATUS = {"success": 0,
 
 BASE_PATH = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart"
 
-EPOCH_TRAIN = 10
+EPOCH_TRAIN = 50
 
 FOLDER_SAVE_LABELS = BASE_PATH + '/coco128/labels/train2017'
 FOLDER_SAVE_IMAGES = BASE_PATH + '/coco128/images/train2017'
@@ -31,7 +31,9 @@ PATH_SAVE_STATE_LOAD_MODEL_DETECT = BASE_PATH + "/my_data/load_model_detect.txt"
 
 
 
-PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_19_5.pt"
+# PATH_MODEL_FISH_NAME = BASE_PATH + "/best_s_19_5.pt"
+# /home/doan/Desktop/DA/WebServer/Aquarium-Smart/train_complete/train/weights/best.pt
+PATH_MODEL_FISH_NAME = BASE_PATH + "/train_complete/train/weights/best.pt"
 
 FOLDER_TRAIN_COMPLETE = BASE_PATH+ '/train_complete'
 

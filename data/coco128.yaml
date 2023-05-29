@@ -1,4 +1,4 @@
 train: /home/doan/Desktop/DA/WebServer/Aquarium-Smart/coco128/images/train2017
 val: /home/doan/Desktop/DA/WebServer/Aquarium-Smart/coco128/images/train2017
 names:
-    0: FishRed
+    0: FishFinal

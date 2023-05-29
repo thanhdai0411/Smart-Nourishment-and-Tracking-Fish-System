@@ -72,13 +72,12 @@ def check_state_device () :
 
 
     # ! check 
-    load_complete = read_file_txt(PATH_SATE_LOAD_AI)
-    if(not load_complete): 
-        requests.get("http://0.0.0.0/food/get/Smart")
-        print("?????? LOAD MODEL ??????????")
-        write_file_txt(PATH_SATE_LOAD_AI, "ai feeder")
-        requests.get("http://0.0.0.0/ai_feeder/load")
-    
+
+    requests.get("http://0.0.0.0/food/get/Smart")
+    print("?????? LOAD MODEL ??????????")
+    write_file_txt(PATH_SATE_LOAD_AI, "ai feeder")
+    requests.get("http://0.0.0.0/ai_feeder/load")
+
 
 
 
