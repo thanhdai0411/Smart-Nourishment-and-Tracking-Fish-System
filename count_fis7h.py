@@ -84,7 +84,7 @@ while True:
 
             area = round(cv2.contourArea(cnt))
             # print("area : ", area)
-            if area > 300 and 0 not in cnt:
+            if area >300 and 0 not in cnt:
 
                 if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 

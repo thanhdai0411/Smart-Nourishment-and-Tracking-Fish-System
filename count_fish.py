@@ -72,7 +72,7 @@ if not cap.isOpened():
     exit()
 
 
-DURATION = 30
+DURATION = 60
 
 EDGE_TOP = 150
 EDGE_RIGHT = 700
@@ -149,7 +149,7 @@ while True:
 
             area = round(cv2.contourArea(cnt))
 
-            if area > 200 and 0 not in cnt:
+            if area > 300 and 0 not in cnt:
 
                 if 0 or threshold.shape[1] - 1 not in (cnt[i][0][0] for i in range(len(cnt))):
 
@@ -160,8 +160,8 @@ while True:
                         count = count + 1
 
         #! show frame
-        # cv2.imshow("Edge", img_cvtc)
-        # cv2.imshow("Thresh", fish_contour)
+        cv2.imshow("Edge", img_cvtc)
+        cv2.imshow("Thresh", fish_contour)
 
         year, month, day = time.strftime(
             '%Y'), time.strftime('%m'), time.strftime('%d')
@@ -199,6 +199,7 @@ while True:
             break
     else : 
         print('Without open camera')
+
 
 cap.release()
 cv2.destroyAllWindows()

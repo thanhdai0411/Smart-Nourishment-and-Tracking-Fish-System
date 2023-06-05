@@ -304,7 +304,7 @@ def cron_food(loop_on):
                                 controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
                                 print( "motor control : "+ str(controlMotor))
                                 #! send run motor
-                                # serial_send(controlMotor.encode())
+                                serial_send(controlMotor.encode())
 
                                 data_feeder = {
                                     "amount_food" : amount_food, 
