@@ -85,9 +85,9 @@ btnStopCamera.onclick = (e) => {
 
     // hideCamera();
 
-    setTimeout(() => {
-        showCamera("/camera/fish_die");
-    }, 1000);
+    // setTimeout(() => {
+    //     showCamera("/camera/fish_die");
+    // }, 1000);
 };
 
 btnDetectCamera.onclick = (e) => {

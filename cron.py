@@ -76,6 +76,13 @@ def check_state_device () :
     requests.get("http://0.0.0.0/food/get/Smart")
     print("?????? LOAD MODEL ??????????")
     write_file_txt(PATH_SATE_LOAD_AI, "ai feeder")
+
+    def write_file_json_c (file, data) :
+        with open(file, "w") as outfile:
+            outfile.write(json.dumps(data, indent=4, sort_keys=True, default=str))
+
+    write_file_json_c(RESULT_PREDIRECT_AI, {})
+    
     requests.get("http://0.0.0.0/ai_feeder/load")
 
 
@@ -296,7 +303,8 @@ def cron_food(loop_on):
 
                                 controlMotor =  "M" + str(int(float(amount_food)*1000)) + "E"
                                 print( "motor control : "+ str(controlMotor))
-                                serial_send(controlMotor.encode())
+                                #! send run motor
+                                # serial_send(controlMotor.encode())
 
                                 data_feeder = {
                                     "amount_food" : amount_food, 

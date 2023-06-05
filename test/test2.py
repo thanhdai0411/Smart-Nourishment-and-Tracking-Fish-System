@@ -1,28 +1,14 @@
-from pymongo import MongoClient
-
 import json
-from bson.objectid import ObjectId
-import jsonpickle
-import datetime
+FILE = "/home/doan/Desktop/DA/WebServer/Aquarium-Smart/test/test.json"
 
-import requests
+def write_file_json (file, data) :
+    with open(file, "w") as outfile:
+        outfile.write(json.dumps(data, indent=4, sort_keys=True, default=str))
 
-MONGODB_URL = "mongodb+srv://thanhdai0411:thanhdai0411@cluster0.gsbucce.mongodb.net/?retryWrites=true&w=majority"
+def read_file_json(file) :
+    json_object = ""
+    with open(file, 'r') as open_file:
+        json_object = json.load(open_file)
+    return json_object   
 
-db_client=MongoClient()
-db_client = MongoClient(MONGODB_URL)
-mydatabase = db_client["test"]
-collection_name = mydatabase["email_notify"]
-
-email = collection_name.find_one({"username": "Smart"})["email"]
-
-
-url = "http://0.0.0.0/send_mail"
-text_send = f"[{datetime.datetime.now()}]: Dead fish found"
-
-myobj = {'email': email, "text":text_send }
-
-x = requests.post(url, headers = {'User-Agent': 'Mozilla/5.0'}, data = myobj)
-
-print(x.text)
-
+write_file_json(FILE, {})
